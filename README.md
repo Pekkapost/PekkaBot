@@ -1,180 +1,297 @@
-![Discord4J Logo](/images/d4j_l.png?raw=true)
+[version]: https://api.bintray.com/packages/dv8fromtheworld/maven/JDA/images/download.svg
+[download]: https://bintray.com/dv8fromtheworld/maven/JDA/_latestVersion
+[discord-invite]: https://discord.gg/0hMr4ce0tIl3SLv5
+[license]: https://img.shields.io/badge/License-Apache%202.0-lightgrey.svg
+[jenkins]: https://img.shields.io/badge/Download-Jenkins-brightgreen.svg
+[FAQ]: https://img.shields.io/badge/Wiki-FAQ-blue.svg
+[ ![version][] ][download]
+[ ![jenkins][] ](http://home.dv8tion.net:8080/job/JDA/lastSuccessfulBuild/)
+[ ![license][] ](https://github.com/DV8FromTheWorld/JDA/tree/master/LICENSE)
+[ ![Discord](https://discordapp.com/api/guilds/125227483518861312/widget.png) ][discord-invite]
+[ ![FAQ] ](https://github.com/DV8FromTheWorld/JDA/wiki/10\)-FAQ)
 
-# Discord4J [![Download](https://jitpack.io/v/austinv11/Discord4j.svg?style=flat-square)](https://jitpack.io/#austinv11/Discord4j)  [![Support Server Invite](https://img.shields.io/badge/Join-Discord4J-7289DA.svg?style=flat-square)](https://discord.gg/NxGAeCY) [![Documentation Status](https://readthedocs.org/projects/discord4j/badge/?version=latest)](http://discord4j.readthedocs.io/en/latest/?badge=latest&style=flat-square)
+<img align="right" src="https://i.imgur.com/OG7Tne8.png" height="200" width="200">
 
-Java interface for the official [Discord](https://discordapp.com/) API, written in Java 8.
-[The API is also available in a few other languages.](https://discordapi.com/unofficial/libs.html)
+# JDA (Java Discord API)
+JDA strives to provide a clean and full wrapping of the Discord REST api and its Websocket-Events for Java.
 
-For the latest dev builds, use the short commit hash or `dev-SNAPSHOT` as your version.
+## JDA 3.x
+JDA will be continued with version 3.x and will support Bot-features (for bot-accounts) and Client-features (for user-accounts).
+_Please see the [Discord docs](https://discordapp.com/developers/docs/reference) for more information about bot accounts._
 
-## Adding Discord4J as a dependency for a project
-Given that `@VERSION@` = the version of Discord4J (this can either be a release version, the short commit hash or `dev-SNAPSHOT`).
-### With Maven
-In your `pom.xml` add (without the ellipses):
-```xml
-...
-<repositories>
-  ...
-  <repository> <!-- This repo fixes issues with transitive dependencies -->
-    <id>jcenter</id>
-    <url>http://jcenter.bintray.com</url>
-  </repository>
-  <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-  </repository>
-</repositories>
-...
-<dependencies>
-  ...
-  <dependency>
-    <groupId>com.github.austinv11</groupId>
-    <artifactId>Discord4J</artifactId>
-    <version>@VERSION@</version>
-   <!-- <classifier>shaded</classifier> <!-- Include this line if you want a shaded jar (all the Discord4J dependencies bundled into one jar)-->
-  </dependency>
-</dependencies>
-...
-```
-### With Gradle
-In your `build.gradle` add (without the ellipses): 
-```groovy
-...
-repositories {
-  ...
-  jcenter() //This prevents issues with transitive dependencies
-  maven {
-    url  "https://jitpack.io"
-  }
-}
-...
-dependencies {
-  ...
-  compile "com.github.austinv11:Discord4J:@VERSION@"
-  //compile "com.github.austinv11:Discord4J:@VERSION@:shaded" //Use this line instead of the one above it if you want a shaded jar (all the Discord4J dependencies bundled into one jar)
-}
-...
-```
-### With SBT
-In your `build.sbt` add (without the ellipses):
-```sbt
-...
-libraryDependencies ++= Seq(
-  "com.github.austinv11" % "Discord4J" % "@VERSION@"
-)
 
-resolvers += "jcenter" at "http://jcenter.bintray.com"
-resolvers += "jitpack.io" at "https://jitpack.io"
-```
-### Manually with the shaded jar
-If you don't use Maven nor Gradle (which you really should, because it's a lot more flexible and allows you to update easily), you can always [grab the shaded jar file](http://austinv11.github.io/Discord4J/downloads.html) (which has all the D4J dependencies inside), and link it in your IntelliJ or Eclipse project.
-#### IntelliJ
-Module Settings > Dependencies > click the + > JARs or directories > Select your JAR file
-#### Eclipse
-Project Properties > Java Build Path > Add the jar file
+This officially makes [JDA-Client](https://github.com/DV8FromTheWorld/JDA-Client) deprecated.
+Please do not continue using it, and instead switch to the promoted 3.x version listed further below.
 
-## So, how do I use this?
-### Tutorials/Resources
-* A [quick overview of the AudioPlayer](https://github.com/oopsjpeg/d4j-audioplayer) by [@oopsjpeg](https://github.com/oopsjpeg)
-* A Discord Bot [quick start example](https://gist.github.com/quanticc/a32fa8f3a57f98aee9dc9e935f851e72) maintined by [@quantic](https://github.com/quanticc)
-* A simple [Discord4J module example](https://github.com/Martacus/Simplecommands/tree/master) by [@Martacus](https://github.com/Martacus)
-* The [Official Javadocs](http://austinv11.github.io/Discord4J/docs.html) (or the [Dash](https://kapeli.com/dash)/[Velocity](https://velocity.silverlakesoftware.com/)/[Zeal](https://zealdocs.org/) mirror maintained by [@jammehcow](https://github.com/jammehcow))
+## Creating the JDA Object
+Creating the JDA Object is done via the JDABuilder class by providing an AccountType (Bot/Client).
+After setting the token via setter,
+the JDA Object is then created by calling the `.buildBlocking()` or the `.buildAsync()` (non-blocking login) method.
 
-### Starting with the API
-The very first thing you need to do is obtain an `IDiscordClient` object. This can be done by using the `ClientBuilder`.
-Example:
+**Example**:
+
 ```java
-public class Example {
+JDA jda = new JDABuilder(AccountType.BOT).setToken("token").buildBlocking();
+```
 
-    public static IDiscordClient createClient(String token, boolean login) { // Returns a new instance of the Discord client
-        ClientBuilder clientBuilder = new ClientBuilder(); // Creates the ClientBuilder instance
-        clientBuilder.withToken(token); // Adds the login info to the builder
-        try {
-            if (login) {
-                return clientBuilder.login(); // Creates the client instance and logs the client in
-            } else {
-                return clientBuilder.build(); // Creates the client instance but it doesn't log the client in yet, you would have to call client.login() yourself
-            }
-        } catch (DiscordException e) { // This is thrown if there was a problem building the client
-            e.printStackTrace();
-            return null;
+**Note**: It is important to set the correct AccountType because Bot-accounts require a token prefix to login.
+
+#### Examples:
+
+**Using EventListener**:
+```java
+public class ReadyListener implements EventListener
+{
+    public static void main(String[] args)
+            throws LoginException, RateLimitedException, InterruptedException
+    {
+        // Note: It is important to register your ReadyListener before building
+        JDA jda = new JDABuilder(AccountType.BOT)
+            .setToken("token")
+            .addEventListener(new ReadyListener())
+            .buildBlocking();
+    }
+
+    @Override
+    public void onEvent(Event event)
+    {
+        if (event instanceof ReadyEvent)
+            System.out.println("API is ready!");
+    }
+}
+```
+**Using ListenerAdapter**:
+```java
+public class MessageListener extends ListenerAdapter
+{
+    public static void main(String[] args)
+            throws LoginException, RateLimitedException, InterruptedException
+    {
+        JDA jda = new JDABuilder(AccountType.BOT).setToken("token").buildBlocking();
+        jda.addEventListener(new MessageListener());
+    }
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event)
+    {
+        if (event.isFromType(ChannelType.PRIVATE))
+        {
+            System.out.printf("[PM] %s: %s\n", event.getAuthor().getName(),
+                                    event.getMessage().getContent());
+        }
+        else
+        {
+            System.out.printf("[%s][%s] %s: %s\n", event.getGuild().getName(),
+                        event.getTextChannel().getName(), event.getMember().getEffectiveName(),
+                        event.getMessage().getContent());
         }
     }
 }
 ```
-### Events
-The Discord4J library is very event driven. Your bot can detect these events through the use of an event listener. There are two ways of creating an event listener:
 
-1. Using `IListener`:
+> **Note**: In these examples we override methods from the inheriting class `ListenerAdapter`.<br>
+> The usage of the `@Override` annotation is recommended to validate methods.
+
+### Sharding a Bot
+
+Discord allows Bot-accounts to share load across sessions by limiting them to a fraction of the total connected Guilds/Servers of the bot.
+<br>This can be done using **sharding** which will limit JDA to only a certain amount of Guilds/Servers including events and entities.
+Sharding will limit the amount of Guilds/Channels/Users visible to the JDA session so it is recommended to have some kind of elevated management to
+access information of other shards.
+
+To use sharding in JDA you will need to use `JDABuilder.useSharding(int shardId, int shardTotal)`. The **shardId** is 0-based which means the first shard
+has the ID 0. The **shardTotal** is the total amount of shards (not 0-based) which can be seen similar to the length of an array, the last shard has the ID of 
+`shardTotal - 1`.
+
+When using sharding it is also recommended to use a `SessionReconnectQueue` instance for all shards. This allows JDA to properly
+handle reconnecting multiple shards without violating Discord limitations (not using this might cause an IP ban on bad days).
+
+Additionally to keep track of the global REST rate-limit JDA has a `ShardedRateLimiter` which is set by default when using the same JDABuilder
+for all shards. If you want to use multiple builders to build your shards you should use the same ShardedRateLimiter instance!
+
+**Logins between shards _must_ happen with a minimum of _5 SECONDS_ of backoff time. JDA will inform you if the backoff is too short
+with a log message:**
+
+```
+Encountered IDENTIFY (OP 2) Rate Limit! Waiting 5 seconds before trying again!
+```
+> Note: Failing to backoff properly will cause JDA to wait 5 seconds after failing to connect. Respect the 5 second login rate limit!
+
+#### Example Sharding
+
 ```java
-public class InterfaceListener implements IListener<ReadyEvent> { // The event type in IListener<> can be any class which extends Event
-  
-    @Override
-    public void handle(ReadyEvent event) { // This is called when the ReadyEvent is dispatched
-        doCoolStuff();
+public static void main(String[] args) throws Exception
+{
+    JDABuilder shardBuilder = new JDABuilder(AccountType.BOT).setToken(args[0]).setReconnectQueue(new SessionReconnectQueue());
+    //register your listeners here using shardBuilder.addEventListener(...)
+    shardBuilder.addEventListener(new MessageListener());
+    for (int i = 0; i < 10; i++)
+    {
+        //using buildBlocking(JDA.Status.AWAITING_LOGIN_CONFIRMATION)
+        // makes sure we start to delay the next shard once the current one actually
+        // sent the login information, otherwise we might hit nasty race conditions
+        shardBuilder.useSharding(i, 10)
+                    .buildBlocking(JDA.Status.AWAITING_LOGIN_CONFIRMATION);
+        Thread.sleep(5000); //sleep 5 seconds between each login
     }
-    
 }
 ```
 
-2. Using the `@EventSubscriber` annotation:
-```java
-public class AnnotationListener {
-  
-    @EventSubscriber
-    public void onReadyEvent(ReadyEvent event) { // This method is called when the ReadyEvent is dispatched
-        foo(); // Will be called!
-    }
-  
-    public void onMessageReceivedEvent(MessageReceivedEvent event) { // This method is NOT called because it doesn't have the @EventSubscriber annotation
-        bar(); // Never called!
-    }
+> Note: We are not setting a `ShardedRateLimiter` here as it isn't necessary when we use the same builder!<br>
+> When you use multiple builders you should use JDABuilder.setShardedRateLimiter(ShardedRateLimiter) with a shared instance of the same ShardedRateLimiter!
 
+## More Examples
+We provide a small set of Examples in the [Example Directory](https://github.com/DV8FromTheWorld/JDA/tree/master/src/examples/java).
+
+In addition you can look at the many Discord Bots that were implemented using JDA:
+- [Yui](https://github.com/DV8FromTheWorld/Yui)
+- [Vortex](https://github.com/jagrosh/Vortex)
+- [FredBoat](https://github.com/Frederikam/FredBoat)
+
+[And many more!](https://github.com/search?q=JDA+discord+bot&type=Repositories&utf8=%E2%9C%93)
+
+## Download
+Latest Version:
+[ ![version][] ][download]
+
+Be sure to replace the **VERSION** key below with the latest version shown above!
+
+Maven
+```xml
+<dependency>
+    <groupId>net.dv8tion</groupId>
+    <artifactId>JDA</artifactId>
+    <version>VERSION</version>
+</dependency>
+
+<repository>
+    <id>jcenter</id>
+    <name>jcenter-bintray</name>
+    <url>http://jcenter.bintray.com</url>
+</repository>
+```
+
+Gradle
+```gradle
+dependencies {
+    compile 'net.dv8tion:JDA:VERSION'
+}
+
+repositories {
+    jcenter()
 }
 ```
 
-Registering your listener:
-```java
-public class Main {
-  
-    public static void main(String[] args) {
-        IDiscordClient client = Example.createClient(args[0], true); // Gets the client object (from the first example)
-        EventDispatcher dispatcher = client.getDispatcher(); // Gets the EventDispatcher instance for this client instance
-        dispatcher.registerListener(new InterfaceListener()); // Registers the IListener example class from above
-        dispatcher.registerListener(new AnnotationListener()); // Registers the @EventSubscriber example class from above
-    }
+The builds are distributed using JCenter through Bintray [JDA JCenter Bintray](https://bintray.com/dv8fromtheworld/maven/JDA/)
 
-}
-```
+## Documentation
+Docs can be found on the [Jenkins](http://home.dv8tion.net:8080/) or directly [here](http://home.dv8tion.net:8080/job/JDA/javadoc/)
+<br>A simple Wiki can also be found in this repository's [Wiki section](https://github.com/DV8FromTheWorld/JDA/wiki)
 
-### Modules
-Discord4J has an API for creating modular Discord Bots! See [Martacus's sample repo](https://github.com/Martacus/Simplecommands/tree/master) for an example as to how it works.
+## Getting Help
+If you need help, or just want to talk with the JDA or other Discord Devs, you can join the [Unofficial Discord API](https://discord.gg/0SBTUU1wZTUydsWv) Guild.
 
-### More examples
-See the [examples directory](https://github.com/austinv11/Discord4J/tree/master/src/test/java/sx/blah/discord/examples).
+Once you joined, you can find JDA-specific help in the #java_jda channel<br>
+We have our own Discord Server [here][discord-invite]
 
-## Projects using Discord4J
-* Official Discord4J Addons: A collection of official addons and modules for Discord4J (https://github.com/Discord4J-Addons)
-* Lavaplayer by [@sedmelluq](https://github.com/sedmelluq): A full-featured audio player for Discord4J and JDA (https://github.com/sedmelluq/lavaplayer)
-* Discordinator by [@alpha;helix](https://github.com/alphahelix00): A modularized command API (https://github.com/alphahelix00/Discordinator)
-* Instructability by [@Kaioru](https://github.com/Kaioru): A simple command API (https://github.com/Kaioru/Instructability)
-* BC4D4J by [@danthonywalker](https://github.com/danthonywalker): An annotation based command API written in Kotlin (https://github.com/danthonywalker/bc4d4j)
-* D4J-OAuth by [@xaanit](https://github.com/xaanit) and [@UnderMybrella](https://github.com/UnderMybrella): An OAuth extenssion to Discord4J (https://github.com/xaanit/D4J-OAuth)
-* DiscordEmoji4J by [@nerd](https://github.com/nerd/DiscordEmoji4J): An emoji library designed with Discord in mind (https://github.com/nerd/DiscordEmoji4J)
+For guides and setup help you can also take a look at the [wiki](https://github.com/DV8FromTheWorld/JDA/wiki)
+<br>Especially interesting are the [Getting Started](https://github.com/DV8FromTheWorld/JDA/wiki/3\)-Getting-Started)
+and [Setup](https://github.com/DV8FromTheWorld/JDA/wiki/2\)-Setup) Pages.
 
-## Deprecation policy
-Due to the nature of the Discord API, any deprecations found in the API should not be expected to last past the current
- version. Meaning that if a method is deprecated on version 2.1.0, do not assume the method will be available in version 2.2.0.
+## Third Party Recommendations
 
-## Development
-The Discord API is still in development. Functions may break at any time.  
-In such an event, please contact me or submit a pull request.
+### [LavaPlayer](https://github.com/sedmelluq/lavaplayer)
 
-## Pull requests
-No one is perfect at programming and I am no exception. If you see something that can be improved, please read the [contributing guildelines](https://github.com/austinv11/Discord4J/blob/master/.github/CONTRIBUTING.md) and feel free to submit a pull request! 
+Created and maintained by [sedmelluq](https://github.com/sedmelluq)
+<br>LavaPlayer is the most popular library used by Music Bots created in Java.
+It is highly compatible with JDA and Discord4J and allows to play audio from
+Youtube, Soundcloud, Twitch, Bandcamp and [more providers](https://github.com/sedmelluq/lavaplayer#supported-formats). 
+<br>The library can easily be expanded to more services by implementing your own AudioSourceManager and registering it.
 
-## Other info
-More information can be found in the official [javadocs](http://austinv11.github.io/Discord4J/docs.html). 
-Alternatively you can view the docs through [Dash](https://kapeli.com/dash), [Velocity](https://velocity.silverlakesoftware.com/), or [Zeal](https://zealdocs.org/) (maintained by [@jammehcow](https://github.com/jammehcow)) under the *User Contributed* tab.
+It is recommended to read the [Usage](https://github.com/sedmelluq/lavaplayer#usage) section of LavaPlayer
+to understand a proper implementation.
+<br>Sedmelluq provided a demo in his repository which presents an example implementation for JDA:
+https://github.com/sedmelluq/lavaplayer/tree/master/demo-jda
 
-You can contact me on the [Official Discord4J Server (recommended)](https://discord.gg/NxGAeCY) or the [Discord API server](https://discord.gg/0SBTUU1wZTU7PCok) in the #java_discord4j channel.
+
+### [JDA-Utilities](https://github.com/JDA-Applications/JDA-Utilities)
+
+Created and maintained by [jagrosh](https://github.com/jagrosh).
+<br>JDA-Utilities provides a Command-Extension and several utilities to make using JDA very simple.
+
+Features include:
+- Paginated Message using Reactions
+- EventWaiter allowing to wait for a response and other events
+
+### [Kotlin-JDA](https://github.com/JDA-Applications/Kotlin-JDA)
+
+Created and maintained by [MinnDevelopment](https://github.com/MinnDevelopment)
+<br>Kotlin-JDA provides several extensions allowing to easily use kotlin idioms with JDA.
+
+Features include:
+- Groovy-style Builders
+- Coroutine RestActions
+
+### [JDAction](https://github.com/sedmelluq/jdaction)
+
+Created and maintained by [sedmelluq](https://github.com/sedmelluq)
+<br>JDAction is a [Gradle](https://gradle.org/) plugin which makes sure that the return values of all methods which return a RestAction are used.
+Since it is a common mistake to forget to `.queue()`/`.complete()`/`.submit()` RestActions,
+and it is often only discovered after noticing that something doesn't work,
+this plugin will help catch those cases quickly as it will cause a build failure in such case.
+
+More info about RestAction: [Wiki](https://github.com/DV8FromTheWorld/JDA/wiki/7\)-Using-RestAction)
+
+------
+
+More can be found in our github organization: [JDA-Applications](https://github.com/JDA-Applications)
+
+## Contributing to JDA
+If you want to contribute to JDA, make sure to base your branch off of our master branch (or a feature-branch)
+and create your PR into that **same** branch. **We will be rejecting any PRs between branches!**
+
+It is also highly recommended to get in touch with the Devs before opening Pull Requests (either through an issue or the Discord servers mentioned above).<br>
+It is very possible that your change might already be in development or you missed something.
+
+More information can be found at the wiki page [Contributing](https://github.com/DV8FromTheWorld/JDA/wiki/5\)-Contributing)
+
+## Dependencies:
+This project requires **Java 8**.<br>
+All dependencies are managed automatically by Gradle.
+ * NV Websocket Client
+   * Version: **2.2**
+   * [Github](https://github.com/TakahikoKawasaki/nv-websocket-client)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/com.neovisionaries%3Anv-websocket-client/view)
+ * OkHttp
+   * Version: **3.8.1**
+   * [Github](https://github.com/square/okhttp)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/com.squareup.okhttp:okhttp)
+ * Apache Commons Lang3
+   * Version: **3.5**
+   * [Website](https://commons.apache.org/proper/commons-lang/)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/org.apache.commons%3Acommons-lang3/view)
+ * Apache Commons Collections4
+   * Version: **4.1**
+   * [Website](https://commons.apache.org/proper/commons-collections/)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/org.apache.commons%3Acommons-collections4/view)
+ * org.json
+   * Version: **20160810**
+   * [Github](https://github.com/douglascrockford/JSON-java)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/org.json%3Ajson/view)
+ * JNA
+   * Version: **4.4.0**
+   * [Github](https://github.com/java-native-access/jna)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/net.java.dev.jna%3Ajna/view)
+ * Trove4j
+   * Version: **3.0.3**
+   * [BitBucket](https://bitbucket.org/trove4j/trove)
+   * [JCenter Repository](https://bintray.com/bintray/jcenter/net.sf.trove4j%3Atrove4j/view)
+   
+## Related Projects
+
+- [Discord4J](https://github.com/austinv11/Discord4J)
+- [Discord.NET](https://github.com/RogueException/Discord.Net)
+- [discord.py](https://github.com/Rapptz/discord.py)
+- [serenity](https://github.com/zeyla/serenity)
+
+**See also:** https://discordapp.com/developers/docs/topics/libraries

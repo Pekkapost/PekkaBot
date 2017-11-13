@@ -1,24 +1,26 @@
-### Prerequisites
-* [ ] If this is a question/suggestion, I have already considered talking about it on the [Discord4J server](https://discord.gg/NxGAeCY)
-* [ ] This issue specifically has something to do with Discord4J
-* [ ] I have attempted to [look for similar issues](https://github.com/austinv11/Discord4J/issues?utf8=%E2%9C%93&q=is%3Aissue) already
+[download]: https://bintray.com/dv8fromtheworld/maven/JDA/_latestVersion
+[guild]: https://discord.gg/0hMr4ce0tIk3pSjp
+[stack overflow]: https://stackoverflow.com/questions/tagged/java
+
+## General Troubleshooting
+
+Hey there! Before you report a bug or suggest a new feature,
+  please make sure to follow these steps first!
+  
+- [ ] I have checked for similar issues.
+- [ ] I have updated to the [latest JDA version][download].
+- [ ] I have checked the branches or the maintainers' PRs for upcoming features/bug fixes.
+
+> This is not the place to learn Java. Please refer to [StackOverflow][stack overflow]
+  for your general programming questions.
+
+## Template
+
+### Issue Type
+
+- [ ] Bug Report
+- [ ] Feature Request
 
 ### Description
-[Description of the issue]
 
-### Steps to Reproduce
-1. [First step]
-2. [Second step]
-
-...
-
-**Expected behavior:** [What was supposed to happen]
-
-**Actual behavior:** [What actually happened]
-
-**Stacktrace (if applicable):** [PASTEBIN or HASTEBIN link to the stacktrace]
-
-**Version affected:** [The version of Discord4J]
-
-### Additional Information
-[Any other information that may be able to help me with the problem]
+Replace this sentence with a description and include as many details as you think are needed to understand your issue.

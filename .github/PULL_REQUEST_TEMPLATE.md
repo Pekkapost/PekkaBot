@@ -1,15 +1,19 @@
-### Prerequisites
-* [ ] I have read and understood the [contribution guidelines](CONTRIBUTING.md)
-* [ ] This pull request follows the code style of the project
-* [ ] I have tested this feature thoroughly
-  * [Proof of testing](screenshot, any evidence you tested this pull request)
+[contributing]: https://github.com/DV8FromTheWorld/JDA/wiki/5%29-Contributing
 
-**Issues Fixed:** [The issues fixed by this pull request]
+## Pull Request Etiquette
 
-### Changes Proposed in this Pull Request
-* [Change 1]
-* [Change 2]
+There are several guidelines you should follow in order for your
+  Pull Request to be merged.
 
-...
+- [ ] I have checked the PRs for upcoming features/bug fixes.
+- [ ] I have read the [contributing guidelines][contributing].
 
+> It is sometimes better to include more changes in a single commit. 
+  If you find yourself having an overwhelming amount of commits, you
+  can **rebase** your branch.
 
+## Template
+
+### Pull Request
+
+Replace this sentence with general description of what your Pull Request does.
