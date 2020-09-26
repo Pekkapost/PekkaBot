@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="PekkaBot2:jar" />
+      <artifact name="PekkaBot:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="812fb714-a289-4430-9ef3-20c746fed1d6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
+    <list default="true" id="812fb714-a289-4430-9ef3-20c746fed1d6" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,115 +18,6 @@
   <component name="ExportToHTMLSettings">
     <option name="OUTPUT_DIRECTORY" value="C:\Users\Eric\IdeaProjects\PekkaBot2\exportToHTML" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Connection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Connection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessageRespond.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MessageRespond.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ping.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/ping.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1363">
-              <caret line="100" column="60" lean-forward="false" selection-start-line="100" selection-start-column="60" selection-end-line="100" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="currency.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/currency.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="952">
-              <caret line="57" column="115" lean-forward="false" selection-start-line="57" selection-start-column="115" selection-end-line="57" selection-end-column="115" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GachaConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Constants/GachaConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gacha.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Commands/gacha.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="122" column="70" lean-forward="false" selection-start-line="122" selection-start-column="70" selection-end-line="122" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#ToovaASBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#ElgaBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#RenriBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#ShannonBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#IsukaASBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#ClaudeBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#MightyASBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#TsukihaBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#FelminaBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#BertrandBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#SuzetteASBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#fiveBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#jpBanner#0;class#gacha#0" expanded="false" />
-                <element signature="method#gachaTest#0;class#gacha#0" expanded="false" />
-                <element signature="method#add2#0;class#gacha#0" expanded="false" />
-                <element signature="method#replaceSelected#0;class#gacha#0" expanded="false" />
-                <element signature="method#gachaMeList#0;class#gacha#0" expanded="false" />
-                <marker date="1569738313983" expanded="true" signature="52049:61006" ph="..." />
-                <marker date="1569738313983" expanded="true" signature="61010:68842" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gachaSpecific.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Commands/gachaSpecific.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1530">
-              <caret line="241" column="50" lean-forward="false" selection-start-line="241" selection-start-column="50" selection-end-line="241" selection-end-column="50" />
-              <folding>
-                <element signature="method#ToovaASBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#RenriBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#ShannonBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#IsukaASBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#ClaudeBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#MightyASBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#TsukihaBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#FelminaBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#BertrandBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#SuzetteASBanner#0;class#gachaSpecific#0" expanded="false" />
-                <element signature="method#fiveBanner#0;class#gachaSpecific#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -139,140 +25,14 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>high</find>
-      <find>attack</find>
-      <find>attack ter</find>
-      <find>devil</find>
-      <find>firmness</find>
-      <find>golden</find>
-      <find>write</find>
-      <find>jre</find>
-      <find>JRE</find>
-      <find>call</find>
-      <find>math</find>
-      <find>event.getMessage().getContent()</find>
-      <find>&quot;well&quot;) + 7</find>
-      <find>ladder l</find>
-      <find>&quot;left&quot;) + 8</find>
-      <find>ladder r</find>
-      <find>right&quot;) + 8</find>
-      <find>ladder m</find>
-      <find>middle&quot;) + 8</find>
-      <find>replaceSelectedF(event.getAuthor().getID().toString() + &quot; Element&quot;, whiteGate(event, &quot;Element</find>
-      <find>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Element&quot;, whiteGate(event, &quot;Element</find>
-      <find>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Well&quot;, whiteGate(event, &quot;Well</find>
-      <find>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Balloon&quot;, whiteGate(event, &quot;Balloon</find>
-      <find>pickMe(</find>
-      <find>enter</find>
-      <find>System</find>
-      <find>system</find>
-      <find>379513566711119872</find>
-      <find>g</find>
-      <find>temp</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>pSkill</replace>
-      <replace>rune</replace>
-      <replace>public static</replace>
-      <replace>.queue((message2 -&gt; message2.delete().queueAfter(60, TimeUnit.SECONDS)))</replace>
-      <replace>|</replace>
-      <replace />
-      <replace>EVA</replace>
-      <replace>jpg</replace>
-      <replace>png</replace>
-      <replace>message</replace>
-      <replace>&quot;well&quot;) + 4</replace>
-      <replace>left</replace>
-      <replace>&quot;left&quot;) + 4</replace>
-      <replace>right</replace>
-      <replace>right&quot;) + 5</replace>
-      <replace>middle</replace>
-      <replace>middle&quot;) + 6</replace>
-      <replace>middle&quot;) + 6replaceSelectedF(event.getAuthor().getID().toString() + &quot; Element&quot;, whiteGate(event, &quot;ElementF</replace>
-      <replace>replaceSelectedF(event.getAuthor().getID().toString() + &quot; Element&quot;, whiteGate(event, &quot;ElementF</replace>
-      <replace>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Element&quot;, whiteGate(event, &quot;ElementF</replace>
-      <replace>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Well&quot;, whiteGate(event, &quot;WellF</replace>
-      <replace>replaceSelectedF(event.getAuthor().getId().toString() + &quot; Balloon&quot;, whiteGate(event, &quot;BalloonF</replace>
-      <replace>drawMe(</replace>
-      <replace>//System</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\Users\Eric\IdeaProjects\PekkaBot2</dir>
-      <dir>C:\Users\Eric\IdeaProjects\PekkaBot2\src\Commands\pictures</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
+    <option name="ADD_SUFFIX_TO_CHERRY_PICKS_OF_PUBLISHED_COMMITS" value="false" />
+    <option name="PREVIEW_PUSH_ON_COMMIT_AND_PUSH" value="false" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="WARN_ABOUT_CRLF" value="false" />
+    <option name="WARN_ABOUT_DETACHED_HEAD" value="false" />
   </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/spellCheck.java" />
-        <option value="$PROJECT_DIR$/src/Search.java" />
-        <option value="$PROJECT_DIR$/src/Stack.java" />
-        <option value="$PROJECT_DIR$/src/readFile.java" />
-        <option value="$PROJECT_DIR$/src/writeFile.java" />
-        <option value="$PROJECT_DIR$/src/Commands/rebirth.java" />
-        <option value="$PROJECT_DIR$/src/Commands/petXP.java" />
-        <option value="$PROJECT_DIR$/src/Commands/pStat.java" />
-        <option value="$PROJECT_DIR$/src/Commands/rune.java" />
-        <option value="$PROJECT_DIR$/src/Commands/sHonor.java" />
-        <option value="$PROJECT_DIR$/src/Commands/skill.java" />
-        <option value="$PROJECT_DIR$/src/Commands/command.java" />
-        <option value="$PROJECT_DIR$/src/crop.java" />
-        <option value="$PROJECT_DIR$/src/Commands/capitalize.java" />
-        <option value="$PROJECT_DIR$/src/Commands/writeFile.java" />
-        <option value="$PROJECT_DIR$/src/Commands/readFile.java" />
-        <option value="$PROJECT_DIR$/src/Commands/pSkill.java" />
-        <option value="$PROJECT_DIR$/src/Commands/rotation.java" />
-        <option value="$PROJECT_DIR$/src/Commands/Pets.java" />
-        <option value="$PROJECT_DIR$/src/Commands/pet.java" />
-        <option value="$PROJECT_DIR$/myfile.txt" />
-        <option value="$PROJECT_DIR$/src/Commands/music.java" />
-        <option value="$PROJECT_DIR$/src/Commands/callRotation.java" />
-        <option value="$PROJECT_DIR$/src/Commands/levelConstants.java" />
-        <option value="$PROJECT_DIR$/src/Commands/level.java" />
-        <option value="$PROJECT_DIR$/../AutoClicker/src/Runner.java" />
-        <option value="$PROJECT_DIR$/src/Schedule.java" />
-        <option value="$PROJECT_DIR$/src/Commands/google.java" />
-        <option value="$PROJECT_DIR$/src/Commands/spreadsheet.java" />
-        <option value="$PROJECT_DIR$/src/Commands/dinning.java" />
-        <option value="$PROJECT_DIR$/src/Commands/emoji.java" />
-        <option value="$PROJECT_DIR$/src/GuildJoin.java" />
-        <option value="$PROJECT_DIR$/src/Commands/fish.java" />
-        <option value="$PROJECT_DIR$/src/Commands/Constants.java" />
-        <option value="$PROJECT_DIR$/src/Constants/Constants.java" />
-        <option value="$PROJECT_DIR$/src/Commands/embeds.java" />
-        <option value="$PROJECT_DIR$/src/Commands/math.java" />
-        <option value="$PROJECT_DIR$/src/Commands/purge.java" />
-        <option value="$PROJECT_DIR$/Storage2.txt" />
-        <option value="$PROJECT_DIR$/src/Constants/BotConstants.java" />
-        <option value="$PROJECT_DIR$/src/Constants/TimeConstants.java" />
-        <option value="$PROJECT_DIR$/src/Commands/resetTime.java" />
-        <option value="$PROJECT_DIR$/Storage.txt" />
-        <option value="$PROJECT_DIR$/src/Commands/ping.java" />
-        <option value="$PROJECT_DIR$/src/Connection.java" />
-        <option value="$PROJECT_DIR$/Storage3.txt" />
-        <option value="$PROJECT_DIR$/src/MessageRespond.java" />
-        <option value="$PROJECT_DIR$/src/Constants/GachaConstants.java" />
-        <option value="$PROJECT_DIR$/src/Commands/gacha.java" />
-        <option value="$PROJECT_DIR$/src/Commands/gachaSpecific.java" />
-        <option value="$PROJECT_DIR$/src/Commands/currency.java" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="638" />
-    <option name="width" value="1272" />
-    <option name="height" value="728" />
-  </component>
+  <component name="ProjectId" id="1UOwfnXPVUUUO3jlRqyy1M6XIfF" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -295,86 +55,40 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PekkaBot2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PekkaBot2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PekkaBot2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PekkaBot2" type="462c0819:PsiDirectoryNode" />
-              <item name="pictures" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PekkaBot2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PekkaBot2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PekkaBot2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PekkaBot2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PekkaBot2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PekkaBot2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Constants" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PekkaBot2 - Copy" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="pekkabot2" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../untitled" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.splitter.proportion" value="0.20795107" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="Commands.Gacha" />
+      <recent name="Commands.Currency" />
+      <recent name="Commands.Other.Slap" />
+      <recent name="Commands.Other" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\drago\IdeaProjects\PekkaBot\Storage" />
+      <recent name="C:\Users\drago\IdeaProjects\PekkaBot\storage" />
       <recent name="C:\Users\Eric\IdeaProjects\PekkaBot2" />
       <recent name="C:\Users\Eric\IdeaProjects\PekkaBot2\src\Commands" />
       <recent name="C:\Users\Eric\IdeaProjects\PekkaBot2\src\resources" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Application.Test">
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -385,119 +99,76 @@
       <module />
     </configuration>
     <configuration name="Connection" type="Application" factoryName="Application" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="Connection" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="PekkaBot2" />
-      <envs />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Connection" />
+      <module name="PekkaBot" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="Test" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="Connection" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="9.0" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="PekkaBot2" />
-      <envs />
+      <option name="MAIN_CLASS_NAME" value="Connection" />
+      <module name="PekkaBot" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
+    <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
       <properties />
       <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Application.Connection" />
-      <item index="1" class="java.lang.String" itemvalue="Application.Test" />
+    <list>
+      <item itemvalue="Application.Connection" />
+      <item itemvalue="Application.Test" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.Test" />
+      <list>
+        <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -512,373 +183,114 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.24479167" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.7552083" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.084375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39940387" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.44427246" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.48142415" order="1" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.24479167" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39940387" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32873806" sideWeight="0.44427246" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32873806" sideWeight="0.7552083" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1296875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914287" sideWeight="0.48142415" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#Project_Structure" timestamp="1592824266856">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1592824266856" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601025636144">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601025636144" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1592793260392">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1592793260392" />
+    <state x="606" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1592804072859">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="606" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1592804072859" />
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592803956677">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1592803956677" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1601025352810">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1601025352810" />
+    <state width="1921" height="283" key="GridCell.Tab.0.bottom" timestamp="1600471601698">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1600471601698" />
+    <state width="1921" height="283" key="GridCell.Tab.0.center" timestamp="1600471601698">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1600471601698" />
+    <state width="1921" height="283" key="GridCell.Tab.0.left" timestamp="1600471601698">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1600471601698" />
+    <state width="1921" height="283" key="GridCell.Tab.0.right" timestamp="1600471601698">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1600471601698" />
+    <state width="1921" height="356" key="GridCell.Tab.1.bottom" timestamp="1596005800480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="356" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1596005800480" />
+    <state width="1921" height="356" key="GridCell.Tab.1.center" timestamp="1596005800480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="356" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1596005800480" />
+    <state width="1921" height="356" key="GridCell.Tab.1.left" timestamp="1596005800480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="356" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1596005800480" />
+    <state width="1921" height="356" key="GridCell.Tab.1.right" timestamp="1596005800480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1921" height="356" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1596005800480" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1597458645877">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1597458645877" />
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1601164135300">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601164135300" />
+    <state x="1063" y="45" width="737" height="894" key="find.popup" timestamp="1599090796328">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1063" y="45" width="737" height="894" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599090796328" />
+    <state x="439" y="150" key="new project wizard" timestamp="1601025316052">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="439" y="150" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1601025316052" />
+    <state x="601" y="246" width="700" height="530" key="recent.locations.popup" timestamp="1592785585707">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="601" y="246" width="700" height="530" key="recent.locations.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1592785585707" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1599089397540">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599089397540" />
+    <state x="1052" y="177" width="672" height="678" key="search.everywhere.popup" timestamp="1594172211664">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1052" y="177" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1594172211664" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Commands/gachaSpecific.java</url>
-          <line>220</line>
-          <properties class="Commands.gachaSpecific" method="ElgaBanner">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Commands/gachaSpecific.java</url>
-          <line>373</line>
-          <properties />
+          <url>file://$PROJECT_DIR$/src/Commands/SubCommands/gachaSpecific.java</url>
+          <line>371</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Commands/gacha.java</url>
-          <line>123</line>
-          <properties />
-          <option name="timeStamp" value="28" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Commands/Currency/Fishing/Utility/fishUpgradeManager.java</url>
+          <line>31</line>
+          <properties class="Commands.Currency.Fishing.Utility.fishUpgradeManager" method="getLocation">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="29" />
     </breakpoint-manager>
-    <watches-manager />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MessageRespond.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/currency.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="57" column="115" lean-forward="false" selection-start-line="57" selection-start-column="115" selection-end-line="57" selection-end-column="115" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Constants/GachaConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/gacha.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5219">
-          <caret line="307" column="67" lean-forward="false" selection-start-line="307" selection-start-column="67" selection-end-line="307" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#ToovaASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ElgaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#RenriBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ShannonBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#IsukaASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ClaudeBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#MightyASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#TsukihaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#FelminaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#BertrandBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#SuzetteASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#fiveBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#jpBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#gachaTest#0;class#gacha#0" expanded="false" />
-            <element signature="method#add2#0;class#gacha#0" expanded="false" />
-            <element signature="method#replaceSelected#0;class#gacha#0" expanded="false" />
-            <element signature="method#gachaMeList#0;class#gacha#0" expanded="false" />
-            <marker date="1569738313983" expanded="true" signature="52049:61006" ph="..." />
-            <marker date="1569738313983" expanded="true" signature="61010:68842" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/gachaSpecific.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4097">
-          <caret line="241" column="50" lean-forward="false" selection-start-line="241" selection-start-column="50" selection-end-line="241" selection-end-column="50" />
-          <folding>
-            <element signature="method#ToovaASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#RenriBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#ShannonBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#IsukaASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#ClaudeBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#MightyASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#TsukihaBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#FelminaBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#BertrandBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#SuzetteASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#fiveBanner#0;class#gachaSpecific#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/ping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1683">
-          <caret line="100" column="60" lean-forward="false" selection-start-line="100" selection-start-column="60" selection-end-line="100" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/gachaSpecific.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="241" column="50" lean-forward="false" selection-start-line="241" selection-start-column="50" selection-end-line="241" selection-end-column="50" />
-          <folding>
-            <element signature="method#ToovaASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#RenriBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#ShannonBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#IsukaASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#ClaudeBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#MightyASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#TsukihaBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#FelminaBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#BertrandBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#SuzetteASBanner#0;class#gachaSpecific#0" expanded="false" />
-            <element signature="method#fiveBanner#0;class#gachaSpecific#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/currency.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="57" column="115" lean-forward="false" selection-start-line="57" selection-start-column="115" selection-end-line="57" selection-end-column="115" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/ping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1363">
-          <caret line="100" column="60" lean-forward="false" selection-start-line="100" selection-start-column="60" selection-end-line="100" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MessageRespond.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="39" lean-forward="false" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Constants/GachaConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Commands/gacha.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="122" column="70" lean-forward="false" selection-start-line="122" selection-start-column="70" selection-end-line="122" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#ToovaASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ElgaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#RenriBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ShannonBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#IsukaASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#ClaudeBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#MightyASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#TsukihaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#FelminaBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#BertrandBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#SuzetteASBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#fiveBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#jpBanner#0;class#gacha#0" expanded="false" />
-            <element signature="method#gachaTest#0;class#gacha#0" expanded="false" />
-            <element signature="method#add2#0;class#gacha#0" expanded="false" />
-            <element signature="method#replaceSelected#0;class#gacha#0" expanded="false" />
-            <element signature="method#gachaMeList#0;class#gacha#0" expanded="false" />
-            <marker date="1569738313983" expanded="true" signature="52049:61006" ph="..." />
-            <marker date="1569738313983" expanded="true" signature="61010:68842" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor>
-            <show-content>
-              <type id="library" />
-              <type id="artifact" />
-            </show-content>
-          </artifact-editor>
-          <last-edited>PekkaBot2:jar</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.5" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>9.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>PekkaBot2</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>libs</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>

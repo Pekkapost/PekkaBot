@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PekkaBot2.iml" filepath="$PROJECT_DIR$/PekkaBot2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PekkaBot.iml" filepath="$PROJECT_DIR$/PekkaBot.iml" />
     </modules>
   </component>
 </project>
