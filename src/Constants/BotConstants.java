@@ -1,10 +1,10 @@
 package Constants;
 
 public class BotConstants {
-    public static final String discordToken = ""; //Secret
-    //public static final String discordToken = ""; //Secret
-    public static final String discordOwner = ""; //Secret
-    public static final String discordCoOwner = ""; //Secret
+    public static final String discordToken = "Mzc5NTEzNTY2NzExMTE5ODcy.XlTmcA.haWB_Nusc8FvHcELYIWHHwVFQ-I";
+    //public static final String discordToken = "Mzg3ODQ2OTMyMzM0Mzc5MDA4.XlT2WQ.CyE8vQ9vNdZC9qvOB6H1pgsnF7c";
+    public static final String discordOwner = "218781547854168064";
+    public static final String discordCoOwner = "642865985422098442";
     public static String prefix = "p!";
 
     public static final String whale = "\uD83D\uDC20 - Guppy\n" +
@@ -22,6 +22,9 @@ public class BotConstants {
             "WhiteGate         : Displays your white gate data\n" +
             "WhiteGateRandom   : Returns a random white gate\n" +
             "WhiteGateTotal    : Displays total white gate data\n" +
+            "[Ad]\n" +
+            "AdMy              : Displays your ad data\n" +
+            "AdTotal           : Displays total ad data\n" +
             "[Gary]\n" +
             "Gary              : Displays a Gary\n" +
             "[Gacha]\n" +
@@ -39,22 +42,6 @@ public class BotConstants {
             "[Other]\n" +
             "Jokes             : Displays all joke commands\n" +
             "AddMe             : Sends a link to add the bot\n```";
-    public static final String help2 = "```Apache\n" +
-            "[Command]         : [Description]\n" +
-            "jokes             : Displays all joke commands\n" +
-            "gacha             : Pulls a gacha\n" +
-            "bannerlist        : Displays banner list\n" +
-            "chronos           : Displays your chronos\n" +
-            "fish              : Fishes\n" +
-            "myfish            : Shows your fish coins\n" +
-            "fishupgrade       : Shows your fish upgrades\n" +
-            "fishlb            : Shows fishing leaderboard\n" +
-            "mywg              : Pulls up your wg data\n" +
-            "randomwg          : Creates a random wg run\n" +
-            "time              : Displays time until next ticket reset\n" +
-            "timecat           : Display time until next cat\n" +
-            "addme             : Link to add the bot\n" +
-            "Do p!help [command] for further details```";
     public static final String jokes   = "```Apache\n" +
             "[Command]         : [Description]\n" +
             "gary              : Displays a gary image (Courtsey of Doke)\n" +
@@ -69,14 +56,8 @@ public class BotConstants {
             "gimmie            : Displays a gimmie\n" +
             "whale             : Displays a whale\n```";
     public static final String gacha   = "```p!gacha [banner number]```";
-    public static final String banner  = "```Displays banners```";
-    public static final String chronos = "```Displays your bot currency```";
-    public static final String mywg    = "```Displays WG data when collected by pinging the bot```";
-    public static final String totalwg = "```Displays total WG data when collected by pinging the bot```";
-    public static final String randomwg= "```Creates a random WG run```";
-    public static final String time    = "```Displays time until ticket reset```";
-    public static final String timecat = "```Displays time until cat reset```";
-    public static final String addme   = "```Displays the link to add the bot```";
+    public static final String whiteGate  = "```@PekkaBot Room1 Room2 Room3 Room4 Room5 Win```";
+    public static final String ad = "```@PekkaBot 5 10 20 G R //DO NOT USE \"Green\"```";
 
     public static final String blank = " <:Blank:729158306442248232>";
 

@@ -153,13 +153,19 @@ public class garyManager {
         garyFile.put("bertrand as","assets/Gary/gariyu142.png");
         garyFile.put("aoife","assets/Gary/gariyu143.png");
         garyFile.put("hozuki as","assets/Gary/gariyu144.png");
+        garyFile.put("ilulu as","assets/Gary/gariyu145.png");
+        garyFile.put("ewan as","assets/Gary/gariyu146.png");
+        garyFile.put("mirusha","assets/Gary/gariyu147.png");
+        garyFile.put("violet","assets/Gary/gariyu148.png");
+        garyFile.put("skull","assets/Gary/gariyu149.png");
+        garyFile.put("hismena as","assets/Gary/gariyu150.png");
     }
     public static File callMe(String message, boolean name){
         File file;
         if(name){
             file = new File(findMe(message));
         } else {
-            int rand = new Random().nextInt(144) + 1;
+            int rand = new Random().nextInt(150) + 1;
             file = new File("assets/Gary/gariyu" + rand + ".png");
         }
         return file;

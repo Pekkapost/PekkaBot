@@ -1,21 +1,19 @@
 package Discord;
 
+
 import Commands.Action.*;
-import Commands.Currency.Chronos.chronosDisplay;
+import Commands.Currency.Chronos.*;
 import Commands.Currency.Fishing.*;
-import Commands.Gacha.Utility.Admin.bannerUpdate;
-import Commands.Gacha.Utility.Admin.clear;
-import Commands.Gacha.Utility.Admin.update;
-import Commands.Gacha.gacha;
-import Commands.Gacha.gachaBanner;
-import Commands.Gary.gary;
+import Commands.Gacha.Utility.Admin.*;
+import Commands.Gacha.*;
+import Commands.Gary.*;
 import Commands.Other.*;
-import Commands.Timer.timeCat;
-import Commands.Timer.timeReset;
-import Commands.WhiteGate.wgMy;
-import Commands.WhiteGate.wgRandom;
-import Commands.WhiteGate.wgTotal;
+import Commands.Other.Help.pekka;
+import Commands.Timer.*;
+import Commands.WhiteGate.*;
+import Commands.Ad.*;
 import Constants.BotConstants;
+
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import net.dv8tion.jda.api.JDABuilder;
@@ -52,6 +50,7 @@ public class Discord {
                     new scold(),
                     new highFive(),
                     new wink(),
+                    new slam(),
                     new whale(),
                     new gimmie(),
                     new dango(),
@@ -65,6 +64,9 @@ public class Discord {
                     new wgMy(),
                     new wgRandom(),
                     new wgTotal(),
+                    //Ad
+                    new adMy(),
+                    new adTotal(),
                     //Gacha
                     new gacha(),
                     new gachaBanner(),

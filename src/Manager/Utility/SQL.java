@@ -154,7 +154,7 @@ public class SQL {
             return new int[]{drawer,window,bed,lake,plant,left,middle,right,boat,door,element,balloon,well,varuo,
                     drawerF,windowF,bedF,lakeF,plantF,leftF,middleF,rightF,boatF,doorF,elementF,balloonF,wellF};
         } catch(SQLException e) {
-            System.out.println("    SQLite: Get White Gate Points Error " + e);
+            System.out.println("    SQLite: Get White Gate Total Points Error " + e);
         }
         return new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     }
@@ -203,6 +203,72 @@ public class SQL {
             }
         } catch(SQLException e) {
             System.out.println("    SQLite: Update White Gate Error " + e);
+        }
+    }
+    //--------------------
+    //Ads
+    //--------------------
+    //--------------------
+    public int[] getAd(String id){
+        try {
+            final String queryCheck = "SELECT * FROM Ad WHERE Id = ?";
+            final PreparedStatement ps = c.prepareStatement(queryCheck);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(!rs.isClosed()) {
+                int cs5 = rs.getInt("CS5");
+                int cs10 = rs.getInt("CS10");
+                int cs20 = rs.getInt("CS20");
+                int green = rs.getInt("Green");
+                int red = rs.getInt("Red");
+                return new int[]{cs5,cs10,cs20,green,red};
+            } else {
+                System.out.println("    SQLite: Get Ad Cant find user");
+            }
+        } catch(SQLException e) {
+            System.out.println("    SQLite: Get Ad Points Error " + e);
+        }
+        return new int[]{0,0,0,0,0};
+    }
+    public int[] getAdTotal(){
+        try {
+            final String queryCheck = "SELECT SUM(CS5) as 'CS5', SUM(CS10) as 'CS10', SUM(CS20) as 'CS20'," +
+                    "SUM(Red) as 'Red', SUM(Green) as 'Green'FROM Ad";
+            final PreparedStatement ps = c.prepareStatement(queryCheck);
+            int cs5 = 0, cs10 = 0, cs15 = 0, cs20 = 0, green = 0, red = 0;
+            ResultSet rs = ps.executeQuery();
+            if(!rs.isClosed()) {
+                cs5 = rs.getInt("CS5");
+                cs10 = rs.getInt("CS10");
+                cs20 = rs.getInt("CS20");
+                green = rs.getInt("Green");
+                red = rs.getInt("Red");
+            }
+            return new int[]{cs5,cs10,cs20,green,red};
+        } catch(SQLException e) {
+            System.out.println("    SQLite: Get Ad Total Points Error " + e);
+        }
+        return new int[]{0,0,0,0,0};
+    }
+    public void updateAd(String id, String option){
+        try {
+            final String queryCheck = "SELECT * FROM Ad WHERE Id = ?";
+            final PreparedStatement ps = c.prepareStatement(queryCheck);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            final String query;
+            if(rs.isClosed()) {
+                query = "INSERT INTO Ad (Id," +
+                        option + ") VALUES (?,1)";
+            } else {
+                query = "UPDATE Ad SET " +
+                        option + " = " + option + " + 1 WHERE Id = ?";
+            }
+            final PreparedStatement psInsert = c.prepareStatement(query);
+            psInsert.setString(1, id);
+            psInsert.execute();
+        } catch(SQLException e) {
+            System.out.println("    SQLite: Update Ad Error " + e);
         }
     }
     //--------------------

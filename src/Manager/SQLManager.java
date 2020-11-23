@@ -32,7 +32,27 @@ public class SQLManager {
     public static void updateWhiteGateNumber(String id, String option, int num) {
         sql.updateWhiteGateNumber(id, option, num);
     }
+    //--------------------
+    //WhiteGate
+    //--------------------
+    //--------------------
+    public static int[] getAd(String id) {
+        return sql.getAd(id);
+    }
 
+    public static int[] getTotalAd() {
+        return sql.getAdTotal();
+    }
+
+    public static void updateAd(String id, String option) {
+        sql.updateAd(id, option);
+    }
+
+
+    //--------------------
+    //Fishing
+    //--------------------
+    //--------------------
     public static int getRegion(String id) {
         return sql.getRegion(id);
     }
