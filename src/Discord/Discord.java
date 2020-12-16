@@ -2,6 +2,7 @@ package Discord;
 
 
 import Commands.Action.*;
+import Commands.Action.slam;
 import Commands.Currency.Chronos.*;
 import Commands.Currency.Fishing.*;
 import Commands.Gacha.Utility.Admin.*;
@@ -68,6 +69,7 @@ public class Discord {
                     new adMy(),
                     new adTotal(),
                     //Gacha
+                    new bless(),
                     new gacha(),
                     new gachaBanner(),
                     //Currency
