@@ -1,3 +1,5 @@
 
 src/Constants/BotConstants.java
 README.txt
+out/artifacts/PekkaBot_jar/PekkaBot.jar
+out/production/PekkaBot/Constants/BotConstants.class
