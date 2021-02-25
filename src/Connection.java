@@ -8,7 +8,7 @@ public class Connection {
     public static void main(String[] args) {
         new DiscordManager();
         // Others
-        new TimerManager(DiscordManager.getDiscord());
+        //new TimerManager(DiscordManager.getDiscord());
         gachaManager.update();
         fishManager.initializeFish();
         fishUpgradeManager.initialize();

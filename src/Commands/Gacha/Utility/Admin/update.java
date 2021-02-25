@@ -17,9 +17,13 @@ public class update extends Command {
     protected void execute(CommandEvent event){
         String message = event.getMessage().getContentRaw();
         try {
-            urlParse.callMe(message.substring(message.indexOf(" ") + 1, message.indexOf(" ", message.indexOf(" ") + 1)),
-                    message.substring(message.indexOf(" ", message.indexOf(" ") + 1) + 1, message.lastIndexOf(" ")),
-                    message.substring(message.lastIndexOf(" ") + 1));
+            urlParse.callMe(
+                    message.substring(
+                            message.indexOf(" ") + 1, message.indexOf(" ", message.indexOf(" ") + 1)),
+                    message.substring(
+                            message.indexOf(" ", message.indexOf(" ") + 1) + 1, message.lastIndexOf(" ")),
+                    message.substring(
+                            message.lastIndexOf(" ") + 1));
             if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION, Permission.MESSAGE_EXT_EMOJI)){
                 event.getMessage().addReaction("ShibaHeart:666864728110530591").queue();
             }

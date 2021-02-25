@@ -150,4 +150,22 @@ public class EmbedManager {
             channel.sendMessage(builder.build()).queue();
         }
     }
+    public static void action(MessageChannel channel, User author, String url, String message){
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.PINK);
+        builder.setDescription(message);
+        builder.setImage(url);
+
+        builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
+        channel.sendMessage(builder.build()).queue();
+    }
+    public static void lookingfor(MessageChannel channel, User author, String url, String title){
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.PINK);
+        builder.setTitle(title);
+        builder.setImage(url);
+
+        builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
+        channel.sendMessage(builder.build()).queue();
+    }
 }

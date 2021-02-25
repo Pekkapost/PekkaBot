@@ -1,12 +1,11 @@
 package Commands.Action;
 
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
-
 public class wink extends Command {
-    static File winkFile = new File("assets/Pictures/Wink.gif");
     static StringBuilder names = new StringBuilder();
 
     public wink() {
@@ -15,14 +14,16 @@ public class wink extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
+        String message;
         if(event.getMessage().getMentionedUsers().isEmpty()) {
-            event.getTextChannel().sendMessage("*Winks* <@" + event.getAuthor().getId() + ">").addFile(winkFile).complete();
+            message = "*Winks* <@" + event.getAuthor().getId() + "> ";
         } else {
             names.setLength(0);
-            for(int winks = 0; winks < event.getMessage().getMentionedUsers().size(); ++winks) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(winks).getId()).append("> ");
+            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
+                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
             }
-            event.getTextChannel().sendMessage("*Winks*  " + names).addFile(winkFile).complete();
+            message = "*Winks*  " + names + " ";
         }
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.wink, message);
     }
 }

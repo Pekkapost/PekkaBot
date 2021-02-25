@@ -2,10 +2,9 @@ package Commands.Gary;
 
 import Commands.Gary.Utility.garyManager;
 import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
-
-import java.io.File;
 
 public class gary extends Command {
     public gary() {
@@ -21,7 +20,8 @@ public class gary extends Command {
             message = message.substring(5 + BotConstants.prefix.length());
             name = true;
         }
-        File file = garyManager.callMe(message,name);
-        e.getChannel().sendMessage("Is this the Gariyu AS you're looking for?").addFile(file).complete();
+        String link = garyManager.callMe(message,name);
+        String title = "Is this the Gariyu AS you're looking for?";
+        EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), link, title);
     }
 }
