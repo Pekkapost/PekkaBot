@@ -1,12 +1,11 @@
 package Commands.Action;
 
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
-
 public class hug extends Command {
-    static File hugFile = new File("assets/Pictures/Hug.gif");
     static StringBuilder names = new StringBuilder();
 
     public hug() {
@@ -15,14 +14,16 @@ public class hug extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
+        String message;
         if(event.getMessage().getMentionedUsers().isEmpty()) {
-            event.getTextChannel().sendMessage("*Hugs* <@" + event.getAuthor().getId() + ">").addFile(hugFile).complete();
+            message = "*Hugs* <@" + event.getAuthor().getId() + "> ";
         } else {
             names.setLength(0);
-            for(int hugs = 0; hugs < event.getMessage().getMentionedUsers().size(); ++hugs) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(hugs).getId()).append("> ");
+            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
+                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
             }
-            event.getTextChannel().sendMessage("*Hugs*  " + names).addFile(hugFile).complete();
+            message = "*Hugs*  " + names + " ";
         }
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.hug, message);
     }
 }

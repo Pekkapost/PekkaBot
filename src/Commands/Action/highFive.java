@@ -1,12 +1,11 @@
 package Commands.Action;
 
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
-
 public class highFive extends Command {
-    static File highFile = new File("assets/Pictures/HighFive.gif");
     static StringBuilder names = new StringBuilder();
 
     public highFive() {
@@ -15,14 +14,16 @@ public class highFive extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
+        String message;
         if(event.getMessage().getMentionedUsers().isEmpty()) {
-            event.getTextChannel().sendMessage("*HighFives* <@" + event.getAuthor().getId() + ">").addFile(highFile).complete();
+            message = "*HighFives* <@" + event.getAuthor().getId() + "> ";
         } else {
             names.setLength(0);
-            for(int highFives = 0; highFives < event.getMessage().getMentionedUsers().size(); ++highFives) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(highFives).getId()).append("> ");
+            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
+                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
             }
-            event.getTextChannel().sendMessage("*HighFives*  " + names).addFile(highFile).complete();
+            message = "*HighFives*  " + names + " ";
         }
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.highfive, message);
     }
 }

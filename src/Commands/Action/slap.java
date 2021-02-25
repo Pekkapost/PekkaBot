@@ -1,12 +1,11 @@
 package Commands.Action;
 
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
-
 public class slap extends Command {
-    static File slapFile = new File("assets/Pictures/Slap.gif");
     static StringBuilder names = new StringBuilder();
 
     public slap() {
@@ -15,14 +14,16 @@ public class slap extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
+        String message;
         if(event.getMessage().getMentionedUsers().isEmpty()) {
-            event.getTextChannel().sendMessage("*Slaps* <@" + event.getAuthor().getId() + ">").addFile(slapFile).complete();
+            message = "*Slaps* <@" + event.getAuthor().getId() + "> ";
         } else {
             names.setLength(0);
-            for(int slaps = 0; slaps < event.getMessage().getMentionedUsers().size(); ++slaps) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(slaps).getId()).append("> ");
+            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
+                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
             }
-            event.getTextChannel().sendMessage("*Slaps*  " + names).addFile(slapFile).complete();
+            message = "*Slaps*  " + names + " ";
         }
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.slap, message);
     }
 }

@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimerManager {
-    Timer timer;
+    /*Timer timer;
     JDA discord;
 
     public TimerManager(JDA input) {
@@ -26,7 +26,7 @@ public class TimerManager {
                 System.out.println("Error: " + e);
             }
         }
-    }
+    }*/
     //--------------------
     //Reset Time
     //--------------------

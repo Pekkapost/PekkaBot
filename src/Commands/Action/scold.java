@@ -1,12 +1,11 @@
 package Commands.Action;
 
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
-
 public class scold extends Command {
-    static File scoldFile = new File("assets/Pictures/Scold.gif");
     static StringBuilder names = new StringBuilder();
 
     public scold() {
@@ -15,14 +14,16 @@ public class scold extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
+        String message;
         if(event.getMessage().getMentionedUsers().isEmpty()) {
-            event.getTextChannel().sendMessage("*Scolds* <@" + event.getAuthor().getId() + ">").addFile(scoldFile).complete();
+            message = "*Scolds* <@" + event.getAuthor().getId() + "> ";
         } else {
             names.setLength(0);
-            for(int scolds = 0; scolds < event.getMessage().getMentionedUsers().size(); ++scolds) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(scolds).getId()).append("> ");
+            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
+                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
             }
-            event.getTextChannel().sendMessage("*Scolds*  " + names).addFile(scoldFile).complete();
+            message = "*Scolds*  " + names + " ";
         }
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.scold, message);
     }
 }

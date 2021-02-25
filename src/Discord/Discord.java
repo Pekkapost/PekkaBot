@@ -43,6 +43,8 @@ public class Discord {
             //1. make your classes follow naming conventions
             //2. you can use reflection to register all classes, commands in a package
             builder.addCommands(
+                    //Admin
+                    new admin(),
                     //Jokes
                     new jokes(),
                     new slap(),
@@ -74,7 +76,7 @@ public class Discord {
                     new gachaBanner(),
                     //Currency
                     new chronosDisplay(),
-                    new fish(),
+                    /*new fish(),
                     new fishDisplay(),
                     new fishLeaderboard(),
                     new fishUpgrade(),
@@ -82,7 +84,7 @@ public class Discord {
                     new fishBuy(),
                     new fishGive(),
                     new fishPrestige(),
-                    new fishDex(),
+                    new fishDex(),*/
                     //Other
                     new addMe(),
                     new pekka(),

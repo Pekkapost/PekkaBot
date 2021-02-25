@@ -1,5 +1,8 @@
 package Commands.Other;
 
+import Commands.Gary.Utility.garyManager;
+import Constants.BotConstants;
+import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
@@ -14,17 +17,16 @@ public class tiramisu extends Command {
     }
     @Override
     protected void execute(CommandEvent e) {
-        File file;
+        String url;
         int rand = new Random().nextInt(100) + 1;
-        if(rand == 1) {
-            file = new File("assets/Gary/gariyu96.png");
-        } else if(rand <= 33) {
-            file = new File("assets/Pictures/TiramisuSprite.png");
+        if(rand <= 33) {
+            url = garyManager.findMe("tiramisu");
         } else if(rand <= 66) {
-            file = new File("assets/Pictures/TiramisuCharacter.png");
+            url = BotConstants.tiramisuCharacter;
         } else {
-            file = new File("assets/Pictures/TiramisuCake.png");
+            url = BotConstants.tiramisuCake;
         }
-        e.getChannel().sendMessage("Is this the Tiramisu you're looking for?").addFile(file).complete();
+        String title = "Is this the Tiramisu you're looking for?";
+        EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), url, title);
     }
 }
