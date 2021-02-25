@@ -68,7 +68,7 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="pekkabot2" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
@@ -193,22 +193,26 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1921" height="283" key="GridCell.Tab.0.bottom" timestamp="1614214254750">
+    <state width="1921" height="283" key="GridCell.Tab.0.bottom" timestamp="1614244056596">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1614214254750" />
-    <state width="1921" height="283" key="GridCell.Tab.0.center" timestamp="1614214254750">
+    <state width="1921" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
+    <state width="1921" height="283" key="GridCell.Tab.0.center" timestamp="1614244056596">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1614214254750" />
-    <state width="1921" height="283" key="GridCell.Tab.0.left" timestamp="1614214254750">
+    <state width="1921" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
+    <state width="1921" height="283" key="GridCell.Tab.0.left" timestamp="1614244056596">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1614214254750" />
-    <state width="1921" height="283" key="GridCell.Tab.0.right" timestamp="1614214254750">
+    <state width="1921" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
+    <state width="1921" height="283" key="GridCell.Tab.0.right" timestamp="1614244056596">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1614214254750" />
+    <state width="1921" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1614243883128">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1614243883128" />
     <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1614200339939">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

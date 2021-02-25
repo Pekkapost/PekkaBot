@@ -44,7 +44,7 @@ public class Discord {
             //2. you can use reflection to register all classes, commands in a package
             builder.addCommands(
                     //Admin
-                    new admin(),
+                    //new admin()//,
                     //Jokes
                     new jokes(),
                     new slap(),
@@ -92,7 +92,8 @@ public class Discord {
                     new bannerUpdate(),
                     new update(),
                     new clear(),
-                    new exit());
+                    new exit()
+                    );
             CommandClient client = builder.build();
             // JDA Setup
             d = JDABuilder.create(
@@ -108,9 +109,9 @@ public class Discord {
             e.printStackTrace();
         }
     }
-    public net.dv8tion.jda.api.JDA getDiscord() {
-        return d;
-    }
+//    public net.dv8tion.jda.api.JDA getDiscord() {
+//        return d;
+//    }
     public String getUserName(String id) {
         try {
             User temp = d.retrieveUserById(id).complete();

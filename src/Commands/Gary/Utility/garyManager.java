@@ -169,7 +169,7 @@ public class garyManager {
             Object[] links = garyFile.values().toArray();
             link = (String) links[rand.nextInt(links.length)];
         }
-        System.out.println("Debug: " + link);
+        //System.out.println("Debug: " + link);
         return link;
     }
     public static String findMe(String unit){
