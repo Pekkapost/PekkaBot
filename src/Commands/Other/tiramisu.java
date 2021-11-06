@@ -1,12 +1,11 @@
 package Commands.Other;
 
-import Commands.Gary.Utility.garyManager;
 import Constants.BotConstants;
 import Manager.EmbedManager;
+import Gary.Utility.garyManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
 
-import java.io.File;
 import java.util.Random;
 
 public class tiramisu extends Command {

@@ -71,7 +71,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -80,6 +80,10 @@
     <property name="settings.editor.splitter.proportion" value="0.20795107" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\drago\Pekkabot\PekkaBot\src" />
+      <recent name="C:\Users\drago\IdeaProjects\PekkaBot\src\Commands\Ad" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\drago\IdeaProjects\PekkaBot\Storage" />
       <recent name="C:\Users\drago\IdeaProjects\PekkaBot\storage" />
@@ -93,9 +97,6 @@
       <recent name="Commands.Currency" />
       <recent name="Commands.Other.Slap" />
       <recent name="Commands.Other" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\drago\IdeaProjects\PekkaBot\src\Commands\Ad" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Test">
@@ -196,44 +197,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-  </component>
-  <component name="WindowStateProjectService">
-    <state width="1921" height="283" key="GridCell.Tab.0.bottom" timestamp="1614244056596">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
-    <state width="1921" height="283" key="GridCell.Tab.0.center" timestamp="1614244056596">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
-    <state width="1921" height="283" key="GridCell.Tab.0.left" timestamp="1614244056596">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
-    <state width="1921" height="283" key="GridCell.Tab.0.right" timestamp="1614244056596">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1921" height="283" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1614244056596" />
-    <state x="440" y="94" key="SettingsEditor" timestamp="1614243883128">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1614243883128" />
-    <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1614200339939">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="661" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1614200339939" />
-    <state x="1063" y="45" width="737" height="894" key="find.popup" timestamp="1608114892778">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1063" y="45" width="737" height="894" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608114892778" />
-    <state x="439" y="150" key="new project wizard" timestamp="1606705950892">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="439" y="150" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1606705950892" />
-    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup" timestamp="1614208665337">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="173" width="672" height="676" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1614208665337" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

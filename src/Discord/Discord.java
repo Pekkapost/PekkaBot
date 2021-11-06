@@ -4,16 +4,16 @@ package Discord;
 import Commands.Action.*;
 import Commands.Action.slam;
 import Commands.Currency.Chronos.*;
-import Commands.Currency.Fishing.*;
 import Commands.Gacha.Utility.Admin.*;
 import Commands.Gacha.*;
-import Commands.Gary.*;
 import Commands.Other.*;
 import Commands.Other.Help.pekka;
 import Commands.Timer.*;
 import Commands.WhiteGate.*;
 import Commands.Ad.*;
 import Constants.BotConstants;
+import Gary.*;
+import Unseen.*;
 
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
@@ -63,6 +63,8 @@ public class Discord {
                     new timeCat(),
                     //Gary
                     new gary(),
+                    //Unseen
+                    new unseen(),
                     //White Gate
                     new wgMy(),
                     new wgRandom(),
