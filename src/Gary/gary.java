@@ -1,7 +1,7 @@
-package Commands.Gary;
+package Gary;
 
-import Commands.Gary.Utility.garyManager;
 import Constants.BotConstants;
+import Gary.Utility.garyManager;
 import Manager.EmbedManager;
 import com.jagrosh.jdautilities.command.Command;
 import com.jagrosh.jdautilities.command.CommandEvent;
