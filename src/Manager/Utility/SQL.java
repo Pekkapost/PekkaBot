@@ -646,6 +646,25 @@ public class SQL {
         return false;
     }
     //--------------------
+    //Shion
+    //--------------------
+    //--------------------
+    public int updateShion() {
+        int count = 0;
+        try {
+            final String queryCheck = "SELECT count FROM Shion";
+            final PreparedStatement ps = c.prepareStatement(queryCheck);
+            ResultSet rs = ps.executeQuery();
+            final String queryUpdate = "UPDATE Shion SET count = count + 1";
+            final PreparedStatement psUpdate = c.prepareStatement(queryUpdate);
+            psUpdate.execute();
+            count = rs.getInt("count");
+        } catch(SQLException e) {
+            System.out.println("    SQLite: Update Location Error " + e);
+        }
+        return count;
+    }
+    //--------------------
     //Close
     //--------------------
     //--------------------
