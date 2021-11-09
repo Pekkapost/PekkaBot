@@ -155,4 +155,9 @@ public class SQLManager {
     public static boolean ownedFish(String id, String fish) {
         return sql.ownedFish(id, fish);
     }
+    //--------------------
+    //Shion
+    //--------------------
+    //--------------------
+    public static int updateShion() {return sql.updateShion();}
 }

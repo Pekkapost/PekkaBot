@@ -23,29 +23,32 @@ public class GuildMessageRespond extends ListenerAdapter {
         }
         // Check if message is a white gate response
         for(int i = 0; i < event.getMessage().getMentionedUsers().size(); i++) {
-            // If PekkaBot or Pekkapost is mentioned
-            if(event.getMessage().getMentionedUsers().get(i).getIdLong() == 218781547854168064L ||
-                    event.getMessage().getMentionedUsers().get(i).getIdLong() == 379513566711119872L) {
-                message = message.replace("<@!" + event.getMessage().getMentionedUsers().get(i).getId() + ">", "");
+            // If PekkaBot is mentioned
+            if(event.getMessage().getMentionedUsers().get(i).getIdLong() == 379513566711119872L) {
+                //Have to try to replace both since mobile discord is dumb
+                message = message.replace("<@!379513566711119872>", "");
+                message = message.replace("<@379513566711119872>", "");
+                System.out.println(message);
+                System.out.println(event.getMessage().getContentRaw().toLowerCase());
                 // If message is a white gate response
                 if(message.contains("drawer") ||
                         message.contains("window") ||
                         message.contains("bed")){
-                    pingWG.check(event.getAuthor().getId(),message);
-                    //What is this check for?
-                    pingWG.check6(message);     //???
+                    String output = pingWG.check(event, event.getAuthor().getId(),message);
                     // Try to add an emoji
                     if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
                         event.getMessage().addReaction("ShibaHeart:666864728110530591").queue();
                     }
+                    event.getMessage().getTextChannel().sendMessage("Received(in reverse): " + output).queue();
                 } else if(event.getMessage().getMentionedUsers().get(i).getIdLong() == 379513566711119872L &&
                         (message.contains("5") || message.contains("1") || message.contains("2") || message.contains("g") || message.contains("r"))) {
-                    pingAd.check(event.getAuthor().getId(), message);
+                    String output = pingAd.check(event.getAuthor().getId(), message);
                     if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
-                        event.getMessage().addReaction("ShibaHeart:666864728110530591").queue();
+                        event.getMessage().addReaction("KleeHugBomb:783883423054823434").queue();
                     }
+                    event.getMessage().getTextChannel().sendMessage("Received: " + output).queue();
                 }
                 break;
             }
