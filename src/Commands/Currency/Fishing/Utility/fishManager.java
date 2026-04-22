@@ -7,6 +7,7 @@ import Manager.EmbedManager;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
+import java.time.Duration;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -25,25 +26,22 @@ public class fishManager {
     private static weightedRandomBag<String> vasuBag = new weightedRandomBag<>();
 
     private static Map<String, triple> fishValue = new HashMap<>();
+    // Stores the time each user can next fish; entry is removed once cooldown passes.
     private static Map<String, ZonedDateTime> playerTime = new HashMap<>();
-    private static Map<String, Double> rareFish = new HashMap<>();
     private static ArrayList<String> fishList = new ArrayList<>();
     // region 0 = PekkaCoin, region 1 = PekkaPoint (post-prestige).
     // Earning 10M PekkaCoins triggers a prestige: coins convert to PekkaPoints.
     public static void callMe(MessageChannel channel, User author, String location, int points) {
         String id = author.getId();
-        if(playerTime.containsKey(author.getId())){
-            if(!author.getId().equals("218781547854168064")) {
-                ZonedDateTime currentTime = java.time.ZonedDateTime.now(ZoneId.of("America/Los_Angeles"));
-                ZonedDateTime setTime = playerTime.get(id).plusSeconds(5l);
-                if (setTime.isAfter(currentTime)) {
-                    channel.sendMessage("Please wait `" + (setTime.getSecond() - currentTime.getSecond()) + "` seconds").queue();
-                    return;
-                }
-                playerTime.replace(id, currentTime);
+        if (!id.equals("218781547854168064")) {
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Los_Angeles"));
+            ZonedDateTime canFishAt = playerTime.get(id);
+            if (canFishAt != null && canFishAt.isAfter(now)) {
+                long secs = Duration.between(now, canFishAt).toSeconds();
+                channel.sendMessage("Please wait `" + secs + "` seconds").queue();
+                return;
             }
-        } else {
-            playerTime.put(id,java.time.ZonedDateTime.now(ZoneId.of("America/Los_Angeles")));
+            playerTime.put(id, now.plusSeconds(5));
         }
 
         String fishName = getRandom(location);
@@ -171,7 +169,6 @@ public class fishManager {
         dragonBag.addEntry("Levia", 0.1);
         fishValue.put("Levia",new triple("https://static.miraheze.org/anotheredenwiki/6/6e/104000201_sprite.png",1000000,0));
         fishList.add("Levia");
-        rareFish.put("Levia",0.1);
     }
     public static void baruokiVillage() {
         baruokiBag.addEntry("Glass Slipper",9);

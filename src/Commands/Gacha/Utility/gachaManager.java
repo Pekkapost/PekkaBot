@@ -50,16 +50,13 @@ public class gachaManager {
         String[] gachalist = new String[10];
         Arrays.fill(gachalist, "Failure");
 
-        try {
+        try (FileInputStream fis = new FileInputStream("assets/Gacha/Other/Base.png");
+             FileOutputStream fos = new FileOutputStream("assets/Gacha/Other/Export.png")) {
             byte[] b = new byte[6000];
-            FileInputStream fis = new FileInputStream(new File("assets/Gacha/Other/Base.png"));
-            FileOutputStream fos = new FileOutputStream(new File("assets/Gacha/Other/Export.png"));
             int readbytes;
             while ((readbytes = fis.read(b)) != -1) {
                 fos.write(b, 0, readbytes);
             }
-            fis.close();
-            fos.close();
         } catch (Exception e) {
             System.out.println("Error resetting Export File.");
         }
@@ -82,11 +79,16 @@ public class gachaManager {
         try {
             BufferedImage img = ImageIO.read(new File("assets/Gacha/Other/Export.png"));
             Graphics g = img.createGraphics();
-            for (int i = 0; i < 10; i++) {
-                BufferedImage character = ImageIO.read(new File("assets/Gacha/" + gachalist[i] + ".png"));
-                g.drawImage(character, DRAW_X[i], DRAW_Y[i], null);
+            try {
+                for (int i = 0; i < 10; i++) {
+                    BufferedImage character = ImageIO.read(new File("assets/Gacha/" + gachalist[i] + ".png"));
+                    g.drawImage(character, DRAW_X[i], DRAW_Y[i], null);
+                    character.flush();
+                }
+                ImageIO.write(img, "png", new File("assets/Gacha/Other/Export.png"));
+            } finally {
+                g.dispose();
             }
-            ImageIO.write(img, "png", new File("assets/Gacha/Other/Export.png"));
         } catch (Exception e) {
             System.out.println("Issue exporting image.");
         }

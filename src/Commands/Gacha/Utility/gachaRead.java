@@ -16,17 +16,15 @@ public class gachaRead {
         try {
             File inputFile = new File("Storage/GachaList.txt");
 
-            if(inputFile.length() != 0) {
-                BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-
-                String currentLine;
-
-                while ((currentLine = reader.readLine()) != null) {
-                    if (currentLine.startsWith("Banner ")) {
-                        output += "\n" + currentLine.substring(7);
+            if (inputFile.length() != 0) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+                    String currentLine;
+                    while ((currentLine = reader.readLine()) != null) {
+                        if (currentLine.startsWith("Banner ")) {
+                            output += "\n" + currentLine.substring(7);
+                        }
                     }
                 }
-                reader.close();
             }
         }catch (IOException e){
             System.out.println("     Error: GachaRead IOException");
@@ -35,16 +33,12 @@ public class gachaRead {
         return output;
     }
     public static void updateBanners(int num, weightedRandomBag<String> bag, weightedRandomBag bag2) {
-        try {
-            File inputFile = new File("Storage/GachaList.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-            String currentline;
-            boolean flip = false;
-
+        try (BufferedReader reader = new BufferedReader(new FileReader("Storage/GachaList.txt"))) {
             bag.purge();
             bag2.purge();
-
-            while((currentline = reader.readLine()) != null){
+            String currentline;
+            boolean flip = false;
+            while ((currentline = reader.readLine()) != null) {
                 if(currentline.startsWith("Banner ")) {
                     if(Integer.parseInt(currentline.substring(7,8)) == num) {
                         flip = true;
@@ -86,8 +80,7 @@ public class gachaRead {
                     }
                 }
             }
-            reader.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("     Error: GachaRead IOException");
         }
     }
