@@ -3,6 +3,7 @@ package Commands.Gacha;
 import Commands.Gacha.Utility.gachaManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +26,7 @@ public class gacha extends Command {
         }
         event.getTextChannel().sendMessage("Generating " + event.getAuthor().getName() + "'s Gacha Pull").queue(
                 (message2 -> message2.delete().queueAfter(10, TimeUnit.SECONDS)));
-        event.getTextChannel().sendMessage(event.getAuthor().getName() + "'s 10x Gacha Roll").addFile(
-                gachaManager.pickMe(banner)).complete();
+        event.getTextChannel().sendFiles(FileUpload.fromData(gachaManager.pickMe(banner)))
+                .setContent(event.getAuthor().getName() + "'s 10x Gacha Roll").complete();
     }
 }
