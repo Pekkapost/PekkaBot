@@ -57,7 +57,7 @@ Rates use parentheses for 10th-pull guaranteed rates, e.g. `75(90)%`.
 
 | Package | Description |
 |---|---|
-| `Commands` | All bot commands, grouped by feature (Action, Ad, Currency, Gacha, Gary, Other, Timer, Unseen, WhiteGate) |
+| `Commands` | All bot commands, grouped by feature (Action, Ad, Currency, Gacha, Gary, Other, Timer, Unseen, WhiteGate) — the Fishing sub-feature has been removed |
 | `Discord` | JDA setup (`Discord.java`), message event listener (`GuildMessageRespond.java`) |
 | `Framework.Command` | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
 | `Manager` | `EmbedManager` (embed helpers), `SQLManager` (database queries), `Utility.SQL` (raw SQL + schema) |
@@ -75,21 +75,6 @@ All commands use the configured `prefix` (e.g. `!`).
 | WhiteGate | WG, WGMy, MyWG | Displays your white gate data |
 | WhiteGateRandom | RandomWG, WGRandom | Returns a random white gate |
 | WGTotal | TotalWG, WGT | Displays total white gate data |
-
-### Fishing
-
-| Command | Aliases | Description |
-|---|---|---|
-| Fish | F | Go fishing |
-| FishDisplay | MyFish, FD, FCoin, FishCoin, FBal | Displays your PekkaCoin balance |
-| FishLocation | Fishl, Flocation, FL, FArea | Displays or sets your fishing location |
-| FishUpgrade | Fishgrade, Fishu, FUpgrade, FUp, FShop, FishShop | Displays and purchases upgrades |
-| FishBuy | Buy, FBuy, FB | Buys something |
-| FishLeaderboard | FishLb, FLeaderboard, FLb | Displays top 10 PekkaCoin data |
-| FishDex | FDex, PekkaDex, PDex | Fish Dex |
-| FishPrestige | FP, FishP, FPrestige | Prestiges your fishing (at 10M PekkaCoins) |
-
-Fishing uses a two-region prestige system: region 0 earns PekkaCoins; reaching 10M triggers prestige and switches to region 1 (PekkaPoints).
 
 ### Gacha
 
@@ -145,6 +130,7 @@ All times are in JST (Asia/Tokyo), which is Another Eden's server timezone.
 | Gimmie | — | Gimmie |
 | Gary | — | Displays a Gary (Gariyu AS) |
 | Unseen | — | Displays an Unseen |
+| Shion | — | Shions |
 | AddMe | — | Sends a link to add the bot |
 
 ### Admin (owner-only, hidden)
