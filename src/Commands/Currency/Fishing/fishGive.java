@@ -17,10 +17,10 @@ public class fishGive extends Command {
     @Override
     protected void execute(CommandEvent event) {
         String message = event.getMessage().getContentRaw();
-        if(event.getMessage().getMentions().getUsers().size() > 0) {
+        if(!event.getMessage().getMentions().getUsers().isEmpty()) {
             String id = event.getMessage().getMentions().getMembers().get(0).getId();
             if (message.contains(" ")) {
-                int add = Integer.valueOf(message.substring(message.lastIndexOf(" ") + 1));
+                int add = Integer.parseInt(message.substring(message.lastIndexOf(" ") + 1));
                 SQLManager.updateFishing(id,add,1);
                 if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                         event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {

@@ -14,6 +14,6 @@ public class fish extends Command {
     @Override
     protected void execute(CommandEvent event) {
         String id = event.getAuthor().getId();
-        fishManager.callMe(event.getChannel(),event.getAuthor(),SQLManager.getLocation(id), SQLManager.getFishing(id));
-}
+        fishManager.callMe(event.getChannel(), event.getAuthor(), SQLManager.getLocation(id), SQLManager.getFishing(id));
+    }
 }

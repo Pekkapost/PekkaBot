@@ -146,7 +146,6 @@ All times are in JST (Asia/Tokyo), which is Another Eden's server timezone.
 | Gary | — | Displays a Gary (Gariyu AS) |
 | Unseen | — | Displays an Unseen |
 | AddMe | — | Sends a link to add the bot |
-| Pekka | Help | Displays help |
 
 ### Admin (owner-only, hidden)
 

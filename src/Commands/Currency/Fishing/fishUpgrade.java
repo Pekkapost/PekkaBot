@@ -26,7 +26,7 @@ public class fishUpgrade extends Command {
         String currencyLocation = fishManager.getCurrency(fishRegionLocation);
         // Storage
         int upgradeStorage = SQLManager.getUpgradeStorage(id);
-        int fishRegionStorage = fishUpgradeManager.getStorageDisplayRegion(upgradeStorage, region);
+        int fishRegionStorage = fishUpgradeManager.getStorageRegion(upgradeStorage);
         if(region > fishRegionStorage) {
             fishRegionStorage = region;
         }
@@ -39,8 +39,8 @@ public class fishUpgrade extends Command {
                         + " " + fishUpgradeManager.getRodPrice(0) + " <:PekkaCoin:719798142983340074>\n",
                 fishUpgradeManager.getBoat(0)
                         + " " + fishUpgradeManager.getBoatPrice(0) + " <:PekkaCoin:719798142983340074>\n",
-                fishUpgradeManager.getDisplayStorage(upgradeStorage, region)
-                        + " " + fishUpgradeManager.getStorageDisplayPrice(upgradeStorage, fishRegionStorage) + currencyStorage,
+                fishUpgradeManager.getStorage(upgradeStorage)
+                        + " " + fishUpgradeManager.getStoragePrice(upgradeStorage, fishRegionStorage) + currencyStorage,
                 fishUpgradeManager.getBait(0)
                         + " " + fishUpgradeManager.getBaitPrice(0) + " <:PekkaCoin:719798142983340074>\n");
     }

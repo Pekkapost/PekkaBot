@@ -6,72 +6,30 @@ import Framework.Command.CommandEvent;
 import java.util.Random;
 
 public class wgRandom extends Command {
+    private static final String[] ENTRANCES  = {"Drawer", "Window", "Bed"};
+    private static final String[] AREAS      = {"Lake", "Plant"};
+    private static final String[] POSITIONS  = {"Left", "Middle", "Right"};
+    private static final String[] PATHS      = {"Boat", "Door"};
+    private static final String[] ENDINGS    = {"Element", "Balloon", "Well"};
+
     public wgRandom() {
         this.name = "WhiteGateRandom";
-        this.aliases = new String[]{"RandomWG","WGRandom"};
+        this.aliases = new String[]{"RandomWG", "WGRandom"};
         this.help = "Returns a random white gate";
     }
     @Override
     protected void execute(CommandEvent event) {
         event.getTextChannel().sendMessage(random()).queue();
     }
-    public String random(){
-        String str = "";
+    private String random() {
         Random r = new Random();
-        int rand = r.nextInt(3) + 1;
-        switch(rand) {
-            case 1:
-                str += "Drawer - ";
-                break;
-            case 2:
-                str += "Window - ";
-                break;
-            case 3:
-                str += "Bed - ";
-                break;
-        }
-        rand = r.nextInt(2) + 1;
-        switch(rand) {
-            case 1:
-                str += "Lake - ";
-                break;
-            case 2:
-                str += "Plant - ";
-                break;
-        }
-        rand = r.nextInt(3) + 1;
-        switch(rand) {
-            case 1:
-                str += "Left - ";
-                break;
-            case 2:
-                str += "Middle - ";
-                break;
-            case 3:
-                str += "Right - ";
-                break;
-        }
-        rand = r.nextInt(2) + 1;
-        switch(rand) {
-            case 1:
-                str += "Boat - ";
-                break;
-            case 2:
-                str += "Door - ";
-                break;
-        }
-        rand = r.nextInt(3) + 1;
-        switch(rand) {
-            case 1:
-                str += "Element";
-                break;
-            case 2:
-                str += "Balloon";
-                break;
-            case 3:
-                str += "Well";
-                break;
-        }
-        return str;
+        return pick(r, ENTRANCES) + " - " +
+               pick(r, AREAS)     + " - " +
+               pick(r, POSITIONS) + " - " +
+               pick(r, PATHS)     + " - " +
+               pick(r, ENDINGS);
+    }
+    private String pick(Random r, String[] options) {
+        return options[r.nextInt(options.length)];
     }
 }

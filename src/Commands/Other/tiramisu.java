@@ -2,7 +2,7 @@ package Commands.Other;
 
 import Constants.BotConstants;
 import Manager.EmbedManager;
-import Gary.Utility.garyManager;
+import Commands.Gary.Utility.garyManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;
 

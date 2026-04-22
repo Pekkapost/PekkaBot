@@ -5,147 +5,109 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+// Parses a White Gate result message sent by mentioning the bot.
+// A full result walks 5 layers of the WG tree:
+//   Layer 1 (entrance):   drawer / window / bed
+//   Layer 2 (area):       lake / plant
+//   Layer 3 (position):   left / middle / right
+//   Layer 4 (path):       boat / door
+//   Layer 5 (destination): element / balloon / well / varuo
+// Each layer records a success ("lake") or failure ("lakeF") to the DB.
+// An incomplete chain (missing a layer) marks the entrance as a failure and adds a Shion_point reaction.
 public class pingWG {
     public static void addEmote(MessageReceivedEvent event) {
-        if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
+        if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                 event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
             event.getMessage().addReaction(Emoji.fromCustom("Shion_point", 778018004075937803L, false)).queue();
         }
     }
+
+    // Layer 1: identify the entrance (drawer / window / bed)
     public static String check(MessageReceivedEvent event, String id, String message) {
         StringBuilder output = new StringBuilder();
-        if(message.contains("drawer")) {
-            if(check2(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "drawer");
-                output.append("drawer ");
+        String entrance = message.contains("drawer") ? "drawer"
+                        : message.contains("window") ? "window"
+                        : message.contains("bed")    ? "bed"
+                        : null;
+        if (entrance != null) {
+            if (checkArea(id, message, output)) {
+                SQLManager.updateWhiteGate(id, entrance);
+                output.append(entrance).append(" ");
             } else {
-                SQLManager.updateWhiteGate(id, "drawerF");
-                output.append("drawerF ");
-                addEmote(event);
-            }
-        } else if(message.contains("window")) {
-            if(check2(id, message, output)){
-                SQLManager.updateWhiteGate(id, "window");
-                output.append("window ");
-            } else {
-                SQLManager.updateWhiteGate(id, "windowF");
-                output.append("windowF ");
-                addEmote(event);
-            }
-        } else if(message.contains("bed")) {
-            if(check2(id, message, output)){
-                SQLManager.updateWhiteGate(id, "bed");
-                output.append("bed ");
-            } else {
-                SQLManager.updateWhiteGate(id, "bedF");
-                output.append("bedF ");
+                SQLManager.updateWhiteGate(id, entrance + "F");
+                output.append(entrance).append("F ");
                 addEmote(event);
             }
         }
         return output.toString();
     }
-    public static boolean check2(String id, String message, StringBuilder output) {
-        if(message.contains("lake") || message.contains("pond")) {
-            if(check3(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "lake");
-                output.append("lake ");
-            } else {
-                SQLManager.updateWhiteGate(id, "lakeF");
-                output.append("lakeF ");
-            }
-            return true;
-        } else if(message.contains("plant")) {
-            if (check3(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "plant");
-                output.append("plant ");
-            } else {
-                SQLManager.updateWhiteGate(id, "plantF");
-                output.append("plantF ");
-            }
-            return true;
+
+    // Layer 2: identify the area (lake / plant)
+    private static boolean checkArea(String id, String message, StringBuilder output) {
+        String area = (message.contains("lake") || message.contains("pond")) ? "lake"
+                    : message.contains("plant") ? "plant"
+                    : null;
+        if (area == null) return false;
+        if (checkPosition(id, message, output)) {
+            SQLManager.updateWhiteGate(id, area);
+            output.append(area).append(" ");
+        } else {
+            SQLManager.updateWhiteGate(id, area + "F");
+            output.append(area).append("F ");
         }
-        return false;
+        return true;
     }
-    public static boolean check3(String id, String message, StringBuilder output) {
-        if(message.contains("left")) {
-            if(check4(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "left");
-                output.append("left ");
-            } else {
-                SQLManager.updateWhiteGate(id, "leftF");
-                output.append("leftF ");
-            }
-            return true;
-        } else if(message.contains("middle") || message.contains("center")) {
-            if(check4(id, message, output)){
-                SQLManager.updateWhiteGate(id, "middle");
-                output.append("middle ");
-            } else {
-                SQLManager.updateWhiteGate(id, "middleF");
-                output.append("middleF ");
-            }
-            return true;
-        } else if(message.contains("right")) {
-            if(check4(id, message, output)){
-                SQLManager.updateWhiteGate(id, "right");
-                output.append("right ");
-            } else {
-                SQLManager.updateWhiteGate(id, "rightF");
-                output.append("rightF ");
-            }
-            return true;
+
+    // Layer 3: identify the position (left / middle / right)
+    private static boolean checkPosition(String id, String message, StringBuilder output) {
+        String pos = message.contains("left")                              ? "left"
+                   : (message.contains("middle") || message.contains("center")) ? "middle"
+                   : message.contains("right")                             ? "right"
+                   : null;
+        if (pos == null) return false;
+        if (checkPath(id, message, output)) {
+            SQLManager.updateWhiteGate(id, pos);
+            output.append(pos).append(" ");
+        } else {
+            SQLManager.updateWhiteGate(id, pos + "F");
+            output.append(pos).append("F ");
         }
-        return false;
+        return true;
     }
-    public static boolean check4(String id, String message, StringBuilder output) {
-        if(message.contains("boat")) {
-            if(check5(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "boat");
-                output.append("boat ");
-            } else {
-                SQLManager.updateWhiteGate(id, "boatF");
-                output.append("boatF ");
-            }
-            return true;
-        } else if(message.contains("door")) {
-            if (check5(id, message, output)) {
-                SQLManager.updateWhiteGate(id, "door");
-                output.append("door ");
-            } else {
-                SQLManager.updateWhiteGate(id, "doorF");
-                output.append("doorF ");
-            }
-            return true;
+
+    // Layer 4: identify the path (boat / door)
+    private static boolean checkPath(String id, String message, StringBuilder output) {
+        String path = message.contains("boat") ? "boat"
+                    : message.contains("door") ? "door"
+                    : null;
+        if (path == null) return false;
+        if (checkDestination(id, message, output)) {
+            SQLManager.updateWhiteGate(id, path);
+            output.append(path).append(" ");
+        } else {
+            SQLManager.updateWhiteGate(id, path + "F");
+            output.append(path).append("F ");
         }
-        return false;
+        return true;
     }
-    public static boolean check5(String id, String message, StringBuilder output) {
-        if(message.contains("element")) {
-            if(check6(message)) {
-                SQLManager.updateWhiteGate(id, "element");
-                output.append("element ");
-            } else {
-                SQLManager.updateWhiteGate(id, "elementF");
-                output.append("elementF ");
-            }
+
+    // Layer 5: identify the destination (element / balloon / well / varuo)
+    // Varuo is always a win; the others check for "win" in the message.
+    private static boolean checkDestination(String id, String message, StringBuilder output) {
+        if (message.contains("element")) {
+            String key = isWin(message) ? "element" : "elementF";
+            SQLManager.updateWhiteGate(id, key);
+            output.append(key).append(" ");
             return true;
-        } else if(message.contains("balloon")) {
-            if(check6(message)){
-                SQLManager.updateWhiteGate(id, "balloon");
-                output.append("balloon ");
-            } else {
-                SQLManager.updateWhiteGate(id, "balloonF");
-                output.append("balloonF ");
-            }
+        } else if (message.contains("balloon")) {
+            String key = isWin(message) ? "balloon" : "balloonF";
+            SQLManager.updateWhiteGate(id, key);
+            output.append(key).append(" ");
             return true;
-        } else if(message.contains("well")) {
-            if(check6(message)){
-                SQLManager.updateWhiteGate(id, "well");
-                output.append("well ");
-            } else {
-                SQLManager.updateWhiteGate(id, "wellF");
-                output.append("wellF ");
-            }
+        } else if (message.contains("well")) {
+            String key = isWin(message) ? "well" : "wellF";
+            SQLManager.updateWhiteGate(id, key);
+            output.append(key).append(" ");
             return true;
         } else if (message.contains("varuo")) {
             SQLManager.updateWhiteGate(id, "varuo");
@@ -154,14 +116,13 @@ public class pingWG {
         }
         return false;
     }
-    public static boolean check6(String message) {
-        // Strip "window" so "win" inside it doesn't false-positive
-        if(message.contains("window")) {
+
+    // Returns true if the message contains "win" as a result indicator.
+    // Strips "window" first to avoid it triggering as a false positive.
+    private static boolean isWin(String message) {
+        if (message.contains("window")) {
             message = message.substring(message.indexOf("window") + 6);
         }
-        if(message.contains("win")){
-            return true;
-        }
-        return false;
+        return message.contains("win");
     }
 }

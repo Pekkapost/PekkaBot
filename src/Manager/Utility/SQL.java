@@ -27,10 +27,7 @@ public class SQL {
             System.out.println("    SQLite Error " + e);
         }
     }
-    //--------------------
-    //Points
-    //--------------------
-    //--------------------
+    // --- Points ---
     public int getPoints(String id) {
         try {
             final String queryCheck = "SELECT * FROM Chronos WHERE Id = ?";
@@ -64,10 +61,7 @@ public class SQL {
             System.out.println("    SQLite: Update Points Error " + e);
         }
     }
-    //--------------------
-    //WhiteGate
-    //--------------------
-    //--------------------
+    // --- WhiteGate ---
     public int[] getWhiteGate(String id){
         try {
             final String queryCheck = "SELECT * FROM WhiteGate WHERE Id = ?";
@@ -210,10 +204,7 @@ public class SQL {
             System.out.println("    SQLite: Update White Gate Error " + e);
         }
     }
-    //--------------------
-    //Ads
-    //--------------------
-    //--------------------
+    // --- Ads ---
     public int[] getAd(String id){
         try {
             final String queryCheck = "SELECT * FROM Ad WHERE Id = ?";
@@ -276,10 +267,7 @@ public class SQL {
             System.out.println("    SQLite: Update Ad Error " + e);
         }
     }
-    //--------------------
-    //Fishing
-    //--------------------
-    //--------------------
+    // --- Fishing ---
     public int getRegion(String id) {
         try {
             final String queryCheck = "SELECT * FROM Fishing WHERE Id = ?";
@@ -517,10 +505,7 @@ public class SQL {
         }
         return "";
     }
-    //--------------------
-    //Fishgrade
-    //--------------------
-    //--------------------
+    // --- Fishgrade ---
     public int getUpgradeLocation(String id) {
         try {
             final String queryCheck = "SELECT * FROM Fishgrade WHERE Id = ?";
@@ -591,10 +576,7 @@ public class SQL {
             System.out.println("    SQLite: Update Location Error " + e);
         }
     }
-    //--------------------
-    //Pekkadex
-    //--------------------
-    //--------------------
+    // --- Pekkadex ---
     public void updatePekkadex(String id, String fish) {
         try {
             final String queryCheck = "SELECT * FROM Pekkadex WHERE Id = ?";
@@ -607,7 +589,7 @@ public class SQL {
                 psUpdate.setString(1, id);
                 psUpdate.execute();
             } else {
-                final String queryUpdate = "UPDATE Pekkadex SET " + fish + " = " + fish + "  + 1 Where Id = ?";
+                final String queryUpdate = "UPDATE Pekkadex SET " + fish + " = " + fish + " + 1 Where Id = ?";
                 final PreparedStatement psUpdate = c.prepareStatement(queryUpdate);
                 psUpdate.setString(1, id);
                 psUpdate.execute();
@@ -650,10 +632,7 @@ public class SQL {
         }
         return false;
     }
-    //--------------------
-    //Shion
-    //--------------------
-    //--------------------
+    // --- Shion ---
     public int updateShion() {
         int count = 0;
         try {
@@ -669,10 +648,7 @@ public class SQL {
         }
         return count;
     }
-    //--------------------
-    //Close
-    //--------------------
-    //--------------------
+    // --- Close ---
     public void close() {
         try {
             c.close();

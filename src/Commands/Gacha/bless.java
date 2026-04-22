@@ -1,11 +1,9 @@
 package Commands.Gacha;
 
-import Commands.Gacha.Utility.gachaManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class bless extends Command {
     public bless() {
@@ -17,32 +15,13 @@ public class bless extends Command {
     protected void execute(CommandEvent event) {
         event.getTextChannel().sendMessage(random()).queue();
     }
-    private String random(){
-        Random r = new Random();
-        String output = "";
-        int rand = r.nextInt(10) + 1;
-        switch (rand) {
-            case 1:
-                output = "You have been blessed with great luck";
-                break;
-            case 2:
-            case 3:
-                output = "You have been blessed with good luck";
-                break;
-            case 4:
-            case 5:
-            case 6:
-                output = "You have been blessed with average luck";
-                break;
-            case 7:
-            case 8:
-            case 9:
-                output = "You have been cursed with bad luck";
-                break;
-            case 10:
-                output = "You have been cursed with extremely bad luck";
-                break;
+    private String random() {
+        switch (new Random().nextInt(10) + 1) {
+            case 1:          return "You have been blessed with great luck";
+            case 2: case 3:  return "You have been blessed with good luck";
+            case 4: case 5: case 6: return "You have been blessed with average luck";
+            case 7: case 8: case 9: return "You have been cursed with bad luck";
+            default:         return "You have been cursed with extremely bad luck";
         }
-        return output;
     }
 }

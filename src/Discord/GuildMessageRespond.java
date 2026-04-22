@@ -33,8 +33,6 @@ public class GuildMessageRespond extends ListenerAdapter {
                 // Mobile Discord sends <@!id> while desktop sends <@id>, so strip both
                 message = message.replace("<@!379513566711119872>", "");
                 message = message.replace("<@379513566711119872>", "");
-                System.out.println(message);
-                System.out.println(event.getMessage().getContentRaw().toLowerCase());
                 // If message is a white gate response
                 if (message.contains("drawer") ||
                         message.contains("window") ||

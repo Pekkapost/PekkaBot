@@ -86,25 +86,13 @@ public class fishUpgradeManager {
     public static String getStorage(int loc) {
         return fishStorage.get(loc).getLeft();
     }
-    public static String getDisplayStorage(int loc, int region) {
-        return fishStorage.get(loc).getLeft();
-    }
     public static int getStoragePrice(int loc, int region) {
-        if(region > getStorageRegion(loc)) {
-            return 0;
-        }
-        return fishStorage.get(loc).getMiddle();
-    }
-    public static int getStorageDisplayPrice(int loc, int region) {
-        if(region > getStorageRegion(loc)) {
+        if (region > getStorageRegion(loc)) {
             return 0;
         }
         return fishStorage.get(loc).getMiddle();
     }
     public static int getStorageRegion(int loc) {
-        return fishStorage.get(loc).getRight();
-    }
-    public static int getStorageDisplayRegion(int loc, int region) {
         return fishStorage.get(loc).getRight();
     }
     public static void bait() {
