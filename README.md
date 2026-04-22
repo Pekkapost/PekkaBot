@@ -57,10 +57,10 @@ Rates use parentheses for 10th-pull guaranteed rates, e.g. `75(90)%`.
 
 | Package | Description |
 |---|---|
-| `Framework.Command` | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
-| `Manager` | `EmbedManager` (embed helpers), `SQLManager` (database queries) |
-| `Manager.Utility.SQL` | Raw SQL operations; all 7 DB tables initialized here |
+| `Commands` | All bot commands, grouped by feature (Action, Ad, Currency, Gacha, Gary, Other, Timer, Unseen, WhiteGate) |
 | `Discord` | JDA setup (`Discord.java`), message event listener (`GuildMessageRespond.java`) |
+| `Framework.Command` | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
+| `Manager` | `EmbedManager` (embed helpers), `SQLManager` (database queries), `Utility.SQL` (raw SQL + schema) |
 | `Structures` | `weightedRandomBag<T>` for gacha/bless random selection |
 | `Constants` | `BotConstants` (gitignored) |
 
