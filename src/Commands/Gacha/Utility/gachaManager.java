@@ -33,20 +33,20 @@ public class gachaManager {
         defaultBag.addEntry("ButterflyWarrior5", 0.5);
     }
 
-    public static void update() {
+    public static synchronized void update() {
         for (int i = 0; i < 8; i++) {
             gachaRead.updateBanners(i + 1, bags.get(i), bags10.get(i));
         }
     }
 
     // Pull 10 (index 9) uses the guaranteed bag; all others use the normal bag
-    private static void pull(int bannerIdx, int pullNum, String[] gachalist) {
+    private static synchronized void pull(int bannerIdx, int pullNum, String[] gachalist) {
         gachalist[pullNum] = (pullNum == 9)
                 ? bags10.get(bannerIdx).getRandom()
                 : bags.get(bannerIdx).getRandom();
     }
 
-    public static File pickMe(int banner) {
+    public static synchronized File pickMe(int banner) {
         String[] gachalist = new String[10];
         Arrays.fill(gachalist, "Failure");
 

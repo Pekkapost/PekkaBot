@@ -2,6 +2,7 @@ package Discord;
 
 import Commands.Action.*;
 import Commands.Currency.Chronos.*;
+import Commands.Currency.shion;
 import Commands.Gacha.Utility.Admin.*;
 import Commands.Gacha.*;
 import Commands.Other.*;
@@ -26,7 +27,6 @@ public class Discord {
     public Discord() {
         try {
             CommandClientBuilder builder = new CommandClientBuilder();
-            builder.setActivity(Activity.listening("Pekka Bot | " + BotConstants.prefix));
             builder.setOwnerId(BotConstants.discordOwner);
             builder.setCoOwnerIds(BotConstants.discordCoOwner);
             builder.setPrefix(BotConstants.prefix);
@@ -36,6 +36,7 @@ public class Discord {
                     new slap(),
                     new gz(),
                     new hug(),
+                    new pat(),
                     new scold(),
                     new highFive(),
                     new wink(),
@@ -57,8 +58,10 @@ public class Discord {
                     new gacha(),
                     new gachaBanner(),
                     new chronosDisplay(),
+                    new shion(),
                     new addMe(),
                     new pekka(),
+                    new admin(),
                     new bannerUpdate(),
                     new update(),
                     new clear(),
@@ -71,7 +74,10 @@ public class Discord {
                     GatewayIntent.GUILD_EXPRESSIONS,
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                    GatewayIntent.MESSAGE_CONTENT).disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE).build();
+                    GatewayIntent.MESSAGE_CONTENT)
+                    .setActivity(Activity.listening("Pekka Bot | " + BotConstants.prefix))
+                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)
+                    .build();
             d.addEventListener(
                     new GuildMessageRespond(),
                     client);
@@ -84,10 +90,10 @@ public class Discord {
         try {
             User temp = d.retrieveUserById(id).complete();
             return temp.getName();
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("User cannot be found " + id);
             return id;
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("    Error: Get User Name " + e);
             return id;
         }

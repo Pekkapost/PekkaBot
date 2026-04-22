@@ -43,14 +43,14 @@ public class GuildMessageRespond extends ListenerAdapter {
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
                         event.getMessage().addReaction(Emoji.fromCustom("ShibaHeart", 666864728110530591L, false)).queue();
                     }
-                    event.getChannel().asTextChannel().sendMessage("Received(in reverse): " + output).queue();
-                } else if (message.contains("5") || message.contains("1") || message.contains("2") || message.contains("g") || message.contains("r")) {
+                    event.getChannel().sendMessage("Received(in reverse): " + output).queue();
+                } else if (!message.isBlank() && message.matches("[512gr\\s]*")) {
                     String output = pingAd.check(event.getAuthor().getId(), message);
                     if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
                         event.getMessage().addReaction(Emoji.fromCustom("KleeHugBomb", 783883423054823434L, false)).queue();
                     }
-                    event.getChannel().asTextChannel().sendMessage("Received: " + output).queue();
+                    event.getChannel().sendMessage("Received: " + output).queue();
                 }
                 break;
             }

@@ -13,7 +13,7 @@ public class admin extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        if(event.getGuild().getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_HISTORY)) {
+        if(event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_HISTORY)) {
             System.out.println("Has Permission");
         } else {
             System.out.println("Doesnt Have Permission");

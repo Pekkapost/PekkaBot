@@ -118,11 +118,8 @@ public class pingWG {
     }
 
     // Returns true if the message contains "win" as a result indicator.
-    // Strips "window" first to avoid it triggering as a false positive.
+    // Removes all "window" occurrences first to prevent false positives.
     private static boolean isWin(String message) {
-        if (message.contains("window")) {
-            message = message.substring(message.indexOf("window") + 6);
-        }
-        return message.contains("win");
+        return message.replace("window", "").contains("win");
     }
 }

@@ -10,67 +10,84 @@ public class urlParse {
         parseMe(num, name, currentBanner);
     }
 
-    public static void checkBanner(String num) {
+    // Removes the specified banner block from GachaList.txt.
+    // Returns false without modifying the file if num is invalid.
+    public static boolean checkBanner(String num) {
+        int n;
         try {
-            if (Integer.parseInt(num) > 9) throw new NumberFormatException();
+            n = Integer.parseInt(num);
+            if (n < 1 || n > 9) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            System.out.println("    Error: Check Banner");
+            System.out.println("    Error: Check Banner — invalid banner number: " + num);
+            return false;
         }
 
         File inputFile = new File("Storage/GachaList.txt");
-        if (inputFile.length() == 0) return;
+        if (inputFile.length() == 0) return true;
 
-        File tempFile = new File("temp.txt");
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-            boolean onoff = false;
-            String currentLine;
-            while ((currentLine = reader.readLine()) != null) {
-                if (currentLine.startsWith("Banner ")) {
-                    onoff = currentLine.startsWith("Banner " + num);
+        try {
+            File tempFile = File.createTempFile("gacha_check", ".tmp", new File("Storage"));
+            try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+                 BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                boolean onoff = false;
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null) {
+                    if (currentLine.startsWith("Banner ")) {
+                        onoff = currentLine.startsWith("Banner " + n);
+                    }
+                    if (onoff) continue;
+                    writer.write(currentLine + System.lineSeparator());
                 }
-                if (onoff) continue;
-                writer.write(currentLine + System.lineSeparator());
+            }
+            inputFile.delete();
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("     Error: UrlParse checkBanner — rename failed");
+                return false;
             }
         } catch (IOException e) {
             System.out.println("     Error: UrlParse IOException Check Banner");
-            return;
+            return false;
         }
-        inputFile.delete();
-        tempFile.renameTo(inputFile);
+        return true;
     }
 
+    // Rewrites GachaList.txt with all banners sorted in numeric order (1–9).
     public static void sort() {
         File inputFile = new File("Storage/GachaList.txt");
-        File tempFile = new File("temp.txt");
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-            for (int i = 1; i < 10; ++i) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
-                    boolean onoff = false;
-                    String currentLine;
-                    while ((currentLine = reader.readLine()) != null) {
-                        if (currentLine.startsWith("Banner ")) {
-                            onoff = currentLine.startsWith("Banner " + i);
+        try {
+            File tempFile = File.createTempFile("gacha_sort", ".tmp", new File("Storage"));
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                for (int i = 1; i < 10; ++i) {
+                    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+                        boolean onoff = false;
+                        String currentLine;
+                        while ((currentLine = reader.readLine()) != null) {
+                            if (currentLine.startsWith("Banner ")) {
+                                onoff = currentLine.startsWith("Banner " + i);
+                            }
+                            if (!onoff) continue;
+                            writer.write(currentLine + System.lineSeparator());
                         }
-                        if (!onoff) continue;
-                        writer.write(currentLine + System.lineSeparator());
                     }
                 }
             }
+            inputFile.delete();
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("     Error: UrlParse sort — rename failed");
+            }
         } catch (IOException e) {
             System.out.println("     Error: UrlParse IOException Sort");
-            return;
         }
-        inputFile.delete();
-        tempFile.renameTo(inputFile);
     }
 
     public static void parseMe(String num, String name, String currentBanner) throws Exception {
         try {
             URL url = new URL(currentBanner);
             URLConnection conn = url.openConnection();
-            checkBanner(num);
+
+            if (!checkBanner(num)) {
+                throw new IllegalArgumentException("Invalid banner number: " + num);
+            }
 
             // Open GachaList.txt once for the entire parse, then close it.
             try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));

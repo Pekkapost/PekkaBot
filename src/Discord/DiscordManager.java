@@ -6,6 +6,7 @@ public class DiscordManager {
         d = new Discord();
     }
     public static String getUserName(String id) {
+        if (d == null) return id;
         return d.getUserName(id);
     }
 }

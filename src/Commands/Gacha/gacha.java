@@ -17,8 +17,8 @@ public class gacha extends Command {
     protected void execute(CommandEvent event) {
         int banner = 0;
         try {
-            if(event.getMessage().getContentRaw().length() >= 8) {
-                banner = Integer.parseInt(event.getMessage().getContentRaw().substring(8));
+            if (!event.getArgs().isEmpty()) {
+                banner = Integer.parseInt(event.getArgs().trim());
             }
         } catch (NumberFormatException error) {
             event.getTextChannel().sendMessage("Please use the correct format.").queue();

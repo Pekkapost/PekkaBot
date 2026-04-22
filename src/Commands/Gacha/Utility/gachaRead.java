@@ -40,7 +40,8 @@ public class gachaRead {
             boolean flip = false;
             while ((currentline = reader.readLine()) != null) {
                 if(currentline.startsWith("Banner ")) {
-                    if(Integer.parseInt(currentline.substring(7,8)) == num) {
+                    String numStr = currentline.substring(7).trim().split("[\\s:]")[0];
+                if(Integer.parseInt(numStr) == num) {
                         flip = true;
                         continue;
                     }
