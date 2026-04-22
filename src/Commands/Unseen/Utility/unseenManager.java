@@ -1,4 +1,4 @@
-package Unseen.Utility;
+package Commands.Unseen.Utility;
 
 import java.util.HashMap;
 import java.util.Map;

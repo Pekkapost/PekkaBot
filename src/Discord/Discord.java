@@ -10,8 +10,8 @@ import Commands.Timer.*;
 import Commands.WhiteGate.*;
 import Commands.Ad.*;
 import Constants.BotConstants;
-import Gary.*;
-import Unseen.*;
+import Commands.Gary.*;
+import Commands.Unseen.*;
 
 import Framework.Command.CommandClient;
 import Framework.Command.CommandClientBuilder;

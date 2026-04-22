@@ -1,7 +1,7 @@
-package Gary;
+package Commands.Gary;
 
 import Constants.BotConstants;
-import Gary.Utility.garyManager;
+import Commands.Gary.Utility.garyManager;
 import Manager.EmbedManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;

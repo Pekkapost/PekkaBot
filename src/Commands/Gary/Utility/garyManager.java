@@ -1,4 +1,4 @@
-package Gary.Utility;
+package Commands.Gary.Utility;
 
 import java.util.HashMap;
 import java.util.Map;
