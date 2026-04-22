@@ -1,8 +1,8 @@
 package Commands.Other;
 
 import Manager.EmbedManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class dango extends Command {
     public dango() {

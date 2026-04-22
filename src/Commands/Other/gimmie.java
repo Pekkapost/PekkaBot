@@ -1,7 +1,7 @@
 package Commands.Other;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class gimmie extends Command {
     public gimmie() {

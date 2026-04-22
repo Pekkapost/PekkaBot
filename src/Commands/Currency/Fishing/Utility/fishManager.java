@@ -4,7 +4,7 @@ import Manager.SQLManager;
 import Structures.triple;
 import Structures.weightedRandomBag;
 import Manager.EmbedManager;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 
 import java.time.ZoneId;
@@ -57,7 +57,7 @@ public class fishManager {
         String fishStorage = fishName.replaceAll("[^A-Za-z]","");
         SQLManager.updatePekkadex(id,fishStorage);
         // Update Points
-        tempFishPoint = (int)fishPoint / 1;
+        tempFishPoint = (int)fishPoint;
         SQLManager.updateFishing(id,tempFishPoint,fishRegion);
         if(fishRegion > 0) {
             tempFishPoint2 = (int)(fishPoint % 1 * 10000000);
@@ -103,7 +103,7 @@ public class fishManager {
         }
     }
     public static String getRandom(String location) {
-        if(fishLocation.containsKey(location) != true){
+        if(!fishLocation.containsKey(location)){
             System.out.println("    Error: Fish Manager Get Random Location");
             return "ERROR";
         }

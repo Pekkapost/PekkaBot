@@ -3,8 +3,8 @@ package Commands.Currency;
 import Constants.BotConstants;
 import Manager.EmbedManager;
 import Manager.SQLManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class shion extends Command {
     static StringBuilder names = new StringBuilder();

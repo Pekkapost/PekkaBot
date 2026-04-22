@@ -4,9 +4,10 @@ import Commands.Currency.Fishing.Utility.fishUpgradeManager;
 import Manager.EmbedManager;
 import Manager.SQLManager;
 
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 
 public class fishLocation extends Command {
     public fishLocation() {
@@ -31,7 +32,7 @@ public class fishLocation extends Command {
                     SQLManager.updateLocation(id, message.substring(message.indexOf(" ") + 1));
                     if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
-                        event.getMessage().addReaction("ShibaHeart:666864728110530591").queue();
+                        event.getMessage().addReaction(Emoji.fromCustom("ShibaHeart", 666864728110530591L, false)).queue();
                     }
                     return;
                 }

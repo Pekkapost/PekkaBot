@@ -232,54 +232,10 @@ public class gachaManager {
 
     public static void fiveBanner(int pullNum, String[] gachalist) {
         weightedRandomBag<String> bag = new weightedRandomBag<>();
-        double Tier1 = 0.5,Tier2 = 1,Tier3 = 5;
+        double Tier1 = 0.5;
 
-        bag.addEntry("Myunfa5",Tier1);
-        /*bag.addEntry("Dunarith5",Tier1);
-        bag.addEntry("ProudBeast5",Tier1);
-        bag.addEntry("Lovely5", Tier1);
-        bag.addEntry("Philo5", Tier1);
-        bag.addEntry("Tentamare5", Tier1);
-        bag.addEntry("Mikahayahi5", Tier1);
-        bag.addEntry("Rosetta5", Tier2);
-        bag.addEntry("Tsubame5", Tier2);
-        bag.addEntry("Shigure5", Tier2);
-        bag.addEntry("Punishment5", Tier1);
-        bag.addEntry("Biaka5", Tier2);
-        bag.addEntry("Hozuki5", Tier2);
-        bag.addEntry("BlancMeneur5",Tier1);
-        bag.addEntry("Radica5",Tier2);
-        bag.addEntry("Ilulu5",Tier2);
-        bag.addEntry("Sunrise5",Tier1);
-        bag.addEntry("Dewey5",Tier2);
-        bag.addEntry("Veina5",Tier3);
-        bag.addEntry("CursedBride5",Tier2);
-        bag.addEntry("Elga5",Tier3);
-        bag.addEntry("Shannon5",Tier3);
-        bag.addEntry("Renri5",Tier3);
-        bag.addEntry("Starlight5",Tier1);
-        bag.addEntry("Claude5",Tier3);
-        bag.addEntry("Hypnotist5",Tier1);
-        bag.addEntry("Tsukiha5",Tier3);
-        bag.addEntry("Felmina5",Tier3);
-        bag.addEntry("Bertrand5",Tier3);*/
-        bag.addEntry("ButterflyWarrior5",Tier1);
-        /*bag.addEntry("Myrus5",Tier3);
-        bag.addEntry("Shanie5",Tier3);
-        bag.addEntry("Melina5",Tier3);
-        bag.addEntry("Cetie5",Tier3);
-        bag.addEntry("Ewan5",Tier3);
-        bag.addEntry("Nagi5",Tier3);
-        bag.addEntry("Yuna5",Tier3);
-        bag.addEntry("Isuka5",Tier3);
-        bag.addEntry("Laclair5",Tier3);
-        bag.addEntry("Anabel5",Tier3);
-        bag.addEntry("Mariel5",Tier3);
-        bag.addEntry("Shion5",Tier3);
-        bag.addEntry("Suzette5",Tier3);
-        bag.addEntry("Mighty5",Tier3);
-        bag.addEntry("Toova5",Tier3);
-        bag.addEntry("Lokido5",Tier3);*/
+        bag.addEntry("Myunfa5", Tier1);
+        bag.addEntry("ButterflyWarrior5", Tier1);
 
         gachalist[pullNum] = bag.getRandom();
     }

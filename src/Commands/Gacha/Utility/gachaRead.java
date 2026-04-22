@@ -41,7 +41,7 @@ public class gachaRead {
 
             while((currentline = reader.readLine()) != null){
                 if(currentline.startsWith("Banner ")) {
-                    if(Integer.valueOf(currentline.substring(7,8)) == num) {
+                    if(Integer.parseInt(currentline.substring(7,8)) == num) {
                         flip = true;
                         continue;
                     }
@@ -59,24 +59,24 @@ public class gachaRead {
                     currentline = currentline.substring(currentline.indexOf("|")+1);
                     String star5 = currentline.substring(0,currentline.indexOf("|")).replace("%", "");
 
-                    double value = Double.valueOf(star3);
+                    double value = Double.parseDouble(star3);
                     bag.addEntry(name+"3",value);
                     if(star4.contains("(")) {
-                        value = Double.valueOf(star4.substring(0,star4.indexOf("(")));
+                        value = Double.parseDouble(star4.substring(0,star4.indexOf("(")));
                         bag.addEntry(name+"4",value);
-                        value = Double.valueOf(star4.substring(star4.indexOf("(")+1,star4.indexOf(")")));
+                        value = Double.parseDouble(star4.substring(star4.indexOf("(")+1,star4.indexOf(")")));
                         bag2.addEntry(name+"4",value);
                     } else {
-                        value = Double.valueOf(star4);
+                        value = Double.parseDouble(star4);
                         bag.addEntry(name+"4",value);
                     }
                     if(star5.contains("(")) {
-                        value = Double.valueOf(star5.substring(0,star5.indexOf("(")));
+                        value = Double.parseDouble(star5.substring(0,star5.indexOf("(")));
                         bag.addEntry(name+"5",value);
-                        value = Double.valueOf(star5.substring(star5.indexOf("(")+1,star5.indexOf(")")));
+                        value = Double.parseDouble(star5.substring(star5.indexOf("(")+1,star5.indexOf(")")));
                         bag2.addEntry(name+"5",value);
                     } else {
-                        value = Double.valueOf(star5);
+                        value = Double.parseDouble(star5);
                         bag.addEntry(name+"5",value);
                     }
                 }

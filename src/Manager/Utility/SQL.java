@@ -235,7 +235,7 @@ public class SQL {
             final String queryCheck = "SELECT SUM(CS5) as 'CS5', SUM(CS10) as 'CS10', SUM(CS20) as 'CS20'," +
                     "SUM(Red) as 'Red', SUM(Green) as 'Green'FROM Ad";
             final PreparedStatement ps = c.prepareStatement(queryCheck);
-            int cs5 = 0, cs10 = 0, cs15 = 0, cs20 = 0, green = 0, red = 0;
+            int cs5 = 0, cs10 = 0, cs20 = 0, green = 0, red = 0;
             ResultSet rs = ps.executeQuery();
             if(!rs.isClosed()) {
                 cs5 = rs.getInt("CS5");

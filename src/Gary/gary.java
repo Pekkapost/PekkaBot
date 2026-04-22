@@ -3,8 +3,8 @@ package Gary;
 import Constants.BotConstants;
 import Gary.Utility.garyManager;
 import Manager.EmbedManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class gary extends Command {
     public gary() {

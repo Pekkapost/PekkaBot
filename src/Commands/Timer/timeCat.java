@@ -1,8 +1,8 @@
 package Commands.Timer;
 
 import Commands.Timer.Utility.TimerManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 import java.time.ZoneId;
 

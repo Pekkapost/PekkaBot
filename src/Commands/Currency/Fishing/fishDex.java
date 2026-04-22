@@ -2,8 +2,8 @@ package Commands.Currency.Fishing;
 
 import Commands.Currency.Fishing.Utility.fishManager;
 import Manager.EmbedManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class fishDex extends Command {
     public fishDex() {
@@ -24,8 +24,8 @@ public class fishDex extends Command {
             }
         }
         if(page <= Math.ceil(fishManager.getAllFishDex()/12)) {
-            if (event.getMessage().getMentionedUsers().size() > 0) {
-                EmbedManager.fishdex(event.getTextChannel(), event.getMessage().getMentionedUsers().get(0), fishManager.getFishDex(page),
+            if (event.getMessage().getMentions().getUsers().size() > 0) {
+                EmbedManager.fishdex(event.getTextChannel(), event.getMessage().getMentions().getUsers().get(0), fishManager.getFishDex(page),
                         fishManager.getMyFishDex(event.getAuthor().getId()), fishManager.getAllFishDex(), page);
             } else {
                 EmbedManager.fishdex(event.getTextChannel(), event.getAuthor(), fishManager.getFishDex(page),

@@ -1,9 +1,10 @@
 package Commands.Currency.Fishing;
 
 import Manager.SQLManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 
 public class fishGive extends Command {
     public fishGive() {
@@ -16,14 +17,14 @@ public class fishGive extends Command {
     @Override
     protected void execute(CommandEvent event) {
         String message = event.getMessage().getContentRaw();
-        if(event.getMessage().getMentionedUsers().size() > 0) {
-            String id = event.getMessage().getMentionedMembers().get(0).getId();
+        if(event.getMessage().getMentions().getUsers().size() > 0) {
+            String id = event.getMessage().getMentions().getMembers().get(0).getId();
             if (message.contains(" ")) {
                 int add = Integer.valueOf(message.substring(message.lastIndexOf(" ") + 1));
                 SQLManager.updateFishing(id,add,1);
                 if(event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                         event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
-                    event.getMessage().addReaction("ShibaHeart:666864728110530591").queue();
+                    event.getMessage().addReaction(Emoji.fromCustom("ShibaHeart", 666864728110530591L, false)).queue();
                 }
             }
         }

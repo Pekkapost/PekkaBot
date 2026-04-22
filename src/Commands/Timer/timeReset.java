@@ -1,8 +1,8 @@
 package Commands.Timer;
 import Commands.Timer.Utility.TimerManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 
 import java.time.*;
 

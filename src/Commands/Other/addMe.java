@@ -1,8 +1,8 @@
 package Commands.Other;
 
 import Constants.BotConstants;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class addMe extends Command {
     public addMe() {

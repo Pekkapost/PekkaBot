@@ -3,8 +3,8 @@ package Commands.Other;
 import Constants.BotConstants;
 import Manager.EmbedManager;
 import Gary.Utility.garyManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 import java.util.Random;
 

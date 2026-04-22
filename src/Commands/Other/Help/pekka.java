@@ -1,8 +1,8 @@
 package Commands.Other.Help;
 
 import Constants.BotConstants;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class pekka extends Command {
     public pekka() {

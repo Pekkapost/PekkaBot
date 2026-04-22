@@ -1,8 +1,8 @@
 package Commands.Gacha;
 
 import Commands.Gacha.Utility.gachaRead;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class gachaBanner extends Command {
     public gachaBanner() {

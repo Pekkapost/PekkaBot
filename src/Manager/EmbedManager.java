@@ -3,8 +3,8 @@ package Manager;
 import Commands.Currency.Fishing.Utility.fishManager;
 import Constants.BotConstants;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class EmbedManager {
         builder.setColor(Color.PINK);
         builder.setDescription("You have  " + points + " <:ChronosStone:719806042606665738>");
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void pekkaCoin(MessageChannel channel, User author, int points, int region) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -22,7 +22,7 @@ public class EmbedManager {
         String currency = fishManager.getCurrency(region);
         builder.setDescription("You have  " + points + currency);
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void dango(MessageChannel channel) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -30,7 +30,7 @@ public class EmbedManager {
         builder.setTitle("This is a smol little dango");
         builder.setDescription("It likes to bounce around");
         builder.setThumbnail("https://cdn.discordapp.com/avatars/218781547854168064/68474a1b67a8e27f5fafe296815771fe.png");
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void fish(MessageChannel channel, User author, String catchType, String fish, String points, String location, int total, int region) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -39,9 +39,9 @@ public class EmbedManager {
         builder.setDescription("+ " + points);
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
         builder.setThumbnail(fish);
-        String currency = fishManager.getCurrency(region).replaceAll("[^A-Za-z]","");;
+        String currency = fishManager.getCurrency(region).replaceAll("[^A-Za-z]","");
         builder.setFooter(location + " | " + total + " " + currency);
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void fishLeaderboard(MessageChannel channel, User author, String output, String userOuput) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -50,7 +50,7 @@ public class EmbedManager {
         builder.setDescription(output + "\n" + userOuput);
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
         //builder.setFooter();
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void fishLocation(MessageChannel channel, User author, String currentLocation, String totalLocation) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -59,7 +59,7 @@ public class EmbedManager {
         builder.setDescription("You can fish at: " + totalLocation);
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
         builder.setFooter("Please use Proper Capitalization");
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void fishgrade(MessageChannel channel, User author, String location, String rod, String boat, String storage, String bait) {
         EmbedBuilder builder = new EmbedBuilder();
@@ -71,7 +71,7 @@ public class EmbedManager {
         builder.addField("Bait", bait, false);
         builder.setAuthor(author.getName(),author.getAvatarUrl(),author.getAvatarUrl());
         builder.setFooter(BotConstants.prefix + "fishbuy [catagory]");
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void fishdex(MessageChannel channel, User author, String[] fishes,int myFish, int totalFish, int pageNum) {
         if(fishes.length > 0) {
@@ -99,7 +99,7 @@ public class EmbedManager {
             }
             builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
             builder.setFooter("Page: " + pageNum + "/" + (int)(Math.ceil(Double.valueOf(totalFish)/12)));
-            channel.sendMessage(builder.build()).queue();
+            channel.sendMessageEmbeds(builder.build()).queue();
         } else {
             channel.sendMessage("This page does not exist");
         }
@@ -131,7 +131,7 @@ public class EmbedManager {
 
             builder.addField("Varuo", String.valueOf(temp[13]), true);
             builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
-            channel.sendMessage(builder.build()).queue();
+            channel.sendMessageEmbeds(builder.build()).queue();
         }
     }
     public static void ad(MessageChannel channel, User author, int[] temp){
@@ -147,7 +147,7 @@ public class EmbedManager {
             builder.addField("R Key", String.valueOf(temp[4]), true);
 
             builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
-            channel.sendMessage(builder.build()).queue();
+            channel.sendMessageEmbeds(builder.build()).queue();
         }
     }
     public static void action(MessageChannel channel, User author, String url, String message){
@@ -157,7 +157,7 @@ public class EmbedManager {
         builder.setImage(url);
 
         builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
     public static void lookingfor(MessageChannel channel, User author, String url, String title){
         EmbedBuilder builder = new EmbedBuilder();
@@ -166,6 +166,6 @@ public class EmbedManager {
         builder.setImage(url);
 
         builder.setAuthor(author.getName(), author.getAvatarUrl(), author.getAvatarUrl());
-        channel.sendMessage(builder.build()).queue();
+        channel.sendMessageEmbeds(builder.build()).queue();
     }
 }

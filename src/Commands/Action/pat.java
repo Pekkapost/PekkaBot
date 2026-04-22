@@ -2,12 +2,10 @@ package Commands.Action;
 
 import Constants.BotConstants;
 import Manager.EmbedManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class pat extends Command {
-    static StringBuilder names = new StringBuilder();
-
     public pat() {
         this.name = "Pat";
         this.help = "Pats";
@@ -15,14 +13,14 @@ public class pat extends Command {
     @Override
     protected void execute(CommandEvent event) {
         String message;
-        if(event.getMessage().getMentionedUsers().isEmpty()) {
+        if(event.getMessage().getMentions().getUsers().isEmpty()) {
             message = "*Pats* <@" + event.getAuthor().getId() + "> ";
         } else {
-            names.setLength(0);
-            for(int gzs = 0; gzs < event.getMessage().getMentionedUsers().size(); ++gzs) {
-                names.append("<@").append(event.getMessage().getMentionedUsers().get(gzs).getId()).append("> ");
+            StringBuilder names = new StringBuilder();
+            for(int i = 0; i < event.getMessage().getMentions().getUsers().size(); ++i) {
+                names.append("<@").append(event.getMessage().getMentions().getUsers().get(i).getId()).append("> ");
             }
-            message = "*Pats *  " + names + " ";
+            message = "*Pats*  " + names + " ";
         }
         EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.pat, message);
     }

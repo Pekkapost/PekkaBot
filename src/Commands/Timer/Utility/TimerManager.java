@@ -1,32 +1,8 @@
 package Commands.Timer.Utility;
 
-import net.dv8tion.jda.api.JDA;
 import java.time.ZoneId;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class TimerManager {
-    /*Timer timer;
-    JDA discord;
-
-    public TimerManager(JDA input) {
-        int timeleft = 60 - java.time.ZonedDateTime.now(ZoneId.of("America/Los_Angeles")).getMinute();
-        discord = input;
-        timer = new Timer();
-        timer.schedule(new RemindTask(), timeleft * 60 * 1000,1800 * 1000 * 2);
-    }
-
-    class RemindTask extends TimerTask {
-        public void run() {
-            try {
-                discord.getGuildById(468234463386533888L).getTextChannelById(678879605272215552L).sendMessage(
-                        "Online " + java.time.ZonedDateTime.now(ZoneId.of("America/Los_Angeles")).getHour() + ":00").queue();
-                //timer.cancel(); //Terminate the timer thread
-            } catch(java.lang.NullPointerException e) {
-                System.out.println("Error: " + e);
-            }
-        }
-    }*/
     //--------------------
     //Reset Time
     //--------------------

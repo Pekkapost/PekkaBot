@@ -4,8 +4,8 @@ import Commands.Currency.Fishing.Utility.fishManager;
 import Commands.Currency.Fishing.Utility.fishUpgradeManager;
 import Manager.EmbedManager;
 import Manager.SQLManager;
-import com.jagrosh.jdautilities.command.Command;
-import com.jagrosh.jdautilities.command.CommandEvent;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
 
 public class fishUpgrade extends Command {
     public fishUpgrade() {
