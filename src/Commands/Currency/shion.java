@@ -7,8 +7,6 @@ import Framework.Command.Command;
 import Framework.Command.CommandEvent;
 
 public class shion extends Command {
-    static StringBuilder names = new StringBuilder();
-
     public shion() {
         this.name = "shion";
         this.help = "Shions";

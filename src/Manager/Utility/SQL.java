@@ -9,14 +9,19 @@ import java.sql.*;
 
 public class SQL {
     Connection c = null;
+    // DB tables:
+    //   Chronos   — Id, Points
+    //   WhiteGate — Id, Drawer, Window, Bed, Lake, Plant, Left, Middle, Right,
+    //               Boat, Door, Element, Balloon, Well, Varuo (+ *F failure columns)
+    //   Ad        — Id, CS5, CS10, CS20, Green, Red
+    //   Fishing   — Id, Points, Points2, Location, Region
+    //   Fishgrade — Id, Location, Rod, Boat, Storage, Bait
+    //   Pekkadex  — Id, <one column per fish name>
+    //   Shion     — count
     public SQL() {
         try{
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:Storage/PekkaBot.db");
-            //Points - Id, Points
-            //White Gate - Id, Drawer, Window, Bed, Lake, Plant, Left, Middle, Right, Boat, Door, Element, Balloon, Well, Varuo
-            //Fishing - Id, Points, Location
-            //Fishgrade - Id, Location, Rod, Boat, Storage, Bait
             System.out.println("SQLite Connected");
         } catch(Exception e) {
             System.out.println("    SQLite Error " + e);

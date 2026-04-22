@@ -65,6 +65,7 @@ public class Discord {
                     new exit()
                     );
             CommandClient client = builder.build();
+            // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal
             d = JDABuilder.create(
                     BotConstants.discordToken,
                     GatewayIntent.GUILD_EXPRESSIONS,

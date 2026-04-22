@@ -17,7 +17,7 @@ public class bless extends Command {
     protected void execute(CommandEvent event) {
         event.getTextChannel().sendMessage(random()).queue();
     }
-    public String random(){
+    private String random(){
         Random r = new Random();
         String output = "";
         int rand = r.nextInt(10) + 1;

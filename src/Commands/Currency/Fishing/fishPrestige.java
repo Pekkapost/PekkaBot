@@ -16,11 +16,11 @@ public class fishPrestige extends Command {
         String id = event.getAuthor().getId();
         int tempPoints = SQLManager.getFishing(id);
         int region = SQLManager.getRegion(id);
-        if(!(region == 1)) {
+        if(region != 1) {
             if(tempPoints >= 10000000) {
                 fishManager.updatePoints(id);
-                event.getTextChannel().sendMessage("Congradulations on your Prestige! Every 10 million" +
-                        fishManager.getCurrency(0) + " will be converted to" + fishManager.getCurrency(1)).queue();
+                event.getTextChannel().sendMessage("Congratulations on your Prestige! Every 10 million" +
+                        fishManager.getCurrency(0) + " will be converted to " + fishManager.getCurrency(1)).queue();
             } else {
                 event.getTextChannel().sendMessage("You need `" + (10000000 - tempPoints) + "` more to prestige").queue();
             }

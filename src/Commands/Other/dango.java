@@ -7,6 +7,7 @@ import Framework.Command.CommandEvent;
 public class dango extends Command {
     public dango() {
         this.name = "Dango";
+        this.help = "Displays a dango";
     }
     @Override
     protected void execute(CommandEvent event) {

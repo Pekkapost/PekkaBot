@@ -1,175 +1,144 @@
 package Commands.Timer.Utility;
 
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
+// All times use JST (Asia/Tokyo) because that is Another Eden's server timezone.
 public class TimerManager {
-    //--------------------
-    //Reset Time
-    //--------------------
-    //--------------------
-    public static String checkTime(){
-        int currentTimeHour = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getHour();
-        int currentTimeMinute = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getMinute();
+
+    // Ticket resets happen at 06:00, 12:00, 18:00, and 24:00 JST.
+    public static String checkTime() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        int hour = now.getHour();
+        int minute = now.getMinute();
 
         int ticketHour, ticketMinute = 0;
-        if(currentTimeHour < 6) {
-            if(currentTimeMinute == 0) {
-                ticketHour = 6 - currentTimeHour;
+        if(hour < 6) {
+            if(minute == 0) {
+                ticketHour = 6 - hour;
             } else {
-                ticketHour = 5 - currentTimeHour;
-                ticketMinute = 60 - currentTimeMinute;
+                ticketHour = 5 - hour;
+                ticketMinute = 60 - minute;
             }
-        } else if(currentTimeHour < 12) {
-            if(currentTimeMinute == 0) {
-                ticketHour = 12 - currentTimeHour;
+        } else if(hour < 12) {
+            if(minute == 0) {
+                ticketHour = 12 - hour;
             } else {
-                ticketHour = 11 - currentTimeHour;
-                ticketMinute = 60 - currentTimeMinute;
+                ticketHour = 11 - hour;
+                ticketMinute = 60 - minute;
             }
-        } else if(currentTimeHour < 18) {
-            if(currentTimeMinute == 0) {
-                ticketHour = 18 - currentTimeHour;
+        } else if(hour < 18) {
+            if(minute == 0) {
+                ticketHour = 18 - hour;
             } else {
-                ticketHour = 17 - currentTimeHour;
-                ticketMinute = 60 - currentTimeMinute;
+                ticketHour = 17 - hour;
+                ticketMinute = 60 - minute;
             }
         } else {
-            if(currentTimeMinute == 0) {
-                ticketHour = 24 - currentTimeHour;
+            if(minute == 0) {
+                ticketHour = 24 - hour;
             } else {
-                ticketHour = 23 - currentTimeHour;
-                ticketMinute = 60 - currentTimeMinute;
+                ticketHour = 23 - hour;
+                ticketMinute = 60 - minute;
             }
         }
-        String output;
         if(ticketMinute < 10) {
-            output = "There is `" + ticketHour + ":0" + ticketMinute + "` until the next ticket reset";
-        }else{
-            output = "There is `" + ticketHour + ":" + ticketMinute + "` until the next ticket reset";
+            return "There is `" + ticketHour + ":0" + ticketMinute + "` until the next ticket reset";
         }
-        return output;
+        return "There is `" + ticketHour + ":" + ticketMinute + "` until the next ticket reset";
     }
-    //--------------------
-    //Cat Time
-    //--------------------
-    //--------------------
+
+    // Langelo (cat 1) appears daily from 12:00 to 18:00 JST.
     public static String checkCat1() {
-        int currentTimeHour = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getHour();
-        int currentTimeMinute = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getMinute();
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        int hour = now.getHour();
+        int minute = now.getMinute();
 
         int catHour = 0, catMinute = 0;
-        String output;
-        boolean now = false;
-        //Time Check
-        if(currentTimeHour < 12) {
-            if(currentTimeMinute == 0) {
-                catHour = 12 - currentTimeHour;
-            } else {
-                catHour = 11 - currentTimeHour;
-                catMinute = 60 - currentTimeMinute;
-            }
-        } else if(currentTimeHour < 18) {
-            if(currentTimeMinute == 0) {
-                catHour = 18 - currentTimeHour;
-            } else {
-                catHour = 17 - currentTimeHour;
-                catMinute = 60 - currentTimeMinute;
-            }
-            now = true;
-        } else {
-            if(currentTimeMinute == 0) {
-                catHour = 24 - currentTimeHour;
-            } else {
-                catHour = 23 - currentTimeHour;
-                catMinute = 60 - currentTimeMinute;
-            }
-        }
-        //Output Parsing
-        if(!now) {
-            if(catMinute < 10) {
-                output = "There is `" + catHour + ":0" + catMinute + "` left until Langelo arrives";
-            } else {
-                output = "There is `" + catHour + ":" + catMinute + "` left until Langelo arrives";
-            }
-        }else{
-            if(catMinute < 10) {
-                output = "Now! There is `" + catHour + ":0" + catMinute + "` left until Langelo leaves";
-            }else{
-                output = "Now! There is `" + catHour + ":" + catMinute + "` left until Langelo leaves";
-            }
-        }
-        return output;
-    }
-    public static String checkCat2() {
-        int currentTimeHour = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getHour();
-        int currentTimeMinute = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getMinute();
-        String currentTimeDay = java.time.ZonedDateTime.now(ZoneId.of("Asia/Tokyo")).getDayOfWeek().name();
+        boolean active = false;
 
-        int catHour, catMinute;
-        String output;
-        boolean now = false;
-        //Math Calculations
-        int totalTime = 0;
-        switch(currentTimeDay) {
-            case "MONDAY":
-                totalTime = 0;
-                break;
-            case "TUESDAY":
-                totalTime = 24 * 60;
-                break;
-            case "WEDNESDAY":
-                totalTime = 2 * 24 * 60;
-                break;
-            case "THURSDAY":
-                totalTime = 3 * 24 * 60;
-                break;
-            case "FRIDAY":
-                totalTime = 4 * 24 * 60;
-                break;
-            case "SATURDAY":
-                totalTime = 5 * 24 * 60;
-                break;
-            case "SUNDAY":
-                totalTime = 6 * 24 * 60;
-                break;
-            default:
-                break;
-        }
-        totalTime += currentTimeHour * 60 + currentTimeMinute;
-        if(totalTime < 19 * 60) {
-            catMinute = 19 * 60 - totalTime;
-        } else if(totalTime < 24 * 60) {
-            catMinute = 24 * 60 - totalTime;
-            now = true;
-        } else if(totalTime < 19 * 60 + 24 * 2 * 60) {
-            catMinute = 19 * 60 + 24 * 2 * 60 - totalTime;
-        } else if(totalTime < 24 * 60 + 24 * 2 * 60) {
-            catMinute = 24 * 60 + 24 * 2 * 60 - totalTime;
-            now = true;
-        } else if(totalTime < 19 * 60 + 24 * 4 * 60) {
-            catMinute = 19 * 60 + 24 * 4 * 60 - totalTime;
-        } else if(totalTime < 24 * 60 + 24 * 4 * 60) {
-            catMinute = 24 * 60 + 24 * 4 * 60 - totalTime;
-            now = true;
+        if(hour < 12) {
+            if(minute == 0) {
+                catHour = 12 - hour;
+            } else {
+                catHour = 11 - hour;
+                catMinute = 60 - minute;
+            }
+        } else if(hour < 18) {
+            if(minute == 0) {
+                catHour = 18 - hour;
+            } else {
+                catHour = 17 - hour;
+                catMinute = 60 - minute;
+            }
+            active = true;
         } else {
-            catMinute = 24 * 7 * 60 - totalTime + 19 * 60;
+            if(minute == 0) {
+                catHour = 24 - hour;
+            } else {
+                catHour = 23 - hour;
+                catMinute = 60 - minute;
+            }
         }
-        catHour = catMinute / 60;
+
+        String timeStr = catMinute < 10
+                ? catHour + ":0" + catMinute
+                : catHour + ":" + catMinute;
+        if(!active) {
+            return "There is `" + timeStr + "` left until Langelo arrives";
+        }
+        return "Now! There is `" + timeStr + "` left until Langelo leaves";
+    }
+
+    // Peasuke (cat 2) appears Mon 19:00–24:00, Wed 19:00–24:00, Fri 19:00–24:00 JST.
+    public static String checkCat2() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        String day = now.getDayOfWeek().name();
+
+        int totalMinutes = 0;
+        switch(day) {
+            case "MONDAY":    totalMinutes = 0;           break;
+            case "TUESDAY":   totalMinutes = 24 * 60;     break;
+            case "WEDNESDAY": totalMinutes = 2 * 24 * 60; break;
+            case "THURSDAY":  totalMinutes = 3 * 24 * 60; break;
+            case "FRIDAY":    totalMinutes = 4 * 24 * 60; break;
+            case "SATURDAY":  totalMinutes = 5 * 24 * 60; break;
+            case "SUNDAY":    totalMinutes = 6 * 24 * 60; break;
+        }
+        totalMinutes += hour * 60 + minute;
+
+        boolean active = false;
+        int catMinute;
+        if(totalMinutes < 19 * 60) {
+            catMinute = 19 * 60 - totalMinutes;
+        } else if(totalMinutes < 24 * 60) {
+            catMinute = 24 * 60 - totalMinutes;
+            active = true;
+        } else if(totalMinutes < 19 * 60 + 2 * 24 * 60) {
+            catMinute = 19 * 60 + 2 * 24 * 60 - totalMinutes;
+        } else if(totalMinutes < 24 * 60 + 2 * 24 * 60) {
+            catMinute = 24 * 60 + 2 * 24 * 60 - totalMinutes;
+            active = true;
+        } else if(totalMinutes < 19 * 60 + 4 * 24 * 60) {
+            catMinute = 19 * 60 + 4 * 24 * 60 - totalMinutes;
+        } else if(totalMinutes < 24 * 60 + 4 * 24 * 60) {
+            catMinute = 24 * 60 + 4 * 24 * 60 - totalMinutes;
+            active = true;
+        } else {
+            catMinute = 7 * 24 * 60 - totalMinutes + 19 * 60;
+        }
+
+        int catHour = catMinute / 60;
         catMinute = catMinute % 60;
-        //Output Parsing
-        if(!now) {
-            if(catMinute < 10) {
-                output = "There is `" + catHour + ":0" + catMinute + "` left until Peasuke arrives";
-            } else {
-                output = "There is `" + catHour + ":" + catMinute + "` left until Peasuke arrives";
-            }
-        } else {
-            if(catMinute < 10) {
-                output = "Now! There is `" + catHour + ":0" + catMinute + "` left until Peasuke leaves";
-            } else {
-                output = "Now! There is `" + catHour + ":" + catMinute + "` left until Peasuke leaves";
-            }
+
+        String timeStr = catMinute < 10
+                ? catHour + ":0" + catMinute
+                : catHour + ":" + catMinute;
+        if(!active) {
+            return "There is `" + timeStr + "` left until Peasuke arrives";
         }
-        return output;
+        return "Now! There is `" + timeStr + "` left until Peasuke leaves";
     }
 }

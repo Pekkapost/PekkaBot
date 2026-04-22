@@ -28,6 +28,8 @@ public class fishManager {
     private static Map<String, ZonedDateTime> playerTime = new HashMap<>();
     private static Map<String, Double> rareFish = new HashMap<>();
     private static ArrayList<String> fishList = new ArrayList<>();
+    // region 0 = PekkaCoin, region 1 = PekkaPoint (post-prestige).
+    // Earning 10M PekkaCoins triggers a prestige: coins convert to PekkaPoints.
     public static void callMe(MessageChannel channel, User author, String location, int points) {
         String id = author.getId();
         if(playerTime.containsKey(author.getId())){

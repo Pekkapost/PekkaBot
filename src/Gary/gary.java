@@ -17,6 +17,7 @@ public class gary extends Command {
         String message = e.getMessage().getContentRaw().toLowerCase();
         boolean name = false;
         if(!message.equals(BotConstants.prefix + "gary")) {
+            // Strip prefix + "gary " (5 chars) to isolate the character name argument
             message = message.substring(5 + BotConstants.prefix.length());
             name = true;
         }

@@ -15,7 +15,7 @@ public class pekka extends Command {
         String message = event.getMessage().getContentRaw().toLowerCase();
         if(message.contains("wg") || message.contains("white gate"))
             event.getTextChannel().sendMessage(BotConstants.whiteGate).queue();
-        if(message.contains("ad"))
+        else if(message.contains("ad"))
             event.getTextChannel().sendMessage(BotConstants.ad).queue();
         else
             event.getTextChannel().sendMessage(BotConstants.help).queue();

@@ -28,9 +28,9 @@ public class GuildMessageRespond extends ListenerAdapter {
         }
         // Check if message is a white gate response
         for (int i = 0; i < event.getMessage().getMentions().getUsers().size(); i++) {
-            // If PekkaBot is mentioned
+            // If PekkaBot is mentioned (hard-coded bot ID)
             if (event.getMessage().getMentions().getUsers().get(i).getIdLong() == 379513566711119872L) {
-                //Have to try to replace both since mobile discord is dumb
+                // Mobile Discord sends <@!id> while desktop sends <@id>, so strip both
                 message = message.replace("<@!379513566711119872>", "");
                 message = message.replace("<@379513566711119872>", "");
                 System.out.println(message);

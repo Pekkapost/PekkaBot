@@ -4,6 +4,11 @@ import Structures.weightedRandomBag;
 
 import java.io.*;
 
+// Reads and writes Storage/GachaList.txt.
+// File format per banner:
+//   Banner N                 : Banner Name
+//   CharacterName|3star%|4star%|5star%
+//   (blank line separates banners; 10th-pull rates use parentheses: e.g. 75(90)%)
 public class gachaRead {
     public static String checkList() {
         String output = "```Apache\n" +

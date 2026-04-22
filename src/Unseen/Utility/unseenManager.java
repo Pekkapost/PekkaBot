@@ -39,7 +39,6 @@ public class unseenManager {
             Object[] links = unseenFile.values().toArray();
             link = (String) links[rand.nextInt(links.length)];
         }
-        //System.out.println("Debug: " + link);
         return link;
     }
     public static String findMe(String unit){

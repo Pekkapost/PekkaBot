@@ -7,11 +7,7 @@ import java.net.URLConnection;
 
 public class urlParse {
     public static void callMe(String num, String name, String currentBanner) throws Exception {
-        try {
-            parseMe(num,name,currentBanner);
-        }catch (Exception e){
-            throw e;
-        }
+        parseMe(num, name, currentBanner);
     }
     public static void checkBanner(String num) {
         try {

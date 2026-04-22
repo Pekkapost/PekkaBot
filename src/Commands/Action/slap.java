@@ -4,6 +4,7 @@ import Constants.BotConstants;
 import Manager.EmbedManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;
+import net.dv8tion.jda.api.entities.User;
 
 public class slap extends Command {
     public slap() {
@@ -17,8 +18,8 @@ public class slap extends Command {
             message = "*Slaps* <@" + event.getAuthor().getId() + "> ";
         } else {
             StringBuilder names = new StringBuilder();
-            for(int i = 0; i < event.getMessage().getMentions().getUsers().size(); ++i) {
-                names.append("<@").append(event.getMessage().getMentions().getUsers().get(i).getId()).append("> ");
+            for(User user : event.getMessage().getMentions().getUsers()) {
+                names.append("<@").append(user.getId()).append("> ");
             }
             message = "*Slaps*  " + names + " ";
         }

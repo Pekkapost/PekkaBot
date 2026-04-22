@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+// Weighted random selection using cumulative weight buckets.
+// Each entry stores the running total weight; getRandom() picks a random
+// value in [0, total] and returns the first entry whose cumulative weight
+// meets or exceeds it.
 public class weightedRandomBag<T> {
     private class Entry {
         double accumulatedWeight;
@@ -22,6 +26,7 @@ public class weightedRandomBag<T> {
         entries.add(e);
     }
 
+    // Clears all entries so the bag can be repopulated (used when banners reload).
     public void purge(){
         entries.clear();
         accumulatedWeight = 0;
@@ -29,13 +34,12 @@ public class weightedRandomBag<T> {
 
     public T getRandom() {
         double r = rand.nextDouble() * accumulatedWeight;
-
         for (Entry entry : entries) {
             if (entry.accumulatedWeight >= r) {
                 return entry.object;
             }
         }
-        return null; //should only happen when there are no entries
+        return null;
     }
 
     public boolean isEmpty() {

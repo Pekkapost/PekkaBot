@@ -8,7 +8,7 @@ import Framework.Command.CommandEvent;
 public class fishDex extends Command {
     public fishDex() {
         this.name = "FishDex";
-        this.aliases = new String[]{"FishDex","FDex","PekkaDex","PDex"};
+        this.aliases = new String[]{"FDex","PekkaDex","PDex"};
         this.help = "Fish Dex";
     }
     @Override
@@ -17,7 +17,7 @@ public class fishDex extends Command {
         int page = 1;
         if(message.contains(" ")) {
             try {
-                page = Integer.valueOf(message.substring(message.lastIndexOf(" ") + 1));
+                page = Integer.parseInt(message.substring(message.lastIndexOf(" ") + 1));
             } catch(NumberFormatException error) {
                 event.getTextChannel().sendMessage("Please use the correct format.").queue();
                 return;
@@ -32,7 +32,7 @@ public class fishDex extends Command {
                         fishManager.getMyFishDex(event.getAuthor().getId()), fishManager.getAllFishDex(), page);
             }
         } else {
-            event.getTextChannel().sendMessage("There are only " + Math.ceil(fishManager.getAllFishDex()/12) + " pages");
+            event.getTextChannel().sendMessage("There are only " + Math.ceil(fishManager.getAllFishDex()/12) + " pages").queue();
         }
     }
 }

@@ -17,10 +17,10 @@ public class unseen extends Command {
         String message = e.getMessage().getContentRaw().toLowerCase();
         boolean name = false;
         if(!message.equals(BotConstants.prefix + "unseen")) {
+            // Strip prefix + "unseen " (7 chars) to isolate the character name argument
             message = message.substring(7 + BotConstants.prefix.length());
             name = true;
         }
-        System.out.println(message);
         String link = unseenManager.callMe(message,name);
         String title = "Is this the Unseen you're looking for?";
         EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), link, title);
