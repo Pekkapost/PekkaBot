@@ -1,6 +1,8 @@
 src/Constants/BotConstants.java
 out/
-Storage/PekkaBot.db
-Storage/Backup/
+data/PekkaBot.db
+data/Backup/
+.idea/
+*.iml
 Input.txt
 Reasoning.txt

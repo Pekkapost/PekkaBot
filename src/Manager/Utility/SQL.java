@@ -2,7 +2,11 @@ package Manager.Utility;
 
 import java.sql.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SQL {
+    private static final Logger logger = LoggerFactory.getLogger(SQL.class);
     private Connection c = null;
     // DB tables:
     //   Chronos   — Id, Points
@@ -13,10 +17,10 @@ public class SQL {
     public SQL() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:Storage/PekkaBot.db");
-            System.out.println("SQLite Connected");
+            c = DriverManager.getConnection("jdbc:sqlite:data/PekkaBot.db");
+            logger.info("SQLite connected");
         } catch (Exception e) {
-            System.out.println("    SQLite Error " + e);
+            logger.error("SQLite connection error", e);
         }
     }
 
@@ -35,7 +39,7 @@ public class SQL {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Get Points Error " + e);
+            logger.error("SQLite getPoints error", e);
         }
         return 0;
     }
@@ -56,7 +60,7 @@ public class SQL {
                 psUpdate.execute();
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Update Points Error " + e);
+            logger.error("SQLite updatePoints error", e);
         }
     }
 
@@ -81,12 +85,12 @@ public class SQL {
                             rs.getInt("ElementF"), rs.getInt("BalloonF"), rs.getInt("WellF")
                         };
                     } else {
-                        System.out.println("    SQLite: Get White Gate Cannot find user");
+                        logger.warn("SQLite getWhiteGate: user not found");
                     }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Get White Gate Points Error " + e);
+            logger.error("SQLite getWhiteGate error", e);
         }
         return new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     }
@@ -120,12 +124,12 @@ public class SQL {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Get White Gate Total Points Error " + e);
+            logger.error("SQLite getTotalWhiteGate error", e);
         }
         return new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     }
 
-    // option must be a known WhiteGate column name — validated by callers in pingWG.java
+    // option must be a known WhiteGate column name — validated by callers in PingWG.java
     public synchronized void updateWhiteGate(String id, String option) {
         try {
             checkConnection();
@@ -142,7 +146,7 @@ public class SQL {
                 psInsert.execute();
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Update White Gate Error " + e);
+            logger.error("SQLite updateWhiteGate error", e);
         }
     }
 
@@ -171,7 +175,7 @@ public class SQL {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Update White Gate Error " + e);
+            logger.error("SQLite updateWhiteGate error", e);
         }
     }
 
@@ -188,12 +192,12 @@ public class SQL {
                             rs.getInt("Green"), rs.getInt("Red")
                         };
                     } else {
-                        System.out.println("    SQLite: Get Ad Cannot find user");
+                        logger.warn("SQLite getAd: user not found");
                     }
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Get Ad Points Error " + e);
+            logger.error("SQLite getAd error", e);
         }
         return new int[]{0,0,0,0,0};
     }
@@ -214,12 +218,12 @@ public class SQL {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Get Ad Total Points Error " + e);
+            logger.error("SQLite getAdTotal error", e);
         }
         return new int[]{0,0,0,0,0};
     }
 
-    // option must be a known Ad column name — validated by callers in pingAd.java
+    // option must be a known Ad column name — validated by callers in PingAd.java
     public synchronized void updateAd(String id, String option) {
         try {
             checkConnection();
@@ -236,7 +240,7 @@ public class SQL {
                 psInsert.execute();
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Update Ad Error " + e);
+            logger.error("SQLite updateAd error", e);
         }
     }
 
@@ -264,7 +268,7 @@ public class SQL {
                 c.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            System.out.println("    SQLite: Update Shion Error " + e);
+            logger.error("SQLite updateShion error", e);
         }
         return 0;
     }
@@ -274,7 +278,7 @@ public class SQL {
         try {
             if (c != null) c.close();
         } catch (SQLException e) {
-            System.out.println("    SQLite: Close Error " + e);
+            logger.error("SQLite close error", e);
         }
     }
 }

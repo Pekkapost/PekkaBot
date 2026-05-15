@@ -1,0 +1,6 @@
+# Java dependencies — JARs live in libs/ at the repo root.
+# Pin versions here so a fresh clone knows what to drop into libs/.
+JDA                  6.4.1     (libs/JDA-6.4.1-withDependencies.jar)
+sqlite-jdbc          3.49.1.0  (libs/sqlite-jdbc-3.49.1.0.jar)
+jsoup                1.21.1    (libs/jsoup-1.21.1.jar)
+slf4j-simple         2.0.17    (libs/slf4j-simple-2.0.17.jar)

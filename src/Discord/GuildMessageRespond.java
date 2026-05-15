@@ -1,8 +1,8 @@
 package Discord;
 
 import Manager.SQLManager;
-import Commands.WhiteGate.Utility.pingWG;
-import Commands.Ad.Utility.pingAd;
+import Commands.WhiteGate.Utility.PingWG;
+import Commands.Ad.Utility.PingAd;
 
 import Constants.BotConstants;
 import net.dv8tion.jda.api.Permission;
@@ -37,7 +37,7 @@ public class GuildMessageRespond extends ListenerAdapter {
                 if (message.contains("drawer") ||
                         message.contains("window") ||
                         message.contains("bed")) {
-                    String output = pingWG.check(event, event.getAuthor().getId(), message);
+                    String output = PingWG.check(event, event.getAuthor().getId(), message);
                     // Try to add an emoji
                     if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
@@ -45,7 +45,7 @@ public class GuildMessageRespond extends ListenerAdapter {
                     }
                     event.getChannel().sendMessage("Received(in reverse): " + output).queue();
                 } else if (!message.isBlank() && message.matches("[512gr\\s]*")) {
-                    String output = pingAd.check(event.getAuthor().getId(), message);
+                    String output = PingAd.check(event.getAuthor().getId(), message);
                     if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&
                             event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_EXT_EMOJI)) {
                         event.getMessage().addReaction(Emoji.fromCustom("KleeHugBomb", 783883423054823434L, false)).queue();

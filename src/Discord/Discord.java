@@ -2,11 +2,11 @@ package Discord;
 
 import Commands.Action.*;
 import Commands.Currency.Chronos.*;
-import Commands.Currency.shion;
+import Commands.Currency.Shion;
 import Commands.Gacha.Utility.Admin.*;
 import Commands.Gacha.*;
 import Commands.Other.*;
-import Commands.Other.Help.pekka;
+import Commands.Other.Help.Pekka;
 import Commands.Timer.*;
 import Commands.WhiteGate.*;
 import Commands.Ad.*;
@@ -22,7 +22,12 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Discord {
+    private static final Logger logger = LoggerFactory.getLogger(Discord.class);
+
     net.dv8tion.jda.api.JDA d;
     public Discord() {
         try {
@@ -32,40 +37,40 @@ public class Discord {
             builder.setPrefix(BotConstants.prefix);
             builder.useHelpBuilder(false);
             builder.addCommands(
-                    new jokes(),
-                    new slap(),
-                    new gz(),
-                    new hug(),
-                    new pat(),
-                    new scold(),
-                    new highFive(),
-                    new wink(),
-                    new slam(),
-                    new whale(),
-                    new gimmie(),
-                    new dango(),
-                    new tiramisu(),
-                    new timeReset(),
-                    new timeCat(),
-                    new gary(),
-                    new unseen(),
-                    new wgMy(),
-                    new wgRandom(),
-                    new wgTotal(),
-                    new adMy(),
-                    new adTotal(),
-                    new bless(),
-                    new gacha(),
-                    new gachaBanner(),
-                    new chronosDisplay(),
-                    new shion(),
-                    new addMe(),
-                    new pekka(),
-                    new admin(),
-                    new bannerUpdate(),
-                    new update(),
-                    new clear(),
-                    new exit()
+                    new Jokes(),
+                    new Slap(),
+                    new Gz(),
+                    new Hug(),
+                    new Pat(),
+                    new Scold(),
+                    new HighFive(),
+                    new Wink(),
+                    new Slam(),
+                    new Whale(),
+                    new Gimmie(),
+                    new Dango(),
+                    new Tiramisu(),
+                    new TimeReset(),
+                    new TimeCat(),
+                    new Gary(),
+                    new Unseen(),
+                    new WgMy(),
+                    new WgRandom(),
+                    new WgTotal(),
+                    new AdMy(),
+                    new AdTotal(),
+                    new Bless(),
+                    new Gacha(),
+                    new GachaBanner(),
+                    new ChronosDisplay(),
+                    new Shion(),
+                    new AddMe(),
+                    new Pekka(),
+                    new Admin(),
+                    new BannerUpdate(),
+                    new Update(),
+                    new Clear(),
+                    new Exit()
                     );
             CommandClient client = builder.build();
             // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal
@@ -82,7 +87,7 @@ public class Discord {
                     new GuildMessageRespond(),
                     client);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to build JDA client", e);
         }
     }
 
@@ -91,10 +96,10 @@ public class Discord {
             User temp = d.retrieveUserById(id).complete();
             return temp.getName();
         } catch (NullPointerException e) {
-            System.out.println("User cannot be found " + id);
+            logger.warn("getUserName: user {} not found", id);
             return id;
         } catch (Exception e) {
-            System.out.println("    Error: Get User Name " + e);
+            logger.error("getUserName failed for {}", id, e);
             return id;
         }
     }

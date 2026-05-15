@@ -1,0 +1,16 @@
+package Commands.Other;
+
+import Manager.EmbedManager;
+import Framework.Command.Command;
+import Framework.Command.CommandEvent;
+
+public class Dango extends Command {
+    public Dango() {
+        this.name = "Dango";
+        this.help = "Displays a dango";
+    }
+    @Override
+    protected void execute(CommandEvent event) {
+        EmbedManager.dango(event.getTextChannel());
+    }
+}
