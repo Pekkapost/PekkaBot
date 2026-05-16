@@ -3,8 +3,6 @@ package Discord;
 import Commands.Action.*;
 import Commands.Currency.Chronos.*;
 import Commands.Currency.Shion;
-import Commands.Gacha.Utility.Admin.*;
-import Commands.Gacha.*;
 import Commands.Other.*;
 import Commands.Other.Help.Pekka;
 import Commands.Timer.*;
@@ -59,17 +57,11 @@ public class Discord {
                     new WgTotal(),
                     new AdMy(),
                     new AdTotal(),
-                    new Bless(),
-                    new Gacha(),
-                    new GachaBanner(),
                     new ChronosDisplay(),
                     new Shion(),
                     new AddMe(),
                     new Pekka(),
                     new Admin(),
-                    new BannerUpdate(),
-                    new Update(),
-                    new Clear(),
                     new Exit()
                     );
             CommandClient client = builder.build();

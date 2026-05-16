@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 //   - the JAR file itself, when launched via `java -jar PekkaBot.jar`
 //   - the compile output directory, when launched from an IDE
 // Either way, its parent directory is the project root that contains
-// data/, assets/, libs/ at deployment time.
+// data/ and libs/ at deployment time.
 public final class Paths {
     private static final Logger logger = LoggerFactory.getLogger(Paths.class);
     private static final File PROJECT_ROOT = resolveProjectRoot();
@@ -25,10 +25,6 @@ public final class Paths {
 
     public static File data(String relative) {
         return new File(new File(PROJECT_ROOT, "data"), relative);
-    }
-
-    public static File asset(String relative) {
-        return new File(new File(PROJECT_ROOT, "assets"), relative);
     }
 
     // SQLite's JDBC connection string takes a string path, not a File.
@@ -42,11 +38,10 @@ public final class Paths {
             File codeSource = new File(location.toURI());
             // JAR file → parent is the project root.
             // Compile output dir (e.g. out/production/PekkaBot/) → walk up
-            // until we find one that has data/ or assets/ alongside it.
+            // until we find one that has data/ or libs/ alongside it.
             File candidate = codeSource.isFile() ? codeSource.getParentFile() : codeSource;
             for (int i = 0; i < 6 && candidate != null; i++) {
                 if (new File(candidate, "data").isDirectory()
-                        || new File(candidate, "assets").isDirectory()
                         || new File(candidate, "libs").isDirectory()) {
                     return candidate;
                 }

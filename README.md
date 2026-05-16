@@ -16,9 +16,8 @@ PekkaBot/
 │   └── Util/           # cross-cutting utilities (e.g. Paths anchoring)
 ├── config/             # host-local config + dependency manifest
 │   └── BotConstants.java  # gitignored — Discord token, prefix, ...
-├── data/               # runtime state (gitignored except GachaList.txt)
-├── libs/               # JAR dependencies
-└── assets/             # static binary content (gacha PNGs, etc.)
+├── data/               # runtime state (gitignored)
+└── libs/               # JAR dependencies
 ```
 
 ## Tech Stack
@@ -27,7 +26,6 @@ PekkaBot/
 |---|---|---|
 | [JDA](https://github.com/discord-jda/JDA) | 6.4.1 | Discord API wrapper |
 | [sqlite-jdbc](https://github.com/xerial/sqlite-jdbc) | 3.49.1.0 | SQLite database driver |
-| [jsoup](https://jsoup.org/) | 1.21.1 | HTML parsing |
 | [SLF4J Simple](https://www.slf4j.org/) | 2.0.17 | Logging backend |
 | Java | 17+ | Runtime |
 
@@ -37,7 +35,7 @@ The entry point is [`Connection.java`](Connection.java) at the repo root (defaul
 
 ### **1. Install dependencies**
 
-Drop the four JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`](libs/) at the repo root. Versions matter — older JDA releases use a different API.
+Drop the three JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`](libs/) at the repo root. Versions matter — older JDA releases use a different API.
 
 ### **2. BotConstants.java**
 
@@ -80,13 +78,13 @@ Produce `PekkaBot.jar` at the repo root. In IntelliJ: *File → Project Structur
 java -jar PekkaBot.jar
 ```
 
-[`data/`](data/) and [`assets/`](assets/) are resolved relative to the JAR's own location (see [`src/Util/Paths.java`](src/Util/Paths.java)), not the process working directory, so the bot can be launched from anywhere as long as the JAR sits next to those directories. SQLite writes go to [`data/PekkaBot.db`](data/); gacha banner definitions come from [`data/GachaList.txt`](data/GachaList.txt). Both files are created on first run if missing.
+[`data/`](data/) is resolved relative to the JAR's own location (see [`src/Util/Paths.java`](src/Util/Paths.java)), not the process working directory, so the bot can be launched from anywhere as long as the JAR sits next to it. SQLite writes go to [`data/PekkaBot.db`](data/), which is created on first run if missing.
 
 ## Architecture
 
 | Module | Description |
 |---|---|
-| [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager` and triggers the initial gacha banner load. |
+| [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager`. |
 | [config/BotConstants.java](config/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
 | [src/Discord/Discord.java](src/Discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
 | [src/Discord/DiscordManager.java](src/Discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
@@ -95,11 +93,10 @@ java -jar PekkaBot.jar
 | [src/Manager/EmbedManager.java](src/Manager/EmbedManager.java) | Helpers for building Discord embeds. |
 | [src/Manager/SQLManager.java](src/Manager/SQLManager.java) | Application-level wrappers around `Utility/SQL.java`. |
 | [src/Manager/Utility/SQL.java](src/Manager/Utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
-| [src/Util/Paths.java](src/Util/Paths.java) | Resolves `data/` and `assets/` paths against the JAR's own location, not the process CWD. |
-| [src/Structures/](src/Structures/) | `WeightedRandomBag<T>` for gacha/bless random selection; `Pair` helper tuple. |
-| [src/Commands/](src/Commands/) | All commands grouped by feature: Action, Ad, Currency, Gacha, Gary, Other, Timer, Unseen, WhiteGate. |
-| [data/](data/) | Runtime state. Holds `PekkaBot.db` (gitignored) and `GachaList.txt` (banner definitions). |
-| [assets/](assets/) | Static binary content the bot reads (gacha character PNGs and the base/export pull image). |
+| [src/Util/Paths.java](src/Util/Paths.java) | Resolves `data/` paths against the JAR's own location, not the process CWD. |
+| [src/Structures/](src/Structures/) | `Pair` helper tuple. |
+| [src/Commands/](src/Commands/) | All commands grouped by feature: Action, Ad, Currency, Gary, Other, Timer, Unseen, WhiteGate. |
+| [data/](data/) | Runtime state. Holds `PekkaBot.db` (gitignored). |
 
 ## Adding a new command
 
@@ -137,14 +134,6 @@ All commands use the configured `prefix` (e.g. `p!`).
 | `WhiteGate` | `WG`, `WGMy`, `MyWG` | Display your white gate data. |
 | `WhiteGateRandom` | `RandomWG`, `WGRandom` | Return a random white gate. |
 | `WGTotal` | `TotalWG`, `WGT` | Display total white gate data across all users. |
-
-### **Gacha**
-
-| Command | Aliases | Description |
-|---|---|---|
-| `Gacha` | `G` | Roll on the current banner. Uploads the result image. |
-| `GachaBanner` | `BannerList`, `GBanner` | List all configured banners. |
-| `Bless` | `B` | Bless the user. |
 
 ### **Ads**
 
@@ -199,17 +188,13 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 
 | Command | Description |
 |---|---|
-| `BannerUpdate` | Reload gacha banner data from `data/GachaList.txt`. |
-| `Update` | Admin update command. |
-| `Clear` | Admin clear command. |
 | `Exit` | Shut down the bot. |
 
 ## Limitations
 
 - The bot relies on the *Message Content Intent* and the legacy prefix-command model. JDA's slash-command path isn't wired up.
-- SQLite writes go straight to [`data/PekkaBot.db`](data/) without the tmp + rename atomic-write pattern described in [`DESIGN.md`](DESIGN.md) §15. SQLite's own WAL gives some crash safety, but the bot relies on it rather than enforcing atomic semantics at the application layer. The GachaList.txt write paths in [`src/Commands/Gacha/Utility/UrlParse.java`](src/Commands/Gacha/Utility/UrlParse.java) do use atomic-replace via `atomicReplace(...)`.
-- [`assets/Gacha/`](assets/) is gitignored — character PNGs and the base pull image must be supplied locally for the `Gacha` command to render. Missing files surface as logged errors, not crashes.
-- The fishing sub-feature has been removed from earlier versions; no schema migration was needed because its tables were never live in this branch.
+- SQLite writes go straight to [`data/PekkaBot.db`](data/) without the tmp + rename atomic-write pattern described in [`DESIGN.md`](DESIGN.md) §15. SQLite's own WAL gives some crash safety, but the bot relies on it rather than enforcing atomic semantics at the application layer.
+- The fishing and gacha sub-features have been removed from earlier versions; no schema migration was needed because their tables were never live in this branch.
 
 ## Authors
 
