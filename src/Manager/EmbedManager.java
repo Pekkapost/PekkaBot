@@ -60,9 +60,9 @@ public class EmbedManager {
             EmbedBuilder builder = new EmbedBuilder();
             builder.setColor(Color.PINK);
             builder.setTitle(author.getName() + "'s Ad Results");
-            builder.addField("5 <:ChronosStone:719806042606665738>",  String.valueOf(temp[0]), true);
-            builder.addField("10 <:ChronosStone:719806042606665738>", String.valueOf(temp[1]), true);
-            builder.addField("20 <:ChronosStone:719806042606665738>", String.valueOf(temp[2]), true);
+            builder.addField("5 <:chronos:540404637581443095>",  String.valueOf(temp[0]), true);
+            builder.addField("10 <:chronos:540404637581443095>", String.valueOf(temp[1]), true);
+            builder.addField("20 <:chronos:540404637581443095>", String.valueOf(temp[2]), true);
             builder.addField("G Key", String.valueOf(temp[3]), true);
             builder.addField("R Key", String.valueOf(temp[4]), true);
             builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
