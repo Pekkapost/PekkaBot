@@ -1,6 +1,6 @@
 package commands.other;
 
-import config.BotConstants;
+import util.Resources;
 import framework.command.Command;
 import framework.command.CommandEvent;
 
@@ -11,6 +11,6 @@ public class AddMe extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getChannel().sendMessage(BotConstants.addME).queue();
+        event.getChannel().sendMessage(Resources.addME).queue();
     }
 }

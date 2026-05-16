@@ -1,6 +1,6 @@
 package commands.currency;
 
-import config.BotConstants;
+import util.Resources;
 import manager.EmbedManager;
 import manager.SQLManager;
 import framework.command.Command;
@@ -14,6 +14,6 @@ public class Shion extends Command {
     @Override
     protected void execute(CommandEvent event) {
         int count = SQLManager.updateShion();
-        event.getTextChannel().sendMessage(count + " Shions have been shioned " + BotConstants.shion).queue();
+        event.getTextChannel().sendMessage(count + " Shions have been shioned " + Resources.shion).queue();
     }
 }

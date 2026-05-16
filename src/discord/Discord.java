@@ -1,19 +1,11 @@
 package discord;
 
-import commands.action.*;
-import commands.currency.chronos.*;
-import commands.currency.Shion;
-import commands.other.*;
-import commands.other.help.Pekka;
-import commands.timer.*;
-import commands.whitegate.*;
-import commands.ad.*;
 import config.BotConstants;
-import commands.gary.*;
-import commands.unseen.*;
-
+import framework.command.Command;
 import framework.command.CommandClient;
 import framework.command.CommandClientBuilder;
+import util.CommandLoader;
+
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.User;
@@ -34,36 +26,7 @@ public class Discord {
             builder.setCoOwnerIds(BotConstants.discordCoOwner);
             builder.setPrefix(BotConstants.prefix);
             builder.useHelpBuilder(false);
-            builder.addCommands(
-                    new Jokes(),
-                    new Slap(),
-                    new Gz(),
-                    new Hug(),
-                    new Pat(),
-                    new Scold(),
-                    new HighFive(),
-                    new Wink(),
-                    new Slam(),
-                    new Whale(),
-                    new Gimmie(),
-                    new Dango(),
-                    new Tiramisu(),
-                    new TimeReset(),
-                    new TimeCat(),
-                    new Gary(),
-                    new Unseen(),
-                    new WgMy(),
-                    new WgRandom(),
-                    new WgTotal(),
-                    new AdMy(),
-                    new AdTotal(),
-                    new ChronosDisplay(),
-                    new Shion(),
-                    new AddMe(),
-                    new Pekka(),
-                    new Admin(),
-                    new Exit()
-                    );
+            builder.addCommands(CommandLoader.discover().toArray(new Command[0]));
             CommandClient client = builder.build();
             // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal
             d = JDABuilder.create(

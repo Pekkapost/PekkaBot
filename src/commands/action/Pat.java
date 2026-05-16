@@ -1,6 +1,6 @@
 package commands.action;
 
-import config.BotConstants;
+import util.Resources;
 import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
@@ -23,6 +23,6 @@ public class Pat extends Command {
             }
             message = "*Pats*  " + names + " ";
         }
-        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.pat, message);
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), Resources.pat, message);
     }
 }

@@ -1,6 +1,6 @@
 package commands.other;
 
-import config.BotConstants;
+import util.Resources;
 import manager.EmbedManager;
 import commands.gary.utility.GaryManager;
 import framework.command.Command;
@@ -21,9 +21,9 @@ public class Tiramisu extends Command {
         if(rand <= 33) {
             url = GaryManager.findMe("tiramisu");
         } else if(rand <= 66) {
-            url = BotConstants.tiramisuCharacter;
+            url = Resources.tiramisuCharacter;
         } else {
-            url = BotConstants.tiramisuCake;
+            url = Resources.tiramisuCake;
         }
         String title = "Is this the Tiramisu you're looking for?";
         EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), url, title);

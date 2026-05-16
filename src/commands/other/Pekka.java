@@ -1,4 +1,4 @@
-package commands.other.help;
+package commands.other;
 
 import framework.command.Command;
 import framework.command.CommandEvent;

@@ -1,6 +1,6 @@
 package commands.action;
 
-import config.BotConstants;
+import util.Resources;
 import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
@@ -23,6 +23,6 @@ public class Hug extends Command {
             }
             message = "*Hugs*  " + names + " ";
         }
-        EmbedManager.action(event.getTextChannel(), event.getAuthor(), BotConstants.hug, message);
+        EmbedManager.action(event.getTextChannel(), event.getAuthor(), Resources.hug, message);
     }
 }

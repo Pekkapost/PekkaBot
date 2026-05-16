@@ -39,17 +39,16 @@ Drop the three JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`
 
 ### **2. BotConstants.java**
 
-`config/BotConstants.java` is gitignored. Create it locally with at minimum:
+`config/BotConstants.java` is gitignored — it holds the secrets and per-host knobs. Create it locally with exactly these four fields:
 
 ```java
 package config;
 
 public class BotConstants {
-    public static final String discordToken   = "YOUR_BOT_TOKEN";
-    public static final String prefix         = "p!";
-
-    public static final String helpText       = "";
-    public static final String addMeUrl       = "";
+    public static final String   discordToken   = "YOUR_BOT_TOKEN";
+    public static final String   discordOwner   = "YOUR_DISCORD_USER_ID";
+    public static final String[] discordCoOwner = {};
+    public static final String   prefix         = "p!";
 }
 ```
 
@@ -57,9 +56,11 @@ In IntelliJ, mark [`config/`](config/) as a source root (*right-click → Mark D
 
 `discordToken` is your bot's secret. Copy it from your application's *Bot → Token* tab. Never commit it.
 
-`prefix` is the prefix every command uses (e.g. `p!gacha`).
+`discordOwner` / `discordCoOwner` are Discord user IDs that bypass owner-only command checks.
 
-`addMeUrl` is what `/addMe` posts. Generate it from your application's *OAuth2 → URL Generator* tab.
+`prefix` is the prefix every command uses (e.g. `p!hug`).
+
+Everything else the bot ships with — invite URL, action-command GIF URLs, image URLs — lives in [`src/util/Resources.java`](src/util/Resources.java) instead. That file *is* tracked in git; populate it once and the values stay in sync with the repo.
 
 ### **3. Discord Developer Portal**
 
@@ -85,22 +86,24 @@ java -jar PekkaBot.jar
 | Module | Description |
 |---|---|
 | [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager`. |
-| [config/BotConstants.java](config/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
-| [src/discord/Discord.java](src/discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
+| [config/BotConstants.java](config/BotConstants.java) | Discord token, owner ids, and prefix. Gitignored. |
+| [src/util/Resources.java](src/util/Resources.java) | Tracked-in-git string content the bot ships with: invite URL, action GIFs, image URLs. |
+| [src/discord/Discord.java](src/discord/Discord.java) | Builds the JDA client, auto-loads every command via `CommandLoader`, and wires up the message listener. |
 | [src/discord/DiscordManager.java](src/discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
 | [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
 | [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
-| [src/manager/EmbedManager.java](src/manager/EmbedManager.java) | Helpers for building Discord embeds. |
+| [src/manager/EmbedManager.java](src/manager/EmbedManager.java) | Helpers for building Discord embeds, including the dynamically-generated help embed. |
 | [src/manager/SQLManager.java](src/manager/SQLManager.java) | Application-level wrappers around `utility/SQL.java`. |
 | [src/manager/utility/SQL.java](src/manager/utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
+| [src/util/CommandLoader.java](src/util/CommandLoader.java) | Reflection-based command discovery — walks the `commands` package and instantiates every concrete `Command` subclass. |
 | [src/util/Paths.java](src/util/Paths.java) | Resolves `data/` paths against the JAR's own location, not the process CWD. |
 | [src/structures/](src/structures/) | `Pair` helper tuple. |
-| [src/commands/](src/commands/) | All commands grouped by feature: action, ad, currency, gary, other, timer, unseen, whitegate. |
+| [src/commands/](src/commands/) | All commands grouped by feature: action, ad, currency, gary, other, timer, unseen, whitegate. Auto-loaded on startup. |
 | [data/](data/) | Runtime state. Holds `PekkaBot.db` (gitignored). |
 
 ## Adding a new command
 
-Drop a class under the appropriate `src/commands/<feature>/` package that extends [`Command`](src/framework/command/Command.java), then add a `new YourCommand()` line to the `builder.addCommands(...)` block in [`src/discord/Discord.java`](src/discord/Discord.java). Minimum skeleton:
+Drop a class under the appropriate `src/commands/<feature>/` package that extends [`Command`](src/framework/command/Command.java) and has a no-arg constructor — [`CommandLoader`](src/util/CommandLoader.java) finds it on startup. No registration line anywhere. Minimum skeleton:
 
 ```java
 package commands.other;
@@ -121,7 +124,9 @@ public class Hello extends Command {
 }
 ```
 
-Recompile and restart. Files under `src/commands/<feature>/utility/` are support modules, not commands themselves — they don't need to be registered.
+Rebuild and restart. The help embed picks up the new command from its `name` and `help` fields, bucketing it into the section that matches its package (`commands.other.Hello` → **Other**). To add a brand-new category with its own help-embed heading, add one line to [`EmbedManager.HELP_CATEGORY_DISPLAY`](src/manager/EmbedManager.java); otherwise commands in unknown packages fall into the trailing **Other** bucket.
+
+Files under `src/commands/<feature>/utility/` are support modules — they don't extend `Command`, so `CommandLoader` ignores them.
 
 ## Commands
 
@@ -161,21 +166,16 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 
 | Command | Description |
 |---|---|
-| `Gz` | Congratulate a user. |
 | `Hug` | Hug a user. |
 | `Pat` | Pat a user. |
 | `Slap` | Slap a user. |
 | `Slam` | Slam a user. |
 | `Scold` | Scold a user. |
-| `HighFive` | High-five a user. |
-| `Wink` | Wink at a user. |
 
 ### **Other**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Jokes` | — | List the joke commands. |
-| `Whale` | — | Post a whale. |
 | `Dango` | — | Post a dango. |
 | `Tiramisu` | `Tira` | Post a tiramisu. |
 | `Gimmie` | — | Gimmie. |
