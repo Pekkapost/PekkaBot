@@ -78,6 +78,8 @@ public class SQL {
                 ps.setString(1, id);
                 try (ResultSet rs = ps.executeQuery()) { exists = rs.next(); }
             }
+            // 5 points per qualifying message — the Chronos economy is balanced
+            // around this rate. Changing it would inflate every historical row.
             String query = exists
                     ? "UPDATE Chronos SET Points = Points + 5 WHERE Id = ?"
                     : "INSERT INTO Chronos (Id, Points) VALUES (?,5)";

@@ -108,6 +108,9 @@ public class TimerManager {
         int minute = now.getMinute();
         String day = now.getDayOfWeek().name();
 
+        // Collapse (day, hour, minute) into a single "minutes since Monday 00:00"
+        // axis so the cat-active windows are just numeric intervals to compare
+        // against — much simpler than nested day-of-week + time checks below.
         int totalMinutes = 0;
         switch(day) {
             case "MONDAY":    totalMinutes = 0;           break;

@@ -32,7 +32,6 @@ public class PingWG {
         }
     }
 
-    // Layer 1: identify the entrance (drawer / window / bed)
     public static String check(MessageReceivedEvent event, String id, String message) {
         StringBuilder output = new StringBuilder();
         String entrance = message.contains("drawer") ? "drawer"
@@ -52,7 +51,6 @@ public class PingWG {
         return output.toString();
     }
 
-    // Layer 2: identify the area (lake / plant)
     private static boolean checkArea(String id, String message, StringBuilder output) {
         String area = (message.contains("lake") || message.contains("pond")) ? "lake"
                     : message.contains("plant") ? "plant"
@@ -68,7 +66,6 @@ public class PingWG {
         return true;
     }
 
-    // Layer 3: identify the position (left / middle / right)
     private static boolean checkPosition(String id, String message, StringBuilder output) {
         String pos = message.contains("left")                              ? "left"
                    : (message.contains("middle") || message.contains("center")) ? "middle"
@@ -85,7 +82,6 @@ public class PingWG {
         return true;
     }
 
-    // Layer 4: identify the path (boat / door)
     private static boolean checkPath(String id, String message, StringBuilder output) {
         String path = message.contains("boat") ? "boat"
                     : message.contains("door") ? "door"
@@ -101,8 +97,8 @@ public class PingWG {
         return true;
     }
 
-    // Layer 5: identify the destination (element / balloon / well / varuo)
-    // Varuo is always a win; the others check for "win" in the message.
+    // Varuo is always a win — the rare layer-5 destination has no "fail" column
+    // in the schema. The other three destinations check the message for "win".
     private static boolean checkDestination(String id, String message, StringBuilder output) {
         if (message.contains("element")) {
             String key = isWin(message) ? "element" : "elementF";
@@ -127,8 +123,9 @@ public class PingWG {
         return false;
     }
 
-    // Returns true if the message contains "win" as a result indicator.
-    // Removes all "window" occurrences first to prevent false positives.
+    // Strip "window" before checking — the layer-1 entrance keyword contains
+    // "win" as a substring, which would otherwise mark every windowed gate
+    // as a destination-win even when no actual "win" was reported.
     private static boolean isWin(String message) {
         return message.replace("window", "").contains("win");
     }

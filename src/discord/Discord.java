@@ -41,7 +41,7 @@ public class Discord {
             builder.useHelpBuilder(false);
             builder.addCommands(CommandLoader.discover().toArray(new Command[0]));
             CommandClient client = builder.build();
-            // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal
+            // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal.
             d = JDABuilder.create(
                     BotConstants.discordToken,
                     GatewayIntent.GUILD_EXPRESSIONS,
@@ -49,6 +49,8 @@ public class Discord {
                     GatewayIntent.GUILD_MESSAGE_REACTIONS,
                     GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.listening("Pekka Bot | " + BotConstants.prefix))
+                    // The bot doesn't read presence, client-status, or voice state — disable
+                    // the caches so JDA doesn't keep them populated per-guild.
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)
                     .build();
             d.addEventListener(

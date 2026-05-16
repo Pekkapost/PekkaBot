@@ -77,6 +77,9 @@ public final class CommandLoader {
             Enumeration<JarEntry> entries = jf.entries();
             while (entries.hasMoreElements()) {
                 String entry = entries.nextElement().getName();
+                // `$` filters out compiled inner / anonymous classes (e.g.
+                // `Outer$1.class`) — only the outer Command subclass is
+                // instantiable via no-arg constructor.
                 if (entry.startsWith(prefix) && entry.endsWith(".class") && !entry.contains("$")) {
                     String trimmed = entry.substring(0, entry.length() - ".class".length());
                     names.add(trimmed.replace('/', '.'));

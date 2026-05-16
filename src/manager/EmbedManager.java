@@ -100,6 +100,9 @@ public class EmbedManager {
 
             builder.addField("Lake",    temp[3]  + "/" + temp[17], true);
             builder.addField("Plant",   temp[4]  + "/" + temp[18], true);
+            // Empty inline field acts as a row-break: Discord lays inline
+            // fields out 3-per-row, so injecting blanks keeps the WG board
+            // visually grouped as 3/3/3/3/3 instead of reflowing.
             builder.addField("", "", true);
 
             builder.addField("Left",    temp[5]  + "/" + temp[19], true);
@@ -108,6 +111,9 @@ public class EmbedManager {
 
             builder.addField("Boat",    temp[8]  + "/" + temp[22], true);
             builder.addField("Door",    temp[9]  + "/" + temp[23], true);
+            // Empty inline field acts as a row-break: Discord lays inline
+            // fields out 3-per-row, so injecting blanks keeps the WG board
+            // visually grouped as 3/3/3/3/3 instead of reflowing.
             builder.addField("", "", true);
 
             builder.addField("Element", temp[10] + "/" + temp[24], true);
