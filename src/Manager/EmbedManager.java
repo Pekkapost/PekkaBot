@@ -10,7 +10,7 @@ public class EmbedManager {
     public static void chronos(MessageChannel channel, User author, int points) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
-        builder.setDescription("You have " + points + " <:ChronosStone:719806042606665738>");
+        builder.setDescription("You have " + points + " <:chronos:540404637581443095>");
         builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
         channel.sendMessageEmbeds(builder.build()).queue();
     }
