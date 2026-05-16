@@ -767,15 +767,16 @@ Whatever surface the project exposes — commands, REST endpoints, CLI flags, pl
 
 ##### Command / endpoint table convention
 
-- 2 columns: `<Surface> | Description`.
+- 2 columns: `<Surface> | Description`. Add an `Aliases` column between them when the surface supports alternative invocations.
 - The `<Surface>` cell shows the literal invocation, with **inputs in `[brackets]`**: `/command [param1] [param2]`. Brackets visually separate the literal command from its arguments.
+- **Every literal invocation — primary command and each alias — is wrapped in backticks.** Aliases are formatted identically to the primary command so the reader can scan a row and immediately tell what's typeable. A bare-text alias next to a backticked command reads as prose, not code, and obscures the symmetry. Use an em-dash (`—`) for rows with no aliases.
 - The description cell is concise. Repeated cross-cutting constraints (e.g. permissions, timezone defaults, format conventions) belong in a single sentence below the table, not in every row.
 
 ```markdown
-| Command | Description |
-|---|---|
-| `/<command> [<arg>]` | Short description. |
-| `/<command-2>` | Short description. |
+| Command | Aliases | Description |
+|---|---|---|
+| `/<command> [<arg>]` | `/<alias-1>`, `/<alias-2>` | Short description. |
+| `/<command-2>` | — | Short description. |
 
 Cross-cutting note about permissions, defaults, or behavior that applies to all rows above.
 ```

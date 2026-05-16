@@ -47,9 +47,7 @@ package Constants;
 
 public class BotConstants {
     public static final String discordToken   = "YOUR_BOT_TOKEN";
-    public static final String discordOwner   = "YOUR_DISCORD_USER_ID";
-    public static final String[] discordCoOwner = {};
-    public static final String prefix         = "!";
+    public static final String prefix         = "p!";
 
     public static final String helpText       = "";
     public static final String addMeUrl       = "";
@@ -58,9 +56,7 @@ public class BotConstants {
 
 `discordToken` is your bot's secret. Copy it from your application's *Bot → Token* tab. Never commit it.
 
-`discordOwner` is your Discord user id. Owner-only commands (`/exit`, `/update`, `/bannerUpdate`, `/clear`, `/admin`) check this.
-
-`prefix` is the prefix every command uses (e.g. `!gacha`).
+`prefix` is the prefix every command uses (e.g. `p!gacha`).
 
 `addMeUrl` is what `/addMe` posts. Generate it from your application's *OAuth2 → URL Generator* tab.
 
@@ -69,22 +65,28 @@ public class BotConstants {
 In the [Discord Developer Portal](https://discord.com/developers/applications), under **Bot → Privileged Gateway Intents**, enable:
 - **Message Content Intent** — required to read message text via `getContentRaw()`.
 
-### **4. Run**
+### **4. Build the JAR**
+
+The whole source tree is packaged into a single executable JAR — the dependency JARs in [`libs/`](libs/) are unpacked and included alongside the project's own `.class` files. The JAR's manifest points at [`Connection`](src/Connection.java) as the entry point (see [`src/META-INF/MANIFEST.MF`](src/META-INF/MANIFEST.MF)).
+
+Produce `PekkaBot.jar` at the repo root. In IntelliJ: *File → Project Structure → Artifacts → + → JAR → From modules with dependencies*, then *Build → Build Artifacts → PekkaBot:jar*.
+
+### **5. Run**
 
 From the repo root:
 
 ```bash
-java -cp "src:libs/*" Connection
+java -jar PekkaBot.jar
 ```
 
-The bot writes SQLite state to [`data/PekkaBot.db`](data/) and reads gacha banner definitions from [`data/GachaList.txt`](data/GachaList.txt). Both are created on first run if missing.
+The bot writes SQLite state to [`data/PekkaBot.db`](data/) and reads gacha banner definitions from [`data/GachaList.txt`](data/GachaList.txt). Both are created on first run if missing. The working directory matters — `data/` is resolved relative to wherever you launch the JAR from, so launch it from the repo root.
 
 ## Architecture
 
 | Module | Description |
 |---|---|
 | [src/Connection.java](src/Connection.java) | Bot entry point. Builds `DiscordManager` and triggers the initial gacha banner load. |
-| [src/Constants/BotConstants.java](src/Constants/BotConstants.java) | Holds the Discord token, owner id, prefix, and other host-local constants. Gitignored. |
+| [src/Constants/BotConstants.java](src/Constants/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
 | [src/Discord/Discord.java](src/Discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
 | [src/Discord/DiscordManager.java](src/Discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
 | [src/Discord/GuildMessageRespond.java](src/Discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
@@ -123,43 +125,43 @@ Recompile and restart. Files under `src/Commands/<Feature>/Utility/` are support
 
 ## Commands
 
-All commands use the configured `prefix` (e.g. `!`).
+All commands use the configured `prefix` (e.g. `p!`).
 
 ### **White Gate**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `WhiteGate` | WG, WGMy, MyWG | Display your white gate data. |
-| `WhiteGateRandom` | RandomWG, WGRandom | Return a random white gate. |
-| `WGTotal` | TotalWG, WGT | Display total white gate data across all users. |
+| `WhiteGate` | `WG`, `WGMy`, `MyWG` | Display your white gate data. |
+| `WhiteGateRandom` | `RandomWG`, `WGRandom` | Return a random white gate. |
+| `WGTotal` | `TotalWG`, `WGT` | Display total white gate data across all users. |
 
 ### **Gacha**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Gacha` | G | Roll on the current banner. Uploads the result image. |
-| `GachaBanner` | BannerList, GBanner | List all configured banners. |
-| `Bless` | B | Bless the user. |
+| `Gacha` | `G` | Roll on the current banner. Uploads the result image. |
+| `GachaBanner` | `BannerList`, `GBanner` | List all configured banners. |
+| `Bless` | `B` | Bless the user. |
 
 ### **Ads**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Ad` | AdMy, MyAd, MyAds, AdsMy | Display your ad data. |
-| `ADTotal` | TotalAd, ADT, ADsTotal, TotalAds | Display total ad data across all users. |
+| `Ad` | `AdMy`, `MyAd`, `MyAds`, `AdsMy` | Display your ad data. |
+| `ADTotal` | `TotalAd`, `ADT`, `ADsTotal`, `TotalAds` | Display total ad data across all users. |
 
 ### **Currency**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `ChronosDisplay` | Chronos, MyChronos | Display your Chronos Stone balance. |
+| `ChronosDisplay` | `Chronos`, `MyChronos` | Display your Chronos Stone balance. |
 
 ### **Timer**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Time` | TimeReset, ResetTime | Display the next reset time. |
-| `TimeCat` | CatTime | Display the times that cats spawn. |
+| `Time` | `TimeReset`, `ResetTime` | Display the next reset time. |
+| `TimeCat` | `CatTime` | Display the times that cats spawn. |
 
 Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 
@@ -183,23 +185,21 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 | `Jokes` | — | List the joke commands. |
 | `Whale` | — | Post a whale. |
 | `Dango` | — | Post a dango. |
-| `Tiramisu` | Tira | Post a tiramisu. |
+| `Tiramisu` | `Tira` | Post a tiramisu. |
 | `Gimmie` | — | Gimmie. |
 | `Gary` | — | Post a Gary (Gariyu AS). |
 | `Unseen` | — | Post an Unseen. |
 | `Shion` | — | Shion counter. |
 | `AddMe` | — | Post the bot's add-me OAuth2 URL. |
 
-### **Admin (owner-only, hidden)**
+### **Admin (hidden)**
 
 | Command | Description |
 |---|---|
 | `BannerUpdate` | Reload gacha banner data from `data/GachaList.txt`. |
-| `Update` | Owner-only update command. |
-| `Clear` | Owner-only clear command. |
+| `Update` | Admin update command. |
+| `Clear` | Admin clear command. |
 | `Exit` | Shut down the bot. |
-
-Owner-only commands check `discordOwner` / `discordCoOwner` in [`src/Constants/BotConstants.java`](src/Constants/BotConstants.java).
 
 ## Limitations
 
