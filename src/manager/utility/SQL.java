@@ -7,21 +7,42 @@ import org.slf4j.LoggerFactory;
 
 import util.Paths;
 
+/**
+ * Raw SQLite access layer — the only class that touches JDBC.
+ *
+ * Schema lives in this file (no migrations) and the bot expects the four
+ * tables below to exist. The DB file itself is auto-created on first
+ * connect; populating the schema is the operator's responsibility — a
+ * one-time {@code sqlite3} step at deploy time.
+ *
+ * Tables:
+ * <pre>
+ *   Chronos   — Id, Points
+ *   WhiteGate — Id, Drawer, Window, Bed, Lake, Plant, Left, Middle, Right,
+ *               Boat, Door, Element, Balloon, Well, Varuo (+ *F failure columns)
+ *   Ad        — Id, CS5, CS10, CS20, Green, Red
+ *   Shion     — count
+ * </pre>
+ *
+ * Higher-level callers go through {@link manager.SQLManager}, which holds
+ * the singleton {@link SQL} instance. Every public method here is
+ * {@code synchronized} so JDA listener threads can't collide — SQLite is
+ * single-writer, so the monitor is the cheapest correct lock.
+ *
+ * Crash-safety is provided by SQLite's WAL; this layer deliberately does
+ * not apply the tmp+rename pattern from {@link DESIGN.md} §15, which
+ * would corrupt the WAL.
+ */
 public class SQL {
     private static final Logger logger = LoggerFactory.getLogger(SQL.class);
     private Connection c = null;
-    // DB tables:
-    //   Chronos   — Id, Points
-    //   WhiteGate — Id, Drawer, Window, Bed, Lake, Plant, Left, Middle, Right,
-    //               Boat, Door, Element, Balloon, Well, Varuo (+ *F failure columns)
-    //   Ad        — Id, CS5, CS10, CS20, Green, Red
-    //   Shion     — count
+
     public SQL() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:" + Paths.dataPath("PekkaBot.db"));
             logger.info("SQLite connected");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             logger.error("SQLite connection error", e);
         }
     }
@@ -30,7 +51,10 @@ public class SQL {
         if (c == null) throw new SQLException("Database connection is not available");
     }
 
-    // --- Points ---
+    // -----------------------------------------------------------------------
+    // Points (Chronos table)
+    // -----------------------------------------------------------------------
+
     public synchronized int getPoints(String id) {
         try {
             checkConnection();
@@ -66,7 +90,10 @@ public class SQL {
         }
     }
 
-    // --- WhiteGate ---
+    // -----------------------------------------------------------------------
+    // WhiteGate (per-user + totals)
+    // -----------------------------------------------------------------------
+
     public synchronized int[] getWhiteGate(String id) {
         try {
             checkConnection();
@@ -181,7 +208,10 @@ public class SQL {
         }
     }
 
-    // --- Ads ---
+    // -----------------------------------------------------------------------
+    // Ads (per-user + totals)
+    // -----------------------------------------------------------------------
+
     public synchronized int[] getAd(String id) {
         try {
             checkConnection();
@@ -246,7 +276,10 @@ public class SQL {
         }
     }
 
-    // --- Shion ---
+    // -----------------------------------------------------------------------
+    // Shion (single-row counter)
+    // -----------------------------------------------------------------------
+
     // Increments the Shion counter atomically and returns the new (post-increment) value.
     public synchronized int updateShion() {
         try {
@@ -275,7 +308,10 @@ public class SQL {
         return 0;
     }
 
-    // --- Close ---
+    // -----------------------------------------------------------------------
+    // Lifecycle
+    // -----------------------------------------------------------------------
+
     public synchronized void close() {
         try {
             if (c != null) c.close();

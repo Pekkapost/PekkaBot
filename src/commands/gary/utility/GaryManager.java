@@ -4,6 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * In-memory "name → image URL" registry powering the {@code /Gary} command
+ * (and one of the three random branches of {@code /Tiramisu}).
+ *
+ * Populated lazily on first call to {@link #initialize}. {@link #findMe}
+ * resolves an exact key; {@link #callMe} runs the user's message through
+ * a forgiving lookup that accepts shorthand and falls back to a random
+ * entry when no key matches.
+ *
+ * URLs live inline as constants rather than in {@link util.Resources}
+ * because there are ~70 of them and the (key, url) coupling is the whole
+ * file — splitting would just produce two files that have to stay in
+ * sync.
+ */
 public class GaryManager {
     private static Map<String, String> garyFile = new HashMap<>();
 

@@ -5,6 +5,15 @@ import net.dv8tion.jda.api.entities.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fluent builder for {@link CommandClient}.
+ *
+ * Kept around for source compatibility with the archived jda-utilities
+ * API the project originally used. {@link #setActivity} and
+ * {@link #useHelpBuilder} are no-ops retained for shape compatibility:
+ * activity is set via JDABuilder, and help is rendered by
+ * {@link manager.EmbedManager#help}, not jda-utilities' help builder.
+ */
 public class CommandClientBuilder {
     private String prefix = "!";
     private String ownerId = "";

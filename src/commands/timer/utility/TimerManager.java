@@ -3,7 +3,18 @@ package commands.timer.utility;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-// All times use JST (Asia/Tokyo) because that is Another Eden's server timezone.
+/**
+ * JST-anchored timer math for {@code /Time} and {@code /TimeCat}.
+ *
+ * All output is computed in JST (Asia/Tokyo) because that's Another
+ * Eden's server timezone; player-side wallclock doesn't matter, only the
+ * game-server reset cadence does. The cadence is fixed:
+ * <ul>
+ *   <li>Ticket reset: 06:00, 12:00, 18:00, 24:00 JST</li>
+ *   <li>Cat spawn: configured hours in {@code checkCat}</li>
+ * </ul>
+ * Output is formatted as "in Xh Ym" relative to the next event.
+ */
 public class TimerManager {
 
     // Ticket resets happen at 06:00, 12:00, 18:00, and 24:00 JST.

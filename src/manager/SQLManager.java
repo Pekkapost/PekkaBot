@@ -2,6 +2,15 @@ package manager;
 
 import manager.utility.SQL;
 
+/**
+ * Static facade in front of the singleton {@link SQL} instance.
+ *
+ * Holds the lone SQL connection for the bot's lifetime and re-exposes
+ * each operation as a static method so callers (commands, the message
+ * listener) don't have to thread a SQL reference around. Renaming or
+ * adding queries means touching both this class and {@link SQL}; the
+ * one-liner per method keeps the indirection cheap.
+ */
 public class SQLManager {
     static SQL sql = new SQL();
 

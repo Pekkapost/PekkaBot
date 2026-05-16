@@ -17,13 +17,21 @@ import java.util.jar.JarFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Reflection-based command discovery. Walks every class under the
-// `commands` package (in the running JAR or compile-output directory),
-// instantiates concrete subclasses of Command, and returns them.
-//
-// Adding a new command is a single-file affair: drop a class under
-// src/commands/<feature>/ that extends Command and provides a no-arg
-// constructor. No registration line anywhere is needed.
+/**
+ * Reflection-based command discovery.
+ *
+ * Walks every class under the {@code commands} package (in the running
+ * JAR or the compile-output directory), instantiates concrete subclasses
+ * of {@link framework.command.Command}, and returns them sorted by name.
+ *
+ * Adding a new command is a single-file affair: drop a class under
+ * {@code src/commands/<feature>/} that extends {@code Command} and
+ * provides a no-arg constructor. No registration line anywhere is needed —
+ * this loader picks it up on next startup.
+ *
+ * Per-class instantiation failures are logged and swallowed so one broken
+ * command can't prevent the rest of the bot from starting.
+ */
 public final class CommandLoader {
     private static final Logger logger = LoggerFactory.getLogger(CommandLoader.class);
     private static final String COMMANDS_PACKAGE = "commands";

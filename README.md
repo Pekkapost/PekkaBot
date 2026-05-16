@@ -193,8 +193,9 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 ## Limitations
 
 - The bot relies on the *Message Content Intent* and the legacy prefix-command model. JDA's slash-command path isn't wired up.
-- SQLite writes go straight to [`data/PekkaBot.db`](data/) without the tmp + rename atomic-write pattern described in [`DESIGN.md`](DESIGN.md) §15. SQLite's own WAL gives some crash safety, but the bot relies on it rather than enforcing atomic semantics at the application layer.
 - The fishing and gacha sub-features have been removed from earlier versions; no schema migration was needed because their tables were never live in this branch.
+
+[`DESIGN.md`](DESIGN.md) §15's tmp + rename atomic-write rule deliberately does **not** apply to [`data/PekkaBot.db`](data/) — SQLite's WAL already provides stronger crash semantics than tmp + rename, and overwriting a SQLite file via rename would corrupt the journal. See the class Javadoc in [`src/manager/utility/SQL.java`](src/manager/utility/SQL.java) for the reasoning.
 
 ## Authors
 

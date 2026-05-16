@@ -1,14 +1,19 @@
 package util;
 
-// Tracked-in-git strings that previously lived in BotConstants. Anything
-// that's a secret or per-host (token, owner ids, prefix) stays in
-// config/BotConstants.java; everything else is content the bot ships with
-// and lives here.
-//
-// Field names are preserved verbatim from the original BotConstants so the
-// migration is a one-pass import swap at every call site. Fill in the URL
-// strings from your existing local config/BotConstants.java the first time
-// you check this file out.
+/**
+ * Tracked-in-git string content the bot ships with.
+ *
+ * Anything that's a secret or per-host (token, owner ids, prefix) stays
+ * in {@link config.BotConstants}; everything else — invite URL, action
+ * GIF URLs, the Shion suffix — lives here so it's shared across clones
+ * instead of having to be re-typed into each developer's local
+ * BotConstants.
+ *
+ * Field names are preserved verbatim from the original BotConstants so
+ * the migration was a one-pass import swap at every call site. Fill in
+ * the URL strings from your existing local BotConstants the first time
+ * you check this file out.
+ */
 public class Resources {
     // OAuth2 invite URL posted by /AddMe. Generate via the Developer Portal
     // (OAuth2 → URL Generator → scopes: bot, applications.commands).

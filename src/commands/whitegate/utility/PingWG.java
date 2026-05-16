@@ -5,15 +5,25 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-// Parses a White Gate result message sent by mentioning the bot.
-// A full result walks 5 layers of the WG tree:
-//   Layer 1 (entrance):   drawer / window / bed
-//   Layer 2 (area):       lake / plant
-//   Layer 3 (position):   left / middle / right
-//   Layer 4 (path):       boat / door
-//   Layer 5 (destination): element / balloon / well / varuo
-// Each layer records a success ("lake") or failure ("lakeF") to the DB.
-// An incomplete chain (missing a layer) marks the entrance as a failure and adds a Shion_point reaction.
+/**
+ * Parses a White Gate result message posted by @-mentioning the bot.
+ *
+ * A full result walks 5 layers of the WG tree:
+ * <pre>
+ *   Layer 1 (entrance):    drawer / window / bed
+ *   Layer 2 (area):        lake / plant
+ *   Layer 3 (position):    left / middle / right
+ *   Layer 4 (path):        boat / door
+ *   Layer 5 (destination): element / balloon / well / varuo
+ * </pre>
+ * Each layer records a success ({@code "lake"}) or failure
+ * ({@code "lakeF"}) to the WhiteGate table. An incomplete chain (missing
+ * a layer) marks the entrance as a failure and triggers a Shion_point
+ * reaction so the reporter knows to retry.
+ *
+ * Called from {@link discord.GuildMessageRespond} after substring-matching
+ * a body-keyword like "drawer" / "window" / "bed".
+ */
 public class PingWG {
     public static void addEmote(MessageReceivedEvent event) {
         if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_ADD_REACTION) &&

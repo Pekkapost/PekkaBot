@@ -2,8 +2,21 @@ package commands.ad.utility;
 
 import manager.SQLManager;
 
+/**
+ * Parses an ad-result shorthand string and persists it to the Ad table.
+ *
+ * The body is a stream of shorthand characters:
+ * <ul>
+ *   <li>{@code 5} → CS5 (5-Chronos-Stone ad)</li>
+ *   <li>{@code 1} → CS10</li>
+ *   <li>{@code 2} → CS20</li>
+ *   <li>{@code g} → Green key</li>
+ *   <li>{@code r} → Red key</li>
+ * </ul>
+ * Called from {@link discord.GuildMessageRespond} after regex-matching a
+ * body that contains only those characters and whitespace.
+ */
 public class PingAd {
-    // Parse a shorthand ad result string: '5'=CS5, '1'=CS10, '2'=CS20, 'g'=Green key, 'r'=Red key
     public static String check(String id, String message) {
         String output = "";
         for (char c : message.toCharArray()) {

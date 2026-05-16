@@ -10,7 +10,22 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-//Message Respond
+/**
+ * Non-command message handler.
+ *
+ * Most user input flows through the {@link framework.command.CommandClient}
+ * dispatcher, but this listener handles two side-channels that don't fit
+ * the prefix-command model:
+ *
+ * 1. Activity tracking — every non-command guild message increments the
+ *    sender's Chronos Stone count via {@link SQLManager#updatePoints}.
+ * 2. Stat ingestion — when the bot is @-mentioned, the message body is
+ *    parsed for white-gate or ad data and persisted through {@link PingWG}
+ *    / {@link PingAd}.
+ *
+ * The hard-coded bot user id (379513566711119872L) is PekkaBot's own —
+ * a substitution would only matter if forking onto a different account.
+ */
 public class GuildMessageRespond extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {

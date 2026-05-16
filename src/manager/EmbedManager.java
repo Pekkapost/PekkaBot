@@ -14,6 +14,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Centralised Discord embed (and a couple of plain-message) builders.
+ *
+ * Every method here owns the full {@link EmbedBuilder} → {@code send}
+ * round trip, so callers stay one-liners. New canned responses go here
+ * rather than in the command file so the embed style (colour, layout)
+ * stays consistent across commands.
+ *
+ * {@link #help} is the only dynamic builder — it introspects the live
+ * command registry, buckets by package name, and emits one field per
+ * category. The bucket-to-display map below is the only thing to touch
+ * when adding a new top-level package under {@code commands/}.
+ */
 public class EmbedManager {
     // Maps the bucket name (the segment right after "commands." in a command's
     // package) to the display heading shown in the help embed. The map's
