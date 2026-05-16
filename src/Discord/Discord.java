@@ -10,7 +10,7 @@ import Commands.Other.Help.Pekka;
 import Commands.Timer.*;
 import Commands.WhiteGate.*;
 import Commands.Ad.*;
-import Constants.BotConstants;
+import config.BotConstants;
 import Commands.Gary.*;
 import Commands.Unseen.*;
 

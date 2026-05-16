@@ -1,6 +1,6 @@
 package Commands.Action;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import Manager.EmbedManager;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;

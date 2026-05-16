@@ -1,6 +1,7 @@
 package Commands.Gacha.Utility;
 
 import Structures.WeightedRandomBag;
+import Util.Paths;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -55,8 +56,8 @@ public class GachaManager {
         String[] gachalist = new String[10];
         Arrays.fill(gachalist, "Failure");
 
-        try (FileInputStream fis = new FileInputStream("assets/Gacha/Other/Base.png");
-             FileOutputStream fos = new FileOutputStream("assets/Gacha/Other/Export.png")) {
+        try (FileInputStream fis = new FileInputStream(Paths.asset("Gacha/Other/Base.png"));
+             FileOutputStream fos = new FileOutputStream(Paths.asset("Gacha/Other/Export.png"))) {
             byte[] b = new byte[6000];
             int readbytes;
             while ((readbytes = fis.read(b)) != -1) {
@@ -77,20 +78,20 @@ public class GachaManager {
 
         drawMe(gachalist);
         logger.debug("Gacha pull result: {}", Arrays.toString(gachalist));
-        return new File("assets/Gacha/Other/Export.png");
+        return Paths.asset("Gacha/Other/Export.png");
     }
 
     public static void drawMe(String[] gachalist) {
         try {
-            BufferedImage img = ImageIO.read(new File("assets/Gacha/Other/Export.png"));
+            BufferedImage img = ImageIO.read(Paths.asset("Gacha/Other/Export.png"));
             Graphics g = img.createGraphics();
             try {
                 for (int i = 0; i < 10; i++) {
-                    BufferedImage character = ImageIO.read(new File("assets/Gacha/" + gachalist[i] + ".png"));
+                    BufferedImage character = ImageIO.read(Paths.asset("Gacha/" + gachalist[i] + ".png"));
                     g.drawImage(character, DRAW_X[i], DRAW_Y[i], null);
                     character.flush();
                 }
-                ImageIO.write(img, "png", new File("assets/Gacha/Other/Export.png"));
+                ImageIO.write(img, "png", Paths.asset("Gacha/Other/Export.png"));
             } finally {
                 g.dispose();
             }

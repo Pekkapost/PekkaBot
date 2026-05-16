@@ -5,6 +5,8 @@ import java.sql.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import Util.Paths;
+
 public class SQL {
     private static final Logger logger = LoggerFactory.getLogger(SQL.class);
     private Connection c = null;
@@ -17,7 +19,7 @@ public class SQL {
     public SQL() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:data/PekkaBot.db");
+            c = DriverManager.getConnection("jdbc:sqlite:" + Paths.dataPath("PekkaBot.db"));
             logger.info("SQLite connected");
         } catch (Exception e) {
             logger.error("SQLite connection error", e);

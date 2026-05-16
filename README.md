@@ -5,19 +5,20 @@
 ## Layout
 
 ```
-PekkaBot-Redesign/
-├── src/                # library code; Connection.java is the entry point
-│   ├── Connection.java
+PekkaBot/
+├── Connection.java     # entry point — run from here
+├── src/                # library code (never run directly)
 │   ├── Commands/       # bot commands, grouped by feature
 │   ├── Discord/        # JDA setup + message event listener
 │   ├── Framework/      # in-tree replacement for the archived jda-utilities
 │   ├── Manager/        # embed + SQL helpers
 │   ├── Structures/     # generic data structures
-│   └── Constants/      # BotConstants.java (gitignored, host-local)
-├── config/             # dependency manifest and reference docs
-├── data/               # runtime state (gitignored except for GachaList.txt)
+│   └── Util/           # cross-cutting utilities (e.g. Paths anchoring)
+├── config/             # host-local config + dependency manifest
+│   └── BotConstants.java  # gitignored — Discord token, prefix, ...
+├── data/               # runtime state (gitignored except GachaList.txt)
 ├── libs/               # JAR dependencies
-└── assets/             # static binary content (currently empty)
+└── assets/             # static binary content (gacha PNGs, etc.)
 ```
 
 ## Tech Stack
@@ -30,7 +31,7 @@ PekkaBot-Redesign/
 | [SLF4J Simple](https://www.slf4j.org/) | 2.0.17 | Logging backend |
 | Java | 17+ | Runtime |
 
-The entry point is [`src/Connection.java`](src/Connection.java). All JARs live in [`libs/`](libs/) and are pinned in [`config/libs.txt`](config/libs.txt).
+The entry point is [`Connection.java`](Connection.java) at the repo root (default package). All JARs live in [`libs/`](libs/) and are pinned in [`config/libs.txt`](config/libs.txt).
 
 ## Setup
 
@@ -40,10 +41,10 @@ Drop the four JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`]
 
 ### **2. BotConstants.java**
 
-`src/Constants/BotConstants.java` is gitignored. Create it locally with at minimum:
+`config/BotConstants.java` is gitignored. Create it locally with at minimum:
 
 ```java
-package Constants;
+package config;
 
 public class BotConstants {
     public static final String discordToken   = "YOUR_BOT_TOKEN";
@@ -53,6 +54,8 @@ public class BotConstants {
     public static final String addMeUrl       = "";
 }
 ```
+
+In IntelliJ, mark [`config/`](config/) as a source root (*right-click → Mark Directory as → Sources Root*) so the `config` package is compiled and bundled into the JAR.
 
 `discordToken` is your bot's secret. Copy it from your application's *Bot → Token* tab. Never commit it.
 
@@ -67,26 +70,24 @@ In the [Discord Developer Portal](https://discord.com/developers/applications), 
 
 ### **4. Build the JAR**
 
-The whole source tree is packaged into a single executable JAR — the dependency JARs in [`libs/`](libs/) are unpacked and included alongside the project's own `.class` files. The JAR's manifest points at [`Connection`](src/Connection.java) as the entry point (see [`src/META-INF/MANIFEST.MF`](src/META-INF/MANIFEST.MF)).
+The whole source tree is packaged into a single executable JAR — the dependency JARs in [`libs/`](libs/) are unpacked and included alongside the project's own `.class` files. The JAR's manifest points at [`Connection`](Connection.java) as the entry point (see [`src/META-INF/MANIFEST.MF`](src/META-INF/MANIFEST.MF)).
 
-Produce `PekkaBot.jar` at the repo root. In IntelliJ: *File → Project Structure → Artifacts → + → JAR → From modules with dependencies*, then *Build → Build Artifacts → PekkaBot:jar*.
+Produce `PekkaBot.jar` at the repo root. In IntelliJ: *File → Project Structure → Artifacts → + → JAR → From modules with dependencies*, then *Build → Build Artifacts → PekkaBot:jar*. Make sure the project root and [`config/`](config/) are both marked as source roots so `Connection.java` and `BotConstants.java` get compiled in.
 
 ### **5. Run**
-
-From the repo root:
 
 ```bash
 java -jar PekkaBot.jar
 ```
 
-The bot writes SQLite state to [`data/PekkaBot.db`](data/) and reads gacha banner definitions from [`data/GachaList.txt`](data/GachaList.txt). Both are created on first run if missing. The working directory matters — `data/` is resolved relative to wherever you launch the JAR from, so launch it from the repo root.
+[`data/`](data/) and [`assets/`](assets/) are resolved relative to the JAR's own location (see [`src/Util/Paths.java`](src/Util/Paths.java)), not the process working directory, so the bot can be launched from anywhere as long as the JAR sits next to those directories. SQLite writes go to [`data/PekkaBot.db`](data/); gacha banner definitions come from [`data/GachaList.txt`](data/GachaList.txt). Both files are created on first run if missing.
 
 ## Architecture
 
 | Module | Description |
 |---|---|
-| [src/Connection.java](src/Connection.java) | Bot entry point. Builds `DiscordManager` and triggers the initial gacha banner load. |
-| [src/Constants/BotConstants.java](src/Constants/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
+| [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager` and triggers the initial gacha banner load. |
+| [config/BotConstants.java](config/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
 | [src/Discord/Discord.java](src/Discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
 | [src/Discord/DiscordManager.java](src/Discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
 | [src/Discord/GuildMessageRespond.java](src/Discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
@@ -94,9 +95,11 @@ The bot writes SQLite state to [`data/PekkaBot.db`](data/) and reads gacha banne
 | [src/Manager/EmbedManager.java](src/Manager/EmbedManager.java) | Helpers for building Discord embeds. |
 | [src/Manager/SQLManager.java](src/Manager/SQLManager.java) | Application-level wrappers around `Utility/SQL.java`. |
 | [src/Manager/Utility/SQL.java](src/Manager/Utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
-| [src/Structures/](src/Structures/) | `weightedRandomBag<T>` for gacha/bless random selection; `pair<A,B>` helper tuple. |
+| [src/Util/Paths.java](src/Util/Paths.java) | Resolves `data/` and `assets/` paths against the JAR's own location, not the process CWD. |
+| [src/Structures/](src/Structures/) | `WeightedRandomBag<T>` for gacha/bless random selection; `Pair` helper tuple. |
 | [src/Commands/](src/Commands/) | All commands grouped by feature: Action, Ad, Currency, Gacha, Gary, Other, Timer, Unseen, WhiteGate. |
 | [data/](data/) | Runtime state. Holds `PekkaBot.db` (gitignored) and `GachaList.txt` (banner definitions). |
+| [assets/](assets/) | Static binary content the bot reads (gacha character PNGs and the base/export pull image). |
 
 ## Adding a new command
 
@@ -205,6 +208,7 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 
 - The bot relies on the *Message Content Intent* and the legacy prefix-command model. JDA's slash-command path isn't wired up.
 - SQLite writes go straight to [`data/PekkaBot.db`](data/) without the tmp + rename atomic-write pattern described in [`DESIGN.md`](DESIGN.md) §15. SQLite's own WAL gives some crash safety, but the bot relies on it rather than enforcing atomic semantics at the application layer. The GachaList.txt write paths in [`src/Commands/Gacha/Utility/UrlParse.java`](src/Commands/Gacha/Utility/UrlParse.java) do use atomic-replace via `atomicReplace(...)`.
+- [`assets/Gacha/`](assets/) is gitignored — character PNGs and the base pull image must be supplied locally for the `Gacha` command to render. Missing files surface as logged errors, not crashes.
 - The fishing sub-feature has been removed from earlier versions; no schema migration was needed because its tables were never live in this branch.
 
 ## Authors

@@ -11,6 +11,8 @@ import java.nio.file.StandardCopyOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import Util.Paths;
+
 public class UrlParse {
     private static final Logger logger = LoggerFactory.getLogger(UrlParse.class);
 
@@ -42,12 +44,12 @@ public class UrlParse {
             return false;
         }
 
-        File inputFile = new File("data/GachaList.txt");
+        File inputFile = Paths.data("GachaList.txt");
         if (inputFile.length() == 0) return true;
 
         File tempFile = null;
         try {
-            tempFile = File.createTempFile("gacha_check", ".tmp", new File("data"));
+            tempFile = File.createTempFile("gacha_check", ".tmp", Paths.data(""));
             try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
                  BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
                 boolean onoff = false;
@@ -73,10 +75,10 @@ public class UrlParse {
 
     // Rewrites GachaList.txt with all banners sorted in numeric order (1–9).
     public static void sort() {
-        File inputFile = new File("data/GachaList.txt");
+        File inputFile = Paths.data("GachaList.txt");
         File tempFile = null;
         try {
-            tempFile = File.createTempFile("gacha_sort", ".tmp", new File("data"));
+            tempFile = File.createTempFile("gacha_sort", ".tmp", Paths.data(""));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
                 for (int i = 1; i < 10; ++i) {
                     try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
@@ -102,7 +104,7 @@ public class UrlParse {
     }
 
     public static void parseMe(String num, String name, String currentBanner) throws Exception {
-        File target = new File("data/GachaList.txt");
+        File target = Paths.data("GachaList.txt");
         File tempFile = null;
         try {
             URL url = new URL(currentBanner);
@@ -116,7 +118,7 @@ public class UrlParse {
             // first, then the freshly-parsed banner block. The atomic-replace at
             // the end means a crash mid-write can never leave the live file in a
             // half-written state.
-            tempFile = File.createTempFile("gacha_parse", ".tmp", new File("data"));
+            tempFile = File.createTempFile("gacha_parse", ".tmp", Paths.data(""));
             try (BufferedWriter out = new BufferedWriter(new FileWriter(tempFile))) {
                 if (target.exists()) {
                     try (BufferedReader existing = new BufferedReader(new FileReader(target))) {
@@ -167,10 +169,10 @@ public class UrlParse {
     }
 
     public static void clear() {
-        File inputFile = new File("data/GachaList.txt");
+        File inputFile = Paths.data("GachaList.txt");
         inputFile.delete();
         try {
-            new File("data/GachaList.txt").createNewFile();
+            Paths.data("GachaList.txt").createNewFile();
         } catch (IOException e) {
             logger.error("clear: failed to recreate GachaList.txt", e);
         }

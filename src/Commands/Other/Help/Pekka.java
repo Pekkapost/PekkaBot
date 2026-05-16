@@ -1,6 +1,6 @@
 package Commands.Other.Help;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import Framework.Command.Command;
 import Framework.Command.CommandEvent;
 

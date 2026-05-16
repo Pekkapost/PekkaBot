@@ -1,6 +1,6 @@
 package Commands.Currency;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import Manager.EmbedManager;
 import Manager.SQLManager;
 import Framework.Command.Command;

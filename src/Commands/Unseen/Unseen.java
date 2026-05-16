@@ -1,6 +1,6 @@
 package Commands.Unseen;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import Manager.EmbedManager;
 import Commands.Unseen.Utility.UnseenManager;
 import Framework.Command.Command;

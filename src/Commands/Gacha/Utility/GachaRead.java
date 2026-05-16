@@ -1,6 +1,7 @@
 package Commands.Gacha.Utility;
 
 import Structures.WeightedRandomBag;
+import Util.Paths;
 
 import java.io.*;
 
@@ -19,7 +20,7 @@ public class GachaRead {
         String output = "```Apache\n" +
                 "[Banner Number]   : [Banner Name]";
         try {
-            File inputFile = new File("data/GachaList.txt");
+            File inputFile = Paths.data("GachaList.txt");
 
             if (inputFile.length() != 0) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
@@ -38,7 +39,7 @@ public class GachaRead {
         return output;
     }
     public static void updateBanners(int num, WeightedRandomBag<String> bag, WeightedRandomBag bag2) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("data/GachaList.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Paths.data("GachaList.txt")))) {
             bag.purge();
             bag2.purge();
             String currentline;

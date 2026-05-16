@@ -1,6 +1,6 @@
 package Commands.Other;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import Manager.EmbedManager;
 import Commands.Gary.Utility.GaryManager;
 import Framework.Command.Command;

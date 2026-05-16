@@ -1,4 +1,4 @@
-src/Constants/BotConstants.java
+config/BotConstants.java
 out/
 data/PekkaBot.db
 data/Backup/

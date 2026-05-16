@@ -4,7 +4,7 @@ import Manager.SQLManager;
 import Commands.WhiteGate.Utility.PingWG;
 import Commands.Ad.Utility.PingAd;
 
-import Constants.BotConstants;
+import config.BotConstants;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
