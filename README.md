@@ -8,12 +8,12 @@
 PekkaBot/
 ├── Connection.java     # entry point — run from here
 ├── src/                # library code (never run directly)
-│   ├── Commands/       # bot commands, grouped by feature
-│   ├── Discord/        # JDA setup + message event listener
-│   ├── Framework/      # in-tree replacement for the archived jda-utilities
-│   ├── Manager/        # embed + SQL helpers
-│   ├── Structures/     # generic data structures
-│   └── Util/           # cross-cutting utilities (e.g. Paths anchoring)
+│   ├── commands/       # bot commands, grouped by feature
+│   ├── discord/        # JDA setup + message event listener
+│   ├── framework/      # in-tree replacement for the archived jda-utilities
+│   ├── manager/        # embed + SQL helpers
+│   ├── structures/     # generic data structures
+│   └── util/           # cross-cutting utilities (e.g. Paths anchoring)
 ├── config/             # host-local config + dependency manifest
 │   └── BotConstants.java  # gitignored — Discord token, prefix, ...
 ├── data/               # runtime state (gitignored)
@@ -78,7 +78,7 @@ Produce `PekkaBot.jar` at the repo root. In IntelliJ: *File → Project Structur
 java -jar PekkaBot.jar
 ```
 
-[`data/`](data/) is resolved relative to the JAR's own location (see [`src/Util/Paths.java`](src/Util/Paths.java)), not the process working directory, so the bot can be launched from anywhere as long as the JAR sits next to it. SQLite writes go to [`data/PekkaBot.db`](data/), which is created on first run if missing.
+[`data/`](data/) is resolved relative to the JAR's own location (see [`src/util/Paths.java`](src/util/Paths.java)), not the process working directory, so the bot can be launched from anywhere as long as the JAR sits next to it. SQLite writes go to [`data/PekkaBot.db`](data/), which is created on first run if missing.
 
 ## Architecture
 
@@ -86,27 +86,27 @@ java -jar PekkaBot.jar
 |---|---|
 | [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager`. |
 | [config/BotConstants.java](config/BotConstants.java) | Holds the Discord token, prefix, and other host-local constants. Gitignored. |
-| [src/Discord/Discord.java](src/Discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
-| [src/Discord/DiscordManager.java](src/Discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
-| [src/Discord/GuildMessageRespond.java](src/Discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
-| [src/Framework/Command/](src/Framework/Command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
-| [src/Manager/EmbedManager.java](src/Manager/EmbedManager.java) | Helpers for building Discord embeds. |
-| [src/Manager/SQLManager.java](src/Manager/SQLManager.java) | Application-level wrappers around `Utility/SQL.java`. |
-| [src/Manager/Utility/SQL.java](src/Manager/Utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
-| [src/Util/Paths.java](src/Util/Paths.java) | Resolves `data/` paths against the JAR's own location, not the process CWD. |
-| [src/Structures/](src/Structures/) | `Pair` helper tuple. |
-| [src/Commands/](src/Commands/) | All commands grouped by feature: Action, Ad, Currency, Gary, Other, Timer, Unseen, WhiteGate. |
+| [src/discord/Discord.java](src/discord/Discord.java) | Builds the JDA client, registers every command, and wires up the message listener. |
+| [src/discord/DiscordManager.java](src/discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
+| [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
+| [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
+| [src/manager/EmbedManager.java](src/manager/EmbedManager.java) | Helpers for building Discord embeds. |
+| [src/manager/SQLManager.java](src/manager/SQLManager.java) | Application-level wrappers around `utility/SQL.java`. |
+| [src/manager/utility/SQL.java](src/manager/utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
+| [src/util/Paths.java](src/util/Paths.java) | Resolves `data/` paths against the JAR's own location, not the process CWD. |
+| [src/structures/](src/structures/) | `Pair` helper tuple. |
+| [src/commands/](src/commands/) | All commands grouped by feature: action, ad, currency, gary, other, timer, unseen, whitegate. |
 | [data/](data/) | Runtime state. Holds `PekkaBot.db` (gitignored). |
 
 ## Adding a new command
 
-Drop a class under the appropriate `src/Commands/<Feature>/` package that extends [`Command`](src/Framework/Command/Command.java), then add a `new YourCommand()` line to the `builder.addCommands(...)` block in [`src/Discord/Discord.java`](src/Discord/Discord.java). Minimum skeleton:
+Drop a class under the appropriate `src/commands/<feature>/` package that extends [`Command`](src/framework/command/Command.java), then add a `new YourCommand()` line to the `builder.addCommands(...)` block in [`src/discord/Discord.java`](src/discord/Discord.java). Minimum skeleton:
 
 ```java
-package Commands.Other;
+package commands.other;
 
-import Framework.Command.Command;
-import Framework.Command.CommandEvent;
+import framework.command.Command;
+import framework.command.CommandEvent;
 
 public class Hello extends Command {
     public Hello() {
@@ -121,7 +121,7 @@ public class Hello extends Command {
 }
 ```
 
-Recompile and restart. Files under `src/Commands/<Feature>/Utility/` are support modules, not commands themselves — they don't need to be registered.
+Recompile and restart. Files under `src/commands/<feature>/utility/` are support modules, not commands themselves — they don't need to be registered.
 
 ## Commands
 
