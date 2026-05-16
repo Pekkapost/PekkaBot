@@ -9,6 +9,15 @@ import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+/**
+ * Argument bundle handed to every {@link Command#execute} call.
+ *
+ * Wraps the underlying JDA {@link MessageReceivedEvent} so callers don't
+ * import JDA's event types directly, exposes the parsed command arguments
+ * (everything after the command name), and carries a reference to the
+ * dispatching {@link CommandClient} so commands can introspect the live
+ * registry — used by {@link commands.other.Pekka} (the help command).
+ */
 public class CommandEvent {
     private final MessageReceivedEvent event;
     private final String args;

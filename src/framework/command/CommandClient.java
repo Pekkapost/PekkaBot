@@ -9,6 +9,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Prefix-command dispatcher.
+ *
+ * Holds the registered command list (built by {@link CommandClientBuilder},
+ * populated from {@link util.CommandLoader#discover}) and listens for guild
+ * messages. Every message that starts with the configured prefix is split
+ * into {@code name + args}, looked up by name or alias, gated on
+ * {@code ownerCommand}, and dispatched.
+ *
+ * The {@code commandList} field is kept separate from the alias-keyed
+ * {@code commands} map so the help embed can iterate commands
+ * deterministically — iterating the map's values would yield duplicates,
+ * once per alias.
+ */
 public class CommandClient extends ListenerAdapter {
     private final Map<String, Command> commands = new HashMap<>();
     // Separate registration-ordered list so the help command can iterate

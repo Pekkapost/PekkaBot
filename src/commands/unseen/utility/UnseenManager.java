@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * "Name → unseen-variant image URL" registry, the unseen-twin counterpart
+ * to {@link commands.gary.utility.GaryManager}.
+ *
+ * Same shape: lazy {@link #initialize}, {@link #callMe} with random
+ * fallback. Two near-identical files because the underlying URL pools
+ * are different and conflating them risked Gary returning Unseen images
+ * or vice versa.
+ */
 public class UnseenManager {
     private static Map<String, String> unseenFile = new HashMap<>();
 

@@ -15,6 +15,19 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * JDA client builder + global user-name lookup.
+ *
+ * Constructs the bot's gateway connection (with the four intents the bot
+ * actually uses), wires the message listener, and registers every command
+ * found by {@link util.CommandLoader}. Reads its host-local config from
+ * {@link config.BotConstants}; everything else (action GIF URLs, etc.)
+ * comes from {@link util.Resources}.
+ *
+ * The single retained instance is exposed to the rest of the codebase
+ * through {@link DiscordManager} so commands can look up Discord user
+ * names by id without keeping their own JDA reference.
+ */
 public class Discord {
     private static final Logger logger = LoggerFactory.getLogger(Discord.class);
 
