@@ -12,10 +12,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class CommandEvent {
     private final MessageReceivedEvent event;
     private final String args;
+    private final CommandClient client;
 
-    public CommandEvent(MessageReceivedEvent event, String args) {
+    public CommandEvent(MessageReceivedEvent event, String args, CommandClient client) {
         this.event = event;
         this.args = args;
+        this.client = client;
     }
 
     public User getAuthor() { return event.getAuthor(); }
@@ -27,4 +29,5 @@ public class CommandEvent {
     public JDA getJDA() { return event.getJDA(); }
     public Member getSelfMember() { return event.getGuild().getSelfMember(); }
     public String getArgs() { return args; }
+    public CommandClient getClient() { return client; }
 }

@@ -11,6 +11,10 @@ import java.util.Set;
 
 public class CommandClient extends ListenerAdapter {
     private final Map<String, Command> commands = new HashMap<>();
+    // Separate registration-ordered list so the help command can iterate
+    // commands deterministically. The `commands` map is keyed by name and
+    // alias, so iterating its values would yield duplicates.
+    private final List<Command> commandList;
     private final String prefix;
     private final String ownerId;
     private final Set<String> coOwnerIds;
@@ -20,10 +24,15 @@ public class CommandClient extends ListenerAdapter {
         this.ownerId = ownerId;
         this.coOwnerIds = new HashSet<>();
         for (String id : coOwnerIds) this.coOwnerIds.add(id);
-        for (Command cmd : commandList) {
+        this.commandList = List.copyOf(commandList);
+        for (Command cmd : this.commandList) {
             commands.put(cmd.name.toLowerCase(), cmd);
             for (String alias : cmd.aliases) commands.put(alias.toLowerCase(), cmd);
         }
+    }
+
+    public List<Command> getCommands() {
+        return commandList;
     }
 
     @Override
@@ -46,6 +55,6 @@ public class CommandClient extends ListenerAdapter {
         String authorId = event.getAuthor().getId();
         if (command.ownerCommand && !ownerId.equals(authorId) && !coOwnerIds.contains(authorId)) return;
 
-        command.execute(new CommandEvent(event, args));
+        command.execute(new CommandEvent(event, args, this));
     }
 }

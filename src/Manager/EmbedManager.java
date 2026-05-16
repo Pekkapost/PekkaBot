@@ -1,12 +1,64 @@
 package Manager;
 
+import Framework.Command.Command;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EmbedManager {
+    // Maps the bucket name (the segment right after "Commands." in a command's
+    // package) to the display heading shown in the help embed. The map's
+    // insertion order also dictates the field order in the embed. Anything
+    // not listed here falls into the trailing "Other" bucket.
+    private static final Map<String, String> HELP_CATEGORY_DISPLAY = new LinkedHashMap<>();
+    static {
+        HELP_CATEGORY_DISPLAY.put("WhiteGate", "White Gate");
+        HELP_CATEGORY_DISPLAY.put("Ad",        "Ads");
+        HELP_CATEGORY_DISPLAY.put("Currency",  "Currency");
+        HELP_CATEGORY_DISPLAY.put("Timer",     "Timer (JST)");
+        HELP_CATEGORY_DISPLAY.put("Action",    "Actions");
+    }
+    private static final String HELP_FALLBACK_CATEGORY = "Other";
+
+    public static void help(MessageChannel channel, Collection<Command> commands) {
+        LinkedHashMap<String, List<Command>> grouped = new LinkedHashMap<>();
+        for (String display : HELP_CATEGORY_DISPLAY.values()) grouped.put(display, new ArrayList<>());
+        grouped.put(HELP_FALLBACK_CATEGORY, new ArrayList<>());
+
+        for (Command cmd : commands) {
+            if (cmd.hidden || cmd.ownerCommand) continue;
+            String[] parts = cmd.getClass().getPackage().getName().split("\\.");
+            String bucket = parts.length >= 2 ? parts[1] : "";
+            String display = HELP_CATEGORY_DISPLAY.getOrDefault(bucket, HELP_FALLBACK_CATEGORY);
+            grouped.get(display).add(cmd);
+        }
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.PINK);
+        builder.setTitle("PekkaBot Commands");
+        for (Map.Entry<String, List<Command>> entry : grouped.entrySet()) {
+            List<Command> bucket = entry.getValue();
+            if (bucket.isEmpty()) continue;
+            bucket.sort(Comparator.comparing(c -> c.name.toLowerCase()));
+            StringBuilder body = new StringBuilder();
+            for (Command cmd : bucket) {
+                String h = cmd.help.isEmpty() ? "—" : cmd.help;
+                body.append("`").append(cmd.name).append("` — ").append(h).append("\n");
+            }
+            builder.addField(entry.getKey(), body.toString().stripTrailing(), false);
+        }
+        channel.sendMessageEmbeds(builder.build()).queue();
+    }
+
     public static void chronos(MessageChannel channel, User author, int points) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
