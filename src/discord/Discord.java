@@ -46,8 +46,7 @@ public class Discord {
                     BotConstants.discordToken,
                     GatewayIntent.GUILD_EXPRESSIONS,
                     GatewayIntent.GUILD_MESSAGES,
-                    GatewayIntent.GUILD_MESSAGE_REACTIONS,
-                    GatewayIntent.MESSAGE_CONTENT)
+                    GatewayIntent.GUILD_MESSAGE_REACTIONS)
                     .setActivity(Activity.listening("Pekka Bot | " + BotConstants.prefix))
                     // The bot doesn't read presence, client-status, or voice state — disable
                     // the caches so JDA doesn't keep them populated per-guild.
