@@ -13,6 +13,6 @@ public class AdTotal extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.ad(event.getHook(),event.getSelfMember().getUser(),SQLManager.getTotalAd());
+        EmbedManager.ad(event,event.getSelfMember().getUser(),SQLManager.getTotalAd());
     }
 }

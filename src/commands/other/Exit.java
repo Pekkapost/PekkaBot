@@ -14,9 +14,9 @@ public class Exit extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        // complete(), not queue() — the shutdown below would otherwise race the
+        // Blocking, not queued — the shutdown below would otherwise race the
         // REST call and the caller would be left with a dead "thinking…" prompt.
-        event.getHook().sendMessage("Shutting down.").complete();
+        event.replyBlocking("Shutting down.");
         event.getJDA().shutdown();
         SQLManager.close();
         System.exit(0);

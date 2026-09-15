@@ -1,5 +1,6 @@
 package discord;
 
+import config.BotConstants;
 import manager.SQLManager;
 import commands.whitegate.utility.PingWG;
 import commands.ad.utility.PingAd;
@@ -11,23 +12,24 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
- * The bot's only message handler; commands arrive as interactions instead
- * and are routed by {@link framework.command.CommandClient}.
+ * Non-command message handler. Prefix invocations are routed by
+ * {@link framework.command.CommandClient}, which listens separately.
  *
  * Two side-channels live here:
  *
- * 1. Activity tracking — every guild message increments the sender's
- *    Chronos Stone count via {@link SQLManager#updatePoints}. Needs only
- *    the author, never the body.
+ * 1. Activity tracking — every non-command guild message increments the
+ *    sender's Chronos Stone count via {@link SQLManager#updatePoints}.
  * 2. Stat ingestion — when the bot is @-mentioned, the message body is
  *    parsed for white-gate or ad data and persisted through {@link PingWG}
  *    / {@link PingAd}.
  *
- * Without the MESSAGE_CONTENT intent, {@code getContentRaw()} is empty for
- * every message Discord doesn't exempt — and "the bot was mentioned" is
- * exactly one of those exemptions. So the mention check below is not just
- * a filter on which messages are interesting, it is the boundary of what
- * this listener may read at all, and nothing above it may touch the body.
+ * Whether the body is readable at all depends on configuration. With a
+ * prefix set the bot holds MESSAGE_CONTENT and everything is legible; with
+ * a blank prefix it holds no such intent and {@code getContentRaw()}
+ * returns "" for every message Discord doesn't exempt — "the bot was
+ * mentioned" being the exemption this listener lives on. Reading the body
+ * outside those two cases is not merely useless, it makes JDA log a
+ * warning, so the guard below is load-bearing rather than an optimisation.
  */
 public class GuildMessageRespond extends ListenerAdapter {
     @Override
@@ -39,19 +41,29 @@ public class GuildMessageRespond extends ListenerAdapter {
             return;
         }
 
-        SQLManager.updatePoints(event.getAuthor().getId());
-
-        // Read nothing out of the message until we know the bot was mentioned.
-        // That mention is what makes Discord populate the body at all, and JDA
-        // logs a "attempting to access message content without
-        // GatewayIntent.MESSAGE_CONTENT" warning for any other guild message
-        // whose content is touched. This is the same predicate JDA itself uses
-        // to decide the access was legitimate, so keep the two in step.
+        // The body is only legible in two situations, and reading it outside
+        // them makes JDA log an "attempting to access message content without
+        // GatewayIntent.MESSAGE_CONTENT" warning: when the bot was mentioned
+        // (Discord exempts those regardless of intent), or when a prefix is
+        // configured, which is exactly when the bot holds the intent.
         User self = event.getJDA().getSelfUser();
-        if (!event.getMessage().getMentions().getUsers().contains(self)) return;
+        boolean mentioned = event.getMessage().getMentions().getUsers().contains(self);
+        boolean prefixCommands = !BotConstants.prefix.isBlank();
+        String message = mentioned || prefixCommands
+                ? event.getMessage().getContentRaw().toLowerCase()
+                : "";
+
+        // Command invocations don't count — otherwise users could farm Chronos
+        // Stones by spamming any cheap command (`p!hug`, `p!shion`, ...). Slash
+        // invocations aren't messages at all, so they never reach this listener.
+        if (!(prefixCommands && message.startsWith(BotConstants.prefix.toLowerCase()))) {
+            SQLManager.updatePoints(event.getAuthor().getId());
+        }
+
+        if (!mentioned) return;
 
         // Mobile Discord sends <@!id> while desktop sends <@id>; strip both.
-        String message = event.getMessage().getContentRaw().toLowerCase()
+        message = message
                 .replace("<@!" + self.getId() + ">", "")
                 .replace("<@" + self.getId() + ">", "");
 

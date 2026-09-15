@@ -1,10 +1,10 @@
 package manager;
 
 import framework.command.Command;
+import framework.command.CommandEvent;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.interactions.InteractionHook;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class EmbedManager {
     }
     private static final String HELP_FALLBACK_CATEGORY = "Other";
 
-    public static void help(InteractionHook hook, Collection<Command> commands) {
+    public static void help(CommandEvent event, Collection<Command> commands) {
         LinkedHashMap<String, List<Command>> grouped = new LinkedHashMap<>();
         for (String display : HELP_CATEGORY_DISPLAY.values()) grouped.put(display, new ArrayList<>());
         grouped.put(HELP_FALLBACK_CATEGORY, new ArrayList<>());
@@ -69,27 +69,27 @@ public class EmbedManager {
             }
             builder.addField(entry.getKey(), body.toString().stripTrailing(), false);
         }
-        hook.sendMessageEmbeds(builder.build()).queue();
+        event.replyEmbeds(builder.build());
     }
 
-    public static void chronos(InteractionHook hook, User author, int points) {
+    public static void chronos(CommandEvent event, User author, int points) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
         builder.setDescription("You have " + points + " <:chronos:540404637581443095>");
         builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
-        hook.sendMessageEmbeds(builder.build()).queue();
+        event.replyEmbeds(builder.build());
     }
 
-    public static void dango(InteractionHook hook) {
+    public static void dango(CommandEvent event) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
         builder.setTitle("This is a smol little dango");
         builder.setDescription("It likes to bounce around");
         builder.setThumbnail("https://cdn.discordapp.com/avatars/218781547854168064/68474a1b67a8e27f5fafe296815771fe.png");
-        hook.sendMessageEmbeds(builder.build()).queue();
+        event.replyEmbeds(builder.build());
     }
 
-    public static void whiteGate(InteractionHook hook, User author, int[] temp) {
+    public static void whiteGate(CommandEvent event, User author, int[] temp) {
         if (temp.length == 27) {
             EmbedBuilder builder = new EmbedBuilder();
             builder.setColor(Color.PINK);
@@ -122,11 +122,11 @@ public class EmbedManager {
 
             builder.addField("Varuo",   String.valueOf(temp[13]), true);
             builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
-            hook.sendMessageEmbeds(builder.build()).queue();
+            event.replyEmbeds(builder.build());
         }
     }
 
-    public static void ad(InteractionHook hook, User author, int[] temp) {
+    public static void ad(CommandEvent event, User author, int[] temp) {
         if (temp.length == 5) {
             EmbedBuilder builder = new EmbedBuilder();
             builder.setColor(Color.PINK);
@@ -137,25 +137,25 @@ public class EmbedManager {
             builder.addField("G Key", String.valueOf(temp[3]), true);
             builder.addField("R Key", String.valueOf(temp[4]), true);
             builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
-            hook.sendMessageEmbeds(builder.build()).queue();
+            event.replyEmbeds(builder.build());
         }
     }
 
-    public static void action(InteractionHook hook, User author, String url, String message) {
+    public static void action(CommandEvent event, User author, String url, String message) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
         builder.setDescription(message);
         builder.setImage(url);
         builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
-        hook.sendMessageEmbeds(builder.build()).queue();
+        event.replyEmbeds(builder.build());
     }
 
-    public static void lookingfor(InteractionHook hook, User author, String url, String title) {
+    public static void lookingfor(CommandEvent event, User author, String url, String title) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.PINK);
         builder.setTitle(title);
         builder.setImage(url);
         builder.setAuthor(author.getName(), author.getEffectiveAvatarUrl(), author.getEffectiveAvatarUrl());
-        hook.sendMessageEmbeds(builder.build()).queue();
+        event.replyEmbeds(builder.build());
     }
 }

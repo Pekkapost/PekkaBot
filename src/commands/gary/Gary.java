@@ -22,6 +22,6 @@ public class Gary extends Command {
         String name = e.getString("name").toLowerCase();
         String link = GaryManager.callMe(name, !name.isBlank());
         String title = "Is this the Gariyu AS you're looking for?";
-        EmbedManager.lookingfor(e.getHook(), e.getAuthor(), link, title);
+        EmbedManager.lookingfor(e, e.getAuthor(), link, title);
     }
 }

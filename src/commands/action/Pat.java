@@ -21,7 +21,7 @@ public class Pat extends Command {
     protected void execute(CommandEvent event) {
         User target = event.getUser("user");
         String recipient = target == null ? event.getAuthor().getId() : target.getId();
-        EmbedManager.action(event.getHook(), event.getAuthor(), Resources.pat,
+        EmbedManager.action(event, event.getAuthor(), Resources.pat,
                 "*Pats* <@" + recipient + "> ");
     }
 }

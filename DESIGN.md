@@ -17,7 +17,7 @@ PekkaBot/
 ├── src/                      # Library code; never run directly
 │   ├── discord/              # JDA setup, listener, name-lookup facade
 │   ├── framework/            # In-tree replacement for archived jda-utilities
-│   │   └── command/          # Command base class, slash registrar/dispatcher, CommandEvent
+│   │   └── command/          # Command base class, dual dispatcher, CommandEvent + sources
 │   ├── commands/             # Bot commands, grouped by feature
 │   │   ├── action/           # Hug, Pat, Slap, Scold, Slam
 │   │   ├── ad/               # Ad-tracking commands
@@ -38,7 +38,7 @@ PekkaBot/
 │       ├── Paths.java          # Project-root-anchored path resolution
 │       └── Resources.java      # Tracked-in-git string constants
 ├── config/                   # Host-local config + dependency manifest
-│   ├── BotConstants.java     # Gitignored — token, owner ids
+│   ├── BotConstants.java     # Gitignored — token, owner ids, prefix
 │   └── libs.txt              # Pinned JAR versions
 ├── data/                     # Runtime state (gitignored, auto-created)
 │   └── PekkaBot.db
@@ -163,7 +163,9 @@ private static final Logger logger = LoggerFactory.getLogger(MyClass.class);
 
 Two distinct stores, both intentionally hand-edited Java rather than property files:
 
-- **[`config/BotConstants.java`](config/BotConstants.java)** — host-local, gitignored. Discord token and owner IDs. Created per-developer; never committed.
+- **[`config/BotConstants.java`](config/BotConstants.java)** — host-local, gitignored. Discord token, owner IDs, command prefix. Created per-developer; never committed.
+
+`prefix` is host-local rather than shared because it encodes a *capability of this deployment*, not a preference: a blank prefix means "this bot has no MESSAGE_CONTENT intent". One knob drives the intent request, the message listener, and the activity string together, so the three cannot disagree. Resist adding a separate `enableMessageContent` boolean — two flags that must agree is exactly the bug this shape avoids.
 - **[`src/util/Resources.java`](src/util/Resources.java)** — tracked in git. Shared strings the bot ships with: invite URL, action GIF URLs, the Shion suffix. Anything that should be the same across every clone goes here.
 
 The split exists so a new developer cloning the repo gets all the canned strings for free, and only has to create `BotConstants.java` with their own token.
@@ -224,23 +226,27 @@ If a fourth singleton appears, consider whether the static-facade pattern still 
 
 ## 13. JDA Specifics
 
-- **Intents are explicit.** Only enable what's actually consumed: `GUILD_EXPRESSIONS`, `GUILD_MESSAGES`, `GUILD_MESSAGE_REACTIONS`. All three are unprivileged — nothing here needs a Developer Portal toggle.
-- **Message content is not available.** Without `MESSAGE_CONTENT`, `getContentRaw()` returns `""` for every message Discord doesn't exempt. The one exemption this codebase relies on is *"the app was mentioned"*, which is what keeps the white gate / ad reporting in [`GuildMessageRespond`](src/discord/GuildMessageRespond.java) working. Treat readable content as available **only** inside a mention branch; anywhere else, take input as a slash-command option.
-- **Check the mention *before* reading the body.** JDA logs a one-off `Attempting to access message content without GatewayIntent.MESSAGE_CONTENT` warning whenever a guild message's content, embeds or attachments are read, come back empty, and the bot wasn't mentioned. Hoisting a `getContentRaw()` call above the mention check is enough to trigger it on the first ordinary message the bot sees. Gate on `getMentions().getUsers().contains(getSelfUser())` — the same predicate JDA uses — and read the body only after it passes. Don't reach for `Message.suppressContentIntentWarning()`; the warning is a correct signal that the read is in the wrong place.
+- **Intents are explicit.** Only enable what's actually consumed: `GUILD_EXPRESSIONS`, `GUILD_MESSAGES`, `GUILD_MESSAGE_REACTIONS`, plus `MESSAGE_CONTENT` when — and only when — a prefix is configured.
+- **Never request a privileged intent unconditionally.** Asking for `MESSAGE_CONTENT` without the matching Developer Portal toggle doesn't degrade, it fails: Discord closes the gateway with code 4014 and the bot never connects. That's why the request in [`Discord`](src/discord/Discord.java) is built from an `EnumSet` gated on `BotConstants.prefix` instead of being a constant argument list.
+- **Message content is conditionally readable, and the condition is load-bearing.** With a blank prefix the bot holds no content intent, and `getContentRaw()` returns `""` for every message Discord doesn't exempt — *"the app was mentioned"* being the exemption [`GuildMessageRespond`](src/discord/GuildMessageRespond.java) lives on. Read the body only when the bot was mentioned or a prefix is configured.
+- **Check that condition *before* reading the body.** JDA logs a one-off `Attempting to access message content without GatewayIntent.MESSAGE_CONTENT` warning whenever a guild message's content, embeds or attachments are read, come back empty, and the bot wasn't mentioned. Hoisting a `getContentRaw()` call above the guard is enough to trigger it on the first ordinary message the bot sees. Gate on `getMentions().getUsers().contains(getSelfUser())` — the same predicate JDA uses — and don't reach for `Message.suppressContentIntentWarning()`; the warning is a correct signal that the read is in the wrong place.
 - **Disable unused caches.** `JDABuilder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)` — the bot doesn't read these, so JDA shouldn't keep them populated per-guild.
 - **`queue()`, not `complete()`**, is the default send pattern — it enqueues asynchronously so listener threads don't block on the REST call.
 - **`retrieveUserById(...).complete()`** is used in `Discord.getUserName` deliberately — that lookup is rare, happens off the gateway thread (in command-`execute` context), and the caller needs the result synchronously.
 
-### Slash commands
+### Commands: one handler, two front doors
 
-Everything user-facing is a slash command, registered and dispatched by the framework's [`CommandClient`](src/framework/command/CommandClient.java). Extend the framework rather than bypassing it — commands should never touch `SlashCommandInteractionEvent` directly.
+A command is reachable as `/name` (always) and as `<prefix>name` (when a prefix is configured), and its `execute` body must not care which happened. Extend the framework rather than bypassing it — commands should never touch `SlashCommandInteractionEvent` or `MessageReceivedEvent` directly.
 
+The fork lives behind [`CommandSource`](src/framework/command/CommandSource.java), with one implementation per invocation style; [`CommandEvent`](src/framework/command/CommandEvent.java) delegates to it and computes everything both paths derive identically. **Add new per-invocation behaviour to the interface, not as a branch inside a command** — a command that asks "was I called with a slash?" is the thing this shape exists to prevent.
+
+- **Options are named only on the slash path.** A prefix invocation has one blob of text and a mention list, so `MessageSource` maps the text to the first `STRING` option and the first mention to the first `USER` option. Declaring two options of the same type means the second is unreachable by prefix; either parse the text by hand or make the command slash-only. The text is passed through verbatim, so a `STRING` option can contain mention markup when a `USER` option is declared alongside it.
 - **Registration happens on `READY`**, globally rather than per-guild: the bot ships a public invite URL, so it isn't single-guild. The cost is Discord's propagation delay on changes.
 - **Discord has no aliases.** A command's `name` and each entry in `aliases` are registered as separate slash commands sharing one handler. Names are lowercased because Discord rejects any other casing. Budget accordingly — the cap is 100 registrations and the bot currently uses 46.
 - **`help` doubles as the Discord-facing description**, which must be 1–100 characters. `CommandClient.description` strips custom-emoji markup (it renders as raw `<:Name:id>` in the picker), falls back to the command name when `help` is blank, and clamps the length. Keep the emoji in `help` — the help *embed* renders it properly.
-- **Dispatch defers before executing.** `deferReply()` turns Discord's 3-second interaction deadline into 15 minutes, which the blocking lookups in `Discord.getUserName` need. The corollary is that **every command must produce output**, or the caller is left staring at "thinking…" forever. Reply through `CommandEvent.reply(...)` / `getHook()`, never by sending to the channel — a channel send posts the message but never resolves the interaction.
-- **Commands are guild-only** (`InteractionContextType.GUILD`), matching the old dispatcher's behaviour and keeping `getGuild()` non-null.
-- **Owner-only commands** also set `DefaultMemberPermissions.DISABLED` so they stay out of most members' pickers. That's presentation; the owner-id check in the dispatcher is the actual gate.
+- **Slash dispatch defers before executing.** `deferReply()` turns Discord's 3-second interaction deadline into 15 minutes, which the blocking lookups in `Discord.getUserName` need. The corollary is that **every command must produce output**, or the slash caller is left staring at "thinking…" forever. Reply through `CommandEvent.reply(...)` / `replyEmbeds(...)`, never by sending to the channel — a channel send posts the message but never resolves the interaction.
+- **Commands are guild-only** (`InteractionContextType.GUILD` on the slash path, an `isFromGuild` check on the message path), keeping `getGuild()` non-null.
+- **Owner-only commands** also set `DefaultMemberPermissions.DISABLED` so they stay out of most members' pickers. That's presentation; the owner-id check in the dispatcher is the actual gate. A refused slash invocation answers ephemerally because an interaction is waiting; a refused prefix invocation stays silent, so a mistyped command doesn't advertise that an owner command exists.
 
 ---
 

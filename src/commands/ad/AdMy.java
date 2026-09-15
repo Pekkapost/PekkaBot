@@ -13,6 +13,6 @@ public class AdMy extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.ad(event.getHook(),event.getAuthor(), SQLManager.getAd(event.getAuthor().getId()));
+        EmbedManager.ad(event,event.getAuthor(), SQLManager.getAd(event.getAuthor().getId()));
     }
 }

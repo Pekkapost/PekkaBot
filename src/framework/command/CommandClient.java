@@ -1,6 +1,7 @@
 package framework.command;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.InteractionContextType;
@@ -19,12 +20,19 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Slash-command registrar and dispatcher.
+ * Command registrar and dispatcher, serving both invocation styles.
  *
  * Holds the registered command list (built by {@link CommandClientBuilder},
  * populated from {@link util.CommandLoader#discover}), pushes it to Discord
- * on {@code READY}, and routes each incoming interaction to its handler
- * after gating on {@code ownerCommand}.
+ * on {@code READY}, and routes each incoming invocation to its handler
+ * after gating on {@code ownerCommand}. A command is reached either as
+ * {@code /name} (always) or as {@code <prefix>name} (only when a prefix is
+ * configured); both end up in the same {@code execute}, told apart only by
+ * the {@link CommandSource} behind the {@link CommandEvent}.
+ *
+ * An empty prefix disables the message path outright, which is the
+ * supported configuration when the MESSAGE_CONTENT intent isn't available
+ * — see {@link discord.Discord}.
  *
  * Discord has no alias concept, so a command's {@code name} and every entry
  * in its {@code aliases} are registered as separate slash commands pointing
@@ -47,10 +55,12 @@ public class CommandClient extends ListenerAdapter {
     // commands deterministically. The `commands` map is keyed by name and
     // alias, so iterating its values would yield duplicates.
     private final List<Command> commandList;
+    private final String prefix;
     private final String ownerId;
     private final Set<String> coOwnerIds;
 
-    public CommandClient(String ownerId, String[] coOwnerIds, List<Command> commandList) {
+    public CommandClient(String prefix, String ownerId, String[] coOwnerIds, List<Command> commandList) {
+        this.prefix = prefix == null ? "" : prefix.toLowerCase();
         this.ownerId = ownerId;
         this.coOwnerIds = new HashSet<>();
         for (String id : coOwnerIds) this.coOwnerIds.add(id);
@@ -116,7 +126,35 @@ public class CommandClient extends ListenerAdapter {
         // discord.Discord#getUserName. Every command must then produce output
         // through the hook, or the interaction shows "thinking…" forever.
         event.deferReply().queue();
-        command.execute(new CommandEvent(event, this));
+        command.execute(new CommandEvent(new InteractionSource(event), this));
+    }
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        // Empty prefix means the bot never asked for MESSAGE_CONTENT, so the
+        // body would be blank anyway — and reading it would make JDA warn.
+        if (prefix.isEmpty()) return;
+        if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
+
+        String content = event.getMessage().getContentRaw();
+        if (!content.toLowerCase().startsWith(prefix)) return;
+
+        String withoutPrefix = content.substring(prefix.length()).trim();
+        if (withoutPrefix.isEmpty()) return;
+        String[] parts = withoutPrefix.split("\\s+", 2);
+        String args = parts.length > 1 ? parts[1] : "";
+
+        Command command = commands.get(parts[0].toLowerCase());
+        if (command == null) return;
+
+        // Silent on refusal, unlike the slash path: there's no interaction
+        // waiting on an answer, and a mistyped owner command shouldn't tell
+        // the channel that an owner command exists.
+        String authorId = event.getAuthor().getId();
+        if (command.ownerCommand && !ownerId.equals(authorId) && !coOwnerIds.contains(authorId)) return;
+
+        command.execute(new CommandEvent(new MessageSource(event, command, args), this));
     }
 
     // Discord shows this verbatim in the command picker, where custom-emoji

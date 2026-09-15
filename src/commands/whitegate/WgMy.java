@@ -13,6 +13,6 @@ public class WgMy extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.whiteGate(event.getHook(),event.getAuthor(), SQLManager.getWhiteGate(event.getAuthor().getId()));
+        EmbedManager.whiteGate(event,event.getAuthor(), SQLManager.getWhiteGate(event.getAuthor().getId()));
     }
 }

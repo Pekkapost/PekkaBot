@@ -22,6 +22,6 @@ public class Unseen extends Command {
         String name = e.getString("name").toLowerCase();
         String link = UnseenManager.callMe(name, !name.isBlank());
         String title = "Is this the Unseen you're looking for?";
-        EmbedManager.lookingfor(e.getHook(), e.getAuthor(), link, title);
+        EmbedManager.lookingfor(e, e.getAuthor(), link, title);
     }
 }

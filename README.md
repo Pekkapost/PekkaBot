@@ -39,7 +39,7 @@ Drop the three JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`
 
 ### **2. BotConstants.java**
 
-`config/BotConstants.java` is gitignored — it holds the secrets and per-host knobs. Create it locally with exactly these three fields:
+`config/BotConstants.java` is gitignored — it holds the secrets and per-host knobs. Create it locally with exactly these four fields:
 
 ```java
 package config;
@@ -48,6 +48,7 @@ public class BotConstants {
     public static final String   discordToken   = "YOUR_BOT_TOKEN";
     public static final String   discordOwner   = "YOUR_DISCORD_USER_ID";
     public static final String[] discordCoOwner = {};
+    public static final String   prefix         = "p!";   // "" for slash-only
 }
 ```
 
@@ -57,13 +58,21 @@ In IntelliJ, mark [`config/`](config/) as a source root (*right-click → Mark D
 
 `discordOwner` / `discordCoOwner` are Discord user IDs that bypass owner-only command checks.
 
+`prefix` turns prefix commands on and off, and is the **single switch for the privileged intent** — see [step 3](#3-discord-developer-portal). Set it to `p!` and the bot answers both `p!hug` and `/hug`; set it to `""` and the bot is slash-only and requests no privileged intent. There is deliberately no second flag to keep in sync.
+
 Everything else the bot ships with — invite URL, action-command GIF URLs, image URLs — lives in [`src/util/Resources.java`](src/util/Resources.java) instead. That file *is* tracked in git; populate it once and the values stay in sync with the repo.
 
 ### **3. Discord Developer Portal**
 
-No privileged gateway intents are required. The bot uses `GUILD_EXPRESSIONS`, `GUILD_MESSAGES` and `GUILD_MESSAGE_REACTIONS`, all unprivileged, and reaches users through slash commands rather than message text.
+What you need here depends on the `prefix` you just set.
 
-Make sure the invite URL in [`src/util/Resources.java`](src/util/Resources.java) grants the `applications.commands` scope alongside `bot` — without it Discord refuses to register the bot's slash commands in that guild.
+**Slash-only (`prefix = ""`)** — nothing to do. `GUILD_EXPRESSIONS`, `GUILD_MESSAGES` and `GUILD_MESSAGE_REACTIONS` are all unprivileged.
+
+**Prefix commands (`prefix = "p!"`)** — the bot additionally requests `MESSAGE_CONTENT`, which is privileged. Enable it under **Bot → Privileged Gateway Intents → Message Content Intent**. For an app in fewer than 100 servers this is a self-serve toggle; past that threshold the app must be verified and approved for the intent.
+
+> **Requesting the intent without enabling it here fails the login.** Discord closes the gateway with code 4014 and the bot never connects — it does not silently fall back. If `prefix` is non-blank and the bot won't start, this is the first thing to check; the startup log says so explicitly.
+
+Either way, make sure the invite URL in [`src/util/Resources.java`](src/util/Resources.java) grants the `applications.commands` scope alongside `bot` — without it Discord won't surface the bot's slash commands in that guild.
 
 ### **4. Build the JAR**
 
@@ -84,12 +93,13 @@ java -jar PekkaBot.jar
 | Module | Description |
 |---|---|
 | [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager`. |
-| [config/BotConstants.java](config/BotConstants.java) | Discord token and owner ids. Gitignored. |
+| [config/BotConstants.java](config/BotConstants.java) | Discord token, owner ids, and the command prefix. Gitignored. |
 | [src/util/Resources.java](src/util/Resources.java) | Tracked-in-git string content the bot ships with: invite URL, action GIFs, image URLs. |
 | [src/discord/Discord.java](src/discord/Discord.java) | Builds the JDA client, auto-loads every command via `CommandLoader`, and wires up the message listener. |
 | [src/discord/DiscordManager.java](src/discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
-| [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | The only message listener: awards Chronos Stones per message, and parses white gate / ad reports out of messages that @-mention the bot. |
-| [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`; registers and dispatches slash commands. |
+| [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | Non-command message listener: awards Chronos Stones per message, and parses white gate / ad reports out of messages that @-mention the bot. |
+| [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`; registers slash commands and dispatches both slash and prefix invocations. |
+| [src/framework/command/CommandSource.java](src/framework/command/CommandSource.java) | The seam that lets one `execute` body serve both invocation styles — implemented by `MessageSource` (prefix) and `InteractionSource` (slash). |
 | [src/manager/EmbedManager.java](src/manager/EmbedManager.java) | Helpers for building Discord embeds, including the dynamically-generated help embed. |
 | [src/manager/SQLManager.java](src/manager/SQLManager.java) | Application-level wrappers around `utility/SQL.java`. |
 | [src/manager/utility/SQL.java](src/manager/utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
@@ -124,11 +134,13 @@ public class Hello extends Command {
 
 `help` doubles as the slash command's description in Discord's picker, so it can't be blank — a command that leaves it empty is registered under its own name instead.
 
+The command is reachable as both `/hello` and `p!hello` with no extra work; `event` hides which one was used.
+
 To take arguments, declare them as `options` and read them back by name:
 
 ```java
 this.options = new OptionData[]{
-        new OptionData(OptionType.USER,   "user", "Who to greet",   false),
+        new OptionData(OptionType.USER,   "user", "Who to greet",     false),
         new OptionData(OptionType.STRING, "note", "Something to add", false)
 };
 // ...
@@ -136,13 +148,19 @@ User user = event.getUser("user");     // null when omitted
 String note = event.getString("note"); // "" when omitted
 ```
 
+Options are named only on the slash path. A prefix invocation fills the **first** `STRING` option from all the text after the command name, and the **first** `USER` option from the first mention. The two overlap: `p!hello @bob hi there` yields `user=@bob` **and** `note="<@1234> hi there"`, because the text is passed through verbatim, mention markup included. Declare at most one option of each type, and don't rely on a `STRING` option being clean when a `USER` option is also declared.
+
 Rebuild and restart. The help embed picks up the new command from its `name` and `help` fields, bucketing it into the section that matches its package (`commands.other.Hello` → **Other**). To add a brand-new category with its own help-embed heading, add one line to [`EmbedManager.HELP_CATEGORY_DISPLAY`](src/manager/EmbedManager.java); otherwise commands in unknown packages fall into the trailing **Other** bucket.
 
 Files under `src/commands/<feature>/utility/` are support modules — they don't extend `Command`, so `CommandLoader` ignores them.
 
 ## Commands
 
-All commands are slash commands — type `/` in any channel to browse them. Discord has no alias concept, so each alias below is registered as its own slash command sharing the same handler (46 registrations in total, against Discord's cap of 100). Names are lowercased on registration; the casing here is display only.
+Every command below works two ways: as a slash command (always), and as `<prefix>name` when a `prefix` is configured — `/hug` and `p!hug` reach the same handler. Type `/` in any channel to browse them.
+
+Discord has no alias concept, so each alias is registered as its own slash command sharing the same handler (46 registrations in total, against Discord's cap of 100). Names are lowercased on registration; the casing here is display only.
+
+Arguments differ slightly between the two. A slash invocation passes them by name (`/gary name:shion`); a prefix invocation passes the text after the command name, and mentions a user by @-ing them (`p!gary shion`, `p!hug @bob`). Each command takes at most one of each kind, so the two always line up.
 
 ### **White Gate**
 
@@ -200,7 +218,7 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 | `/slam` | `user` | Slam a user. |
 | `/scold` | `user` | Scold a user. |
 
-`user` is optional — omit it and the bot targets you instead.
+`user` is optional — omit it and the bot targets you instead. Prefix form: `p!hug @bob`. Only the first mentioned user is targeted.
 
 ### **Other**
 
@@ -215,7 +233,7 @@ Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 | `/shion` | — | — | Shion counter. |
 | `/addme` | — | — | Post the bot's add-me OAuth2 URL. |
 
-`name` is optional on `/gary` and `/unseen` — omit it for a random one, or pass a character name (`/gary name:shion`). An unrecognised name returns the `???` placeholder image.
+`name` is optional on `/gary` and `/unseen` — omit it for a random one, or pass a character name (`/gary name:shion`, or `p!gary shion`). An unrecognised name returns the `???` placeholder image.
 
 ### **Admin (hidden)**
 
@@ -229,7 +247,9 @@ Owner-only, and registered with default permissions disabled so they don't clutt
 ## Limitations
 
 - **Slash commands register globally**, which Discord can take up to an hour to propagate after a name, description or option changes. Existing commands keep working in the meantime. A guild the bot joined *without* the `applications.commands` scope won't show them at all — re-invite with the URL from `/addme`.
-- **Stat logging only works via @-mention.** Without the *Message Content Intent*, Discord blanks `content` on every message except those that mention the bot — which is exactly the shape the white gate / ad reporting already used, so it survives. Nothing else in the codebase may assume readable message text.
+- **Prefix commands depend on a privileged intent.** They need `MESSAGE_CONTENT`, which is self-serve only below 100 servers; past that the app must be verified and approved, and Discord commonly declines "so I can have prefix commands" as a rationale. The slash path has no such dependency, which is why it stays wired up even when a prefix is set — if the intent is ever lost, blanking `prefix` leaves the bot fully working.
+- **Stat logging always works via @-mention**, in both configurations. Discord delivers message content when the app is mentioned regardless of intent, which is the shape the white gate / ad reporting already used.
+- **One argument of each kind per command.** A prefix invocation carries one blob of text and a mention list, so it can fill at most one `STRING` option and one `USER` option. A command needing two of the same kind has to parse the text itself, or be slash-only.
 - **Aliases cost registrations.** Every alias is a separate slash command; 46 of Discord's 100-command budget are in use.
 - The fishing and gacha sub-features have been removed from earlier versions; no schema migration was needed because their tables were never live in this branch.
 

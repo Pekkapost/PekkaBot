@@ -11,6 +11,6 @@ public class Dango extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.dango(event.getHook());
+        EmbedManager.dango(event);
     }
 }

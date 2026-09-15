@@ -21,7 +21,7 @@ public class Slap extends Command {
     protected void execute(CommandEvent event) {
         User target = event.getUser("user");
         String recipient = target == null ? event.getAuthor().getId() : target.getId();
-        EmbedManager.action(event.getHook(), event.getAuthor(), Resources.slap,
+        EmbedManager.action(event, event.getAuthor(), Resources.slap,
                 "*Slaps* <@" + recipient + "> ");
     }
 }
