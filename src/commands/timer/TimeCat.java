@@ -14,6 +14,6 @@ public class TimeCat extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getChannel().sendMessage(TimerManager.checkCat1() + "\n" + TimerManager.checkCat2()).queue();
+        event.reply(TimerManager.checkCat1() + "\n" + TimerManager.checkCat2());
     }
 }

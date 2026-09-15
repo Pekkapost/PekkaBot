@@ -15,12 +15,10 @@ import java.util.List;
  * {@link manager.EmbedManager#help}, not jda-utilities' help builder.
  */
 public class CommandClientBuilder {
-    private String prefix = "!";
     private String ownerId = "";
     private String[] coOwnerIds = new String[0];
     private final List<Command> commands = new ArrayList<>();
 
-    public CommandClientBuilder setPrefix(String prefix) { this.prefix = prefix; return this; }
     public CommandClientBuilder setOwnerId(String ownerId) { this.ownerId = ownerId; return this; }
     public CommandClientBuilder setCoOwnerIds(String... coOwnerIds) { this.coOwnerIds = coOwnerIds; return this; }
     public CommandClientBuilder setActivity(Activity a) { return this; }
@@ -31,6 +29,6 @@ public class CommandClientBuilder {
     }
 
     public CommandClient build() {
-        return new CommandClient(prefix, ownerId, coOwnerIds, commands);
+        return new CommandClient(ownerId, coOwnerIds, commands);
     }
 }

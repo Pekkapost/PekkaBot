@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JDA client builder + global user-name lookup.
  *
- * Constructs the bot's gateway connection (with the four intents the bot
+ * Constructs the bot's gateway connection (with the three intents the bot
  * actually uses), wires the message listener, and registers every command
  * found by {@link util.CommandLoader}. Reads its host-local config from
  * {@link config.BotConstants}; everything else (action GIF URLs, etc.)
@@ -37,17 +37,19 @@ public class Discord {
             CommandClientBuilder builder = new CommandClientBuilder();
             builder.setOwnerId(BotConstants.discordOwner);
             builder.setCoOwnerIds(BotConstants.discordCoOwner);
-            builder.setPrefix(BotConstants.prefix);
             builder.useHelpBuilder(false);
             builder.addCommands(CommandLoader.discover().toArray(new Command[0]));
             CommandClient client = builder.build();
-            // MESSAGE_CONTENT is a privileged intent — must be enabled in the Discord Developer Portal.
+            // No MESSAGE_CONTENT here, so message bodies arrive empty — except in
+            // the cases Discord exempts, one of which is "the bot was mentioned".
+            // That exemption is the only reason GuildMessageRespond can still read
+            // white-gate and ad reports; nothing else may assume readable content.
             d = JDABuilder.create(
                     BotConstants.discordToken,
                     GatewayIntent.GUILD_EXPRESSIONS,
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_MESSAGE_REACTIONS)
-                    .setActivity(Activity.listening("Pekka Bot | " + BotConstants.prefix))
+                    .setActivity(Activity.listening("Pekka Bot | /pekka"))
                     // The bot doesn't read presence, client-status, or voice state — disable
                     // the caches so JDA doesn't keep them populated per-guild.
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)

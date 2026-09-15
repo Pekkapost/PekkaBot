@@ -8,7 +8,7 @@ import manager.EmbedManager;
  * The {@code /Pekka} (alias {@code /Help}) command.
  *
  * Delegates the entire rendering to
- * {@link EmbedManager#help(net.dv8tion.jda.api.entities.channel.middleman.MessageChannel,
+ * {@link EmbedManager#help(net.dv8tion.jda.api.interactions.InteractionHook,
  * java.util.Collection)}, passing the live command registry pulled from
  * {@link CommandEvent#getClient()}. This means the help embed reflects
  * whatever commands are currently registered — no separate help-text
@@ -20,11 +20,12 @@ public class Pekka extends Command {
     public Pekka() {
         this.name = "Pekka";
         this.aliases = new String[]{"Help"};
+        this.help = "Lists every command";
         this.hidden = true;
     }
 
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.help(event.getTextChannel(), event.getClient().getCommands());
+        EmbedManager.help(event.getHook(), event.getClient().getCommands());
     }
 }

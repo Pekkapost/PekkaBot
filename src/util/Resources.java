@@ -3,7 +3,7 @@ package util;
 /**
  * Tracked-in-git string content the bot ships with.
  *
- * Anything that's a secret or per-host (token, owner ids, prefix) stays
+ * Anything that's a secret or per-host (token, owner ids) stays
  * in {@link config.BotConstants}; everything else — invite URL, action
  * GIF URLs, the Shion suffix — lives here so it's shared across clones
  * instead of having to be re-typed into each developer's local
@@ -17,7 +17,9 @@ package util;
 public class Resources {
     // OAuth2 invite URL posted by /AddMe. Generate via the Developer Portal
     // (OAuth2 → URL Generator → scopes: bot, applications.commands).
-    public static final String addME = "Add me at https://discordapp.com/oauth2/authorize?&client_id=379513566711119872&scope=bot&permissions=1208470592";
+    // applications.commands is not optional: a guild that authorised the bot
+    // without it never sees the slash commands, however they're registered.
+    public static final String addME = "Add me at https://discordapp.com/oauth2/authorize?&client_id=379513566711119872&scope=bot+applications.commands&permissions=1208470592";
 
     // Discord CDN GIF/PNG URLs displayed by the action commands. Each one
     // is rendered as the embed image by EmbedManager.action(...).

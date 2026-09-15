@@ -13,6 +13,6 @@ public class WgTotal extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.whiteGate(event.getTextChannel(),event.getSelfMember().getUser(),SQLManager.getTotalWhiteGate());
+        EmbedManager.whiteGate(event.getHook(),event.getSelfMember().getUser(),SQLManager.getTotalWhiteGate());
     }
 }

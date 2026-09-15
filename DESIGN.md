@@ -17,7 +17,7 @@ PekkaBot/
 ├── src/                      # Library code; never run directly
 │   ├── discord/              # JDA setup, listener, name-lookup facade
 │   ├── framework/            # In-tree replacement for archived jda-utilities
-│   │   └── command/          # Command base class, CommandClient, CommandEvent
+│   │   └── command/          # Command base class, slash registrar/dispatcher, CommandEvent
 │   ├── commands/             # Bot commands, grouped by feature
 │   │   ├── action/           # Hug, Pat, Slap, Scold, Slam
 │   │   ├── ad/               # Ad-tracking commands
@@ -38,7 +38,7 @@ PekkaBot/
 │       ├── Paths.java          # Project-root-anchored path resolution
 │       └── Resources.java      # Tracked-in-git string constants
 ├── config/                   # Host-local config + dependency manifest
-│   ├── BotConstants.java     # Gitignored — token, owner ids, prefix
+│   ├── BotConstants.java     # Gitignored — token, owner ids
 │   └── libs.txt              # Pinned JAR versions
 ├── data/                     # Runtime state (gitignored, auto-created)
 │   └── PekkaBot.db
@@ -111,7 +111,7 @@ Don't fight the IDE's optimizer past this — the goal is "grouped, blank lines 
 
 Add a comment only when the **why** is non-obvious:
 
-- A hidden invariant or ordering constraint (e.g. "MESSAGE_CONTENT is a privileged intent — must be enabled in the Developer Portal" in `Discord.java`).
+- A hidden invariant or ordering constraint (e.g. why `GuildMessageRespond` can still read message bodies at all, in `Discord.java`).
 - A workaround for a framework/library bug or quirk.
 - A design choice a maintainer would otherwise "fix" by accident (e.g. why `SQL` doesn't apply the tmp+rename pattern).
 
@@ -163,7 +163,7 @@ private static final Logger logger = LoggerFactory.getLogger(MyClass.class);
 
 Two distinct stores, both intentionally hand-edited Java rather than property files:
 
-- **[`config/BotConstants.java`](config/BotConstants.java)** — host-local, gitignored. Discord token, owner IDs, prefix. Created per-developer; never committed.
+- **[`config/BotConstants.java`](config/BotConstants.java)** — host-local, gitignored. Discord token and owner IDs. Created per-developer; never committed.
 - **[`src/util/Resources.java`](src/util/Resources.java)** — tracked in git. Shared strings the bot ships with: invite URL, action GIF URLs, the Shion suffix. Anything that should be the same across every clone goes here.
 
 The split exists so a new developer cloning the repo gets all the canned strings for free, and only has to create `BotConstants.java` with their own token.
@@ -175,8 +175,8 @@ The split exists so a new developer cloning the repo gets all the canned strings
 Adding a new command is a single-file affair:
 
 1. Drop a class under `src/commands/<feature>/` that extends `framework.command.Command`.
-2. Set `this.name`, `this.help`, optionally `this.aliases`, in the constructor.
-3. Implement `protected void execute(CommandEvent event)`.
+2. Set `this.name`, `this.help`, optionally `this.aliases` and `this.options`, in the constructor.
+3. Implement `protected void execute(CommandEvent event)`, writing output through `event.reply(...)` or `event.getHook()`.
 
 That's it — [`util/CommandLoader.java`](src/util/CommandLoader.java) scans the `commands` package (in the running JAR or compile-output dir), instantiates every concrete `Command` subclass with a no-arg constructor, and hands the list to the `CommandClient`. No registration line, no manifest edit, no annotation.
 
@@ -224,11 +224,22 @@ If a fourth singleton appears, consider whether the static-facade pattern still 
 
 ## 13. JDA Specifics
 
-- **Intents are explicit.** Only enable what's actually consumed: `GUILD_EXPRESSIONS`, `GUILD_MESSAGES`, `GUILD_MESSAGE_REACTIONS`, `MESSAGE_CONTENT`. The last is privileged and must be enabled in the Developer Portal.
+- **Intents are explicit.** Only enable what's actually consumed: `GUILD_EXPRESSIONS`, `GUILD_MESSAGES`, `GUILD_MESSAGE_REACTIONS`. All three are unprivileged — nothing here needs a Developer Portal toggle.
+- **Message content is not available.** Without `MESSAGE_CONTENT`, `getContentRaw()` returns `""` for every message Discord doesn't exempt. The one exemption this codebase relies on is *"the app was mentioned"*, which is what keeps the white gate / ad reporting in [`GuildMessageRespond`](src/discord/GuildMessageRespond.java) working. Treat readable content as available **only** inside a mention branch; anywhere else, take input as a slash-command option.
 - **Disable unused caches.** `JDABuilder.disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)` — the bot doesn't read these, so JDA shouldn't keep them populated per-guild.
-- **`event.getChannel().sendMessage(...).queue()`** is the default send pattern. `queue()` enqueues asynchronously so listener threads don't block on the REST call.
+- **`queue()`, not `complete()`**, is the default send pattern — it enqueues asynchronously so listener threads don't block on the REST call.
 - **`retrieveUserById(...).complete()`** is used in `Discord.getUserName` deliberately — that lookup is rare, happens off the gateway thread (in command-`execute` context), and the caller needs the result synchronously.
-- **No slash commands yet.** Everything is prefix commands routed through the framework's `CommandClient` listener. If slash commands are added, extend the framework rather than bypassing it.
+
+### Slash commands
+
+Everything user-facing is a slash command, registered and dispatched by the framework's [`CommandClient`](src/framework/command/CommandClient.java). Extend the framework rather than bypassing it — commands should never touch `SlashCommandInteractionEvent` directly.
+
+- **Registration happens on `READY`**, globally rather than per-guild: the bot ships a public invite URL, so it isn't single-guild. The cost is Discord's propagation delay on changes.
+- **Discord has no aliases.** A command's `name` and each entry in `aliases` are registered as separate slash commands sharing one handler. Names are lowercased because Discord rejects any other casing. Budget accordingly — the cap is 100 registrations and the bot currently uses 46.
+- **`help` doubles as the Discord-facing description**, which must be 1–100 characters. `CommandClient.description` strips custom-emoji markup (it renders as raw `<:Name:id>` in the picker), falls back to the command name when `help` is blank, and clamps the length. Keep the emoji in `help` — the help *embed* renders it properly.
+- **Dispatch defers before executing.** `deferReply()` turns Discord's 3-second interaction deadline into 15 minutes, which the blocking lookups in `Discord.getUserName` need. The corollary is that **every command must produce output**, or the caller is left staring at "thinking…" forever. Reply through `CommandEvent.reply(...)` / `getHook()`, never by sending to the channel — a channel send posts the message but never resolves the interaction.
+- **Commands are guild-only** (`InteractionContextType.GUILD`), matching the old dispatcher's behaviour and keeping `getGuild()` non-null.
+- **Owner-only commands** also set `DefaultMemberPermissions.DISABLED` so they stay out of most members' pickers. That's presentation; the owner-id check in the dispatcher is the actual gate.
 
 ---
 
@@ -239,7 +250,7 @@ If a fourth singleton appears, consider whether the static-facade pattern still 
 - **`new File("data/...")` or any CWD-relative path.** Use `util.Paths`.
 - **Adding a registration line somewhere for a new command.** The reflection loader picks it up — don't introduce a manual registry.
 - **Catching `Throwable` to silence a real bug.** If the catch has no `logger.error`, it's a bug.
-- **Sleeping / blocking on the gateway thread.** Use `queue()`, not `complete()`, in event listeners. The exception is `Discord.getUserName`, which is called from command-execution context.
+- **Sleeping / blocking on the gateway thread.** Use `queue()`, not `complete()`, in event listeners. Two deliberate exceptions, both from command-execution context: `Discord.getUserName`, and `Exit`, where `queue()` would race the JVM shutdown that follows it.
 - **Feature flags or backwards-compatibility shims for code we control end-to-end.** Change the code instead.
 - **Repeated `BotConstants` reads inside hot loops.** They're constants; read once into a local.
 - **Putting GIF / image URLs in command files.** Add them to `Resources.java` so the embed style is consistent and the URLs are swappable in one place.

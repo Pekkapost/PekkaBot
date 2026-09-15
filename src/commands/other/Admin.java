@@ -12,7 +12,7 @@ public class Admin extends Command {
 
     public Admin() {
         this.name = "Admin";
-        this.help = "Admin";
+        this.help = "Reports the bot's message-history permission here";
         this.ownerCommand = true;
         this.hidden = true;
     }
@@ -21,5 +21,6 @@ public class Admin extends Command {
         boolean canRead = event.getGuild().getSelfMember()
                 .hasPermission(event.getGuildChannel(), Permission.MESSAGE_HISTORY);
         logger.debug("Admin check in {}: MESSAGE_HISTORY={}", event.getGuildChannel(), canRead);
+        event.reply("MESSAGE_HISTORY in this channel: " + canRead);
     }
 }

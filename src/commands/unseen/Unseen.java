@@ -1,28 +1,27 @@
 package commands.unseen;
 
-import config.BotConstants;
-import manager.EmbedManager;
 import commands.unseen.utility.UnseenManager;
+import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
+
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class Unseen extends Command {
     public Unseen() {
         this.name = "Unseen";
         this.help = "Displays a Unseen";
+        this.options = new OptionData[]{
+                new OptionData(OptionType.STRING, "name", "Character name, or leave blank for a random one", false)
+        };
         UnseenManager.initialize();
     }
     @Override
     protected void execute(CommandEvent e) {
-        String message = e.getMessage().getContentRaw().toLowerCase();
-        boolean name = false;
-        if(!message.equals(BotConstants.prefix + "unseen")) {
-            // Strip prefix + "unseen " (7 chars) to isolate the character name argument
-            message = message.substring(7 + BotConstants.prefix.length());
-            name = true;
-        }
-        String link = UnseenManager.callMe(message,name);
+        String name = e.getString("name").toLowerCase();
+        String link = UnseenManager.callMe(name, !name.isBlank());
         String title = "Is this the Unseen you're looking for?";
-        EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), link, title);
+        EmbedManager.lookingfor(e.getHook(), e.getAuthor(), link, title);
     }
 }

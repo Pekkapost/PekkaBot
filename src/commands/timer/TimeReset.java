@@ -12,6 +12,6 @@ public class TimeReset extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getChannel().sendMessage(TimerManager.checkTime()).queue();
+        event.reply(TimerManager.checkTime());
     }
 }

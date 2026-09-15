@@ -4,25 +4,24 @@ import util.Resources;
 import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
+
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class Pat extends Command {
     public Pat() {
         this.name = "Pat";
         this.help = "Pats";
+        this.options = new OptionData[]{
+                new OptionData(OptionType.USER, "user", "Who to pat", false)
+        };
     }
     @Override
     protected void execute(CommandEvent event) {
-        String message;
-        if(event.getMessage().getMentions().getUsers().isEmpty()) {
-            message = "*Pats* <@" + event.getAuthor().getId() + "> ";
-        } else {
-            StringBuilder names = new StringBuilder();
-            for(User user : event.getMessage().getMentions().getUsers()) {
-                names.append("<@").append(user.getId()).append("> ");
-            }
-            message = "*Pats*  " + names + " ";
-        }
-        EmbedManager.action(event.getTextChannel(), event.getAuthor(), Resources.pat, message);
+        User target = event.getUser("user");
+        String recipient = target == null ? event.getAuthor().getId() : target.getId();
+        EmbedManager.action(event.getHook(), event.getAuthor(), Resources.pat,
+                "*Pats* <@" + recipient + "> ");
     }
 }

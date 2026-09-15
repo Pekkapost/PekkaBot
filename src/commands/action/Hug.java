@@ -4,25 +4,24 @@ import util.Resources;
 import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
+
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class Hug extends Command {
     public Hug() {
         this.name = "Hug";
         this.help = "Hugs";
+        this.options = new OptionData[]{
+                new OptionData(OptionType.USER, "user", "Who to hug", false)
+        };
     }
     @Override
     protected void execute(CommandEvent event) {
-        String message;
-        if(event.getMessage().getMentions().getUsers().isEmpty()) {
-            message = "*Hugs* <@" + event.getAuthor().getId() + "> ";
-        } else {
-            StringBuilder names = new StringBuilder();
-            for(User user : event.getMessage().getMentions().getUsers()) {
-                names.append("<@").append(user.getId()).append("> ");
-            }
-            message = "*Hugs*  " + names + " ";
-        }
-        EmbedManager.action(event.getTextChannel(), event.getAuthor(), Resources.hug, message);
+        User target = event.getUser("user");
+        String recipient = target == null ? event.getAuthor().getId() : target.getId();
+        EmbedManager.action(event.getHook(), event.getAuthor(), Resources.hug,
+                "*Hugs* <@" + recipient + "> ");
     }
 }

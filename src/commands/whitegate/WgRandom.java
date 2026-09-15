@@ -19,7 +19,7 @@ public class WgRandom extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getTextChannel().sendMessage(random()).queue();
+        event.reply(random());
     }
     private String random() {
         Random r = new Random();

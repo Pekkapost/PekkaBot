@@ -4,25 +4,24 @@ import util.Resources;
 import manager.EmbedManager;
 import framework.command.Command;
 import framework.command.CommandEvent;
+
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 public class Slap extends Command {
     public Slap() {
         this.name = "Slap";
         this.help = "Slaps";
+        this.options = new OptionData[]{
+                new OptionData(OptionType.USER, "user", "Who to slap", false)
+        };
     }
     @Override
     protected void execute(CommandEvent event) {
-        String message;
-        if(event.getMessage().getMentions().getUsers().isEmpty()) {
-            message = "*Slaps* <@" + event.getAuthor().getId() + "> ";
-        } else {
-            StringBuilder names = new StringBuilder();
-            for(User user : event.getMessage().getMentions().getUsers()) {
-                names.append("<@").append(user.getId()).append("> ");
-            }
-            message = "*Slaps*  " + names + " ";
-        }
-        EmbedManager.action(event.getTextChannel(), event.getAuthor(), Resources.slap, message);
+        User target = event.getUser("user");
+        String recipient = target == null ? event.getAuthor().getId() : target.getId();
+        EmbedManager.action(event.getHook(), event.getAuthor(), Resources.slap,
+                "*Slaps* <@" + recipient + "> ");
     }
 }

@@ -13,6 +13,6 @@ public class ChronosDisplay extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        EmbedManager.chronos(event.getTextChannel(),event.getAuthor(), SQLManager.getPoints(event.getAuthor().getId()));
+        EmbedManager.chronos(event.getHook(),event.getAuthor(), SQLManager.getPoints(event.getAuthor().getId()));
     }
 }

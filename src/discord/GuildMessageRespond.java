@@ -4,24 +4,29 @@ import manager.SQLManager;
 import commands.whitegate.utility.PingWG;
 import commands.ad.utility.PingAd;
 
-import config.BotConstants;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
- * Non-command message handler.
+ * The bot's only message handler; commands arrive as interactions instead
+ * and are routed by {@link framework.command.CommandClient}.
  *
- * Most user input flows through the {@link framework.command.CommandClient}
- * dispatcher, but this listener handles two side-channels that don't fit
- * the prefix-command model:
+ * Two side-channels live here:
  *
- * 1. Activity tracking — every non-command guild message increments the
- *    sender's Chronos Stone count via {@link SQLManager#updatePoints}.
+ * 1. Activity tracking — every guild message increments the sender's
+ *    Chronos Stone count via {@link SQLManager#updatePoints}. Needs only
+ *    the author, never the body.
  * 2. Stat ingestion — when the bot is @-mentioned, the message body is
  *    parsed for white-gate or ad data and persisted through {@link PingWG}
  *    / {@link PingAd}.
+ *
+ * Without the MESSAGE_CONTENT intent, {@code getContentRaw()} is empty for
+ * every message Discord doesn't exempt — and "the bot was mentioned" is
+ * exactly one of those exemptions. So the mention branch below is not just
+ * a filter on which messages are interesting, it is the boundary of what
+ * this listener can read at all.
  *
  * The hard-coded bot user id (379513566711119872L) is PekkaBot's own —
  * a substitution would only matter if forking onto a different account.
@@ -37,11 +42,7 @@ public class GuildMessageRespond extends ListenerAdapter {
         }
 
         String message = event.getMessage().getContentRaw().toLowerCase();
-        // Command invocations don't count — otherwise users could farm Chronos
-        // Stones by spamming any cheap command (`!hug`, `!shion`, ...).
-        if (!message.startsWith(BotConstants.prefix)) {
-            SQLManager.updatePoints(event.getAuthor().getId());
-        }
+        SQLManager.updatePoints(event.getAuthor().getId());
         for (int i = 0; i < event.getMessage().getMentions().getUsers().size(); i++) {
             if (event.getMessage().getMentions().getUsers().get(i).getIdLong() == 379513566711119872L) {
                 // Mobile Discord sends <@!id> while desktop sends <@id>; strip both.

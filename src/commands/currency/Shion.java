@@ -14,6 +14,6 @@ public class Shion extends Command {
     @Override
     protected void execute(CommandEvent event) {
         int count = SQLManager.updateShion();
-        event.getTextChannel().sendMessage(count + " Shions have been shioned " + Resources.shion).queue();
+        event.reply(count + " Shions have been shioned " + Resources.shion);
     }
 }

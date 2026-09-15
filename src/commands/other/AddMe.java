@@ -11,6 +11,6 @@ public class AddMe extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getChannel().sendMessage(Resources.addME).queue();
+        event.reply(Resources.addME);
     }
 }

@@ -10,6 +10,6 @@ public class Gimmie extends Command {
     }
     @Override
     protected void execute(CommandEvent event) {
-        event.getTextChannel().sendMessage("<a:Gimmie:468234791943143424>").queue();
+        event.reply("<a:Gimmie:468234791943143424>");
     }
 }

@@ -26,6 +26,6 @@ public class Tiramisu extends Command {
             url = Resources.tiramisuCake;
         }
         String title = "Is this the Tiramisu you're looking for?";
-        EmbedManager.lookingfor(e.getTextChannel(), e.getAuthor(), url, title);
+        EmbedManager.lookingfor(e.getHook(), e.getAuthor(), url, title);
     }
 }

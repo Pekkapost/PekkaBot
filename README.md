@@ -15,7 +15,7 @@ PekkaBot/
 │   ├── structures/     # generic data structures
 │   └── util/           # cross-cutting utilities (e.g. Paths anchoring)
 ├── config/             # host-local config + dependency manifest
-│   └── BotConstants.java  # gitignored — Discord token, prefix, ...
+│   └── BotConstants.java  # gitignored — Discord token, owner ids
 ├── data/               # runtime state (gitignored)
 └── libs/               # JAR dependencies
 ```
@@ -39,7 +39,7 @@ Drop the three JARs listed in [`config/libs.txt`](config/libs.txt) into [`libs/`
 
 ### **2. BotConstants.java**
 
-`config/BotConstants.java` is gitignored — it holds the secrets and per-host knobs. Create it locally with exactly these four fields:
+`config/BotConstants.java` is gitignored — it holds the secrets and per-host knobs. Create it locally with exactly these three fields:
 
 ```java
 package config;
@@ -48,7 +48,6 @@ public class BotConstants {
     public static final String   discordToken   = "YOUR_BOT_TOKEN";
     public static final String   discordOwner   = "YOUR_DISCORD_USER_ID";
     public static final String[] discordCoOwner = {};
-    public static final String   prefix         = "p!";
 }
 ```
 
@@ -58,14 +57,13 @@ In IntelliJ, mark [`config/`](config/) as a source root (*right-click → Mark D
 
 `discordOwner` / `discordCoOwner` are Discord user IDs that bypass owner-only command checks.
 
-`prefix` is the prefix every command uses (e.g. `p!hug`).
-
 Everything else the bot ships with — invite URL, action-command GIF URLs, image URLs — lives in [`src/util/Resources.java`](src/util/Resources.java) instead. That file *is* tracked in git; populate it once and the values stay in sync with the repo.
 
 ### **3. Discord Developer Portal**
 
-In the [Discord Developer Portal](https://discord.com/developers/applications), under **Bot → Privileged Gateway Intents**, enable:
-- **Message Content Intent** — required to read message text via `getContentRaw()`.
+No privileged gateway intents are required. The bot uses `GUILD_EXPRESSIONS`, `GUILD_MESSAGES` and `GUILD_MESSAGE_REACTIONS`, all unprivileged, and reaches users through slash commands rather than message text.
+
+Make sure the invite URL in [`src/util/Resources.java`](src/util/Resources.java) grants the `applications.commands` scope alongside `bot` — without it Discord refuses to register the bot's slash commands in that guild.
 
 ### **4. Build the JAR**
 
@@ -86,12 +84,12 @@ java -jar PekkaBot.jar
 | Module | Description |
 |---|---|
 | [Connection.java](Connection.java) | Bot entry point at the repo root. Builds `DiscordManager`. |
-| [config/BotConstants.java](config/BotConstants.java) | Discord token, owner ids, and prefix. Gitignored. |
+| [config/BotConstants.java](config/BotConstants.java) | Discord token and owner ids. Gitignored. |
 | [src/util/Resources.java](src/util/Resources.java) | Tracked-in-git string content the bot ships with: invite URL, action GIFs, image URLs. |
 | [src/discord/Discord.java](src/discord/Discord.java) | Builds the JDA client, auto-loads every command via `CommandLoader`, and wires up the message listener. |
 | [src/discord/DiscordManager.java](src/discord/DiscordManager.java) | Static accessor around the `Discord` instance so commands can look up user names. |
-| [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | JDA event listener that dispatches incoming messages into the command framework. |
-| [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`. |
+| [src/discord/GuildMessageRespond.java](src/discord/GuildMessageRespond.java) | The only message listener: awards Chronos Stones per message, and parses white gate / ad reports out of messages that @-mention the bot. |
+| [src/framework/command/](src/framework/command/) | Drop-in replacement for the archived jda-utilities library. Provides `Command`, `CommandEvent`, `CommandClient`, `CommandClientBuilder`; registers and dispatches slash commands. |
 | [src/manager/EmbedManager.java](src/manager/EmbedManager.java) | Helpers for building Discord embeds, including the dynamically-generated help embed. |
 | [src/manager/SQLManager.java](src/manager/SQLManager.java) | Application-level wrappers around `utility/SQL.java`. |
 | [src/manager/utility/SQL.java](src/manager/utility/SQL.java) | Raw SQLite access — connection, schema, and per-table queries. |
@@ -124,75 +122,115 @@ public class Hello extends Command {
 }
 ```
 
+`help` doubles as the slash command's description in Discord's picker, so it can't be blank — a command that leaves it empty is registered under its own name instead.
+
+To take arguments, declare them as `options` and read them back by name:
+
+```java
+this.options = new OptionData[]{
+        new OptionData(OptionType.USER,   "user", "Who to greet",   false),
+        new OptionData(OptionType.STRING, "note", "Something to add", false)
+};
+// ...
+User user = event.getUser("user");     // null when omitted
+String note = event.getString("note"); // "" when omitted
+```
+
 Rebuild and restart. The help embed picks up the new command from its `name` and `help` fields, bucketing it into the section that matches its package (`commands.other.Hello` → **Other**). To add a brand-new category with its own help-embed heading, add one line to [`EmbedManager.HELP_CATEGORY_DISPLAY`](src/manager/EmbedManager.java); otherwise commands in unknown packages fall into the trailing **Other** bucket.
 
 Files under `src/commands/<feature>/utility/` are support modules — they don't extend `Command`, so `CommandLoader` ignores them.
 
 ## Commands
 
-All commands use the configured `prefix` (e.g. `p!`).
+All commands are slash commands — type `/` in any channel to browse them. Discord has no alias concept, so each alias below is registered as its own slash command sharing the same handler (46 registrations in total, against Discord's cap of 100). Names are lowercased on registration; the casing here is display only.
 
 ### **White Gate**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `WhiteGate` | `WG`, `WGMy`, `MyWG` | Display your white gate data. |
-| `WhiteGateRandom` | `RandomWG`, `WGRandom` | Return a random white gate. |
-| `WGTotal` | `TotalWG`, `WGT` | Display total white gate data across all users. |
+| `/whitegate` | `/wg`, `/wgmy`, `/mywg` | Display your white gate data. |
+| `/whitegaterandom` | `/randomwg`, `/wgrandom` | Return a random white gate. |
+| `/wgtotal` | `/totalwg`, `/wgt` | Display total white gate data across all users. |
+
+White gate *results* aren't logged with a command — @-mention the bot with the run instead:
+
+```
+@PekkaBot drawer lake left boat well win
+```
+
+The bot reacts and echoes back what it recorded. This still works without the Message Content Intent because Discord delivers message content when the app is mentioned (see [Limitations](#limitations)).
 
 ### **Ads**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Ad` | `AdMy`, `MyAd`, `MyAds`, `AdsMy` | Display your ad data. |
-| `ADTotal` | `TotalAd`, `ADT`, `ADsTotal`, `TotalAds` | Display total ad data across all users. |
+| `/ad` | `/admy`, `/myad`, `/myads`, `/adsmy` | Display your ad data. |
+| `/adtotal` | `/totalad`, `/adt`, `/adstotal`, `/totalads` | Display total ad data across all users. |
+
+Ad results are logged by @-mentioning the bot with the shorthand — `5`/`1`/`2` for the Chronos Stone tiers, `g`/`r` for key drops:
+
+```
+@PekkaBot 5 5 1 g 2 r
+```
 
 ### **Currency**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `ChronosDisplay` | `Chronos`, `MyChronos` | Display your Chronos Stone balance. |
+| `/chronosdisplay` | `/chronos`, `/mychronos` | Display your Chronos Stone balance. |
+
+Chronos Stones accrue automatically — one per message sent in a guild.
 
 ### **Timer**
 
 | Command | Aliases | Description |
 |---|---|---|
-| `Time` | `TimeReset`, `ResetTime` | Display the next reset time. |
-| `TimeCat` | `CatTime` | Display the times that cats spawn. |
+| `/time` | `/timereset`, `/resettime` | Display the next reset time. |
+| `/timecat` | `/cattime` | Display the times that cats spawn. |
 
 Times use JST (Asia/Tokyo) — Another Eden's server timezone.
 
 ### **Actions**
 
-| Command | Description |
-|---|---|
-| `Hug` | Hug a user. |
-| `Pat` | Pat a user. |
-| `Slap` | Slap a user. |
-| `Slam` | Slam a user. |
-| `Scold` | Scold a user. |
+| Command | Options | Description |
+|---|---|---|
+| `/hug` | `user` | Hug a user. |
+| `/pat` | `user` | Pat a user. |
+| `/slap` | `user` | Slap a user. |
+| `/slam` | `user` | Slam a user. |
+| `/scold` | `user` | Scold a user. |
+
+`user` is optional — omit it and the bot targets you instead.
 
 ### **Other**
 
-| Command | Aliases | Description |
-|---|---|---|
-| `Dango` | — | Post a dango. |
-| `Tiramisu` | `Tira` | Post a tiramisu. |
-| `Gimmie` | — | Gimmie. |
-| `Gary` | — | Post a Gary (Gariyu AS). |
-| `Unseen` | — | Post an Unseen. |
-| `Shion` | — | Shion counter. |
-| `AddMe` | — | Post the bot's add-me OAuth2 URL. |
+| Command | Aliases | Options | Description |
+|---|---|---|---|
+| `/pekka` | `/help` | — | List every command. |
+| `/dango` | — | — | Post a dango. |
+| `/tiramisu` | `/tira` | — | Post a tiramisu. |
+| `/gimmie` | — | — | Gimmie. |
+| `/gary` | — | `name` | Post a Gary (Gariyu AS). |
+| `/unseen` | — | `name` | Post an Unseen. |
+| `/shion` | — | — | Shion counter. |
+| `/addme` | — | — | Post the bot's add-me OAuth2 URL. |
+
+`name` is optional on `/gary` and `/unseen` — omit it for a random one, or pass a character name (`/gary name:shion`). An unrecognised name returns the `???` placeholder image.
 
 ### **Admin (hidden)**
 
-| Command | Description |
-|---|---|
-| `Exit` | Shut down the bot. |
+Owner-only, and registered with default permissions disabled so they don't clutter the picker for regular members.
+
+| Command | Aliases | Description |
+|---|---|---|
+| `/exit` | `/shutdown` | Shut down the bot. |
+| `/admin` | — | Report whether the bot has MESSAGE_HISTORY in the current channel. |
 
 ## Limitations
 
-- The bot relies on the *Message Content Intent* and the legacy prefix-command model. JDA's slash-command path isn't wired up.
+- **Slash commands register globally**, which Discord can take up to an hour to propagate after a name, description or option changes. Existing commands keep working in the meantime. A guild the bot joined *without* the `applications.commands` scope won't show them at all — re-invite with the URL from `/addme`.
+- **Stat logging only works via @-mention.** Without the *Message Content Intent*, Discord blanks `content` on every message except those that mention the bot — which is exactly the shape the white gate / ad reporting already used, so it survives. Nothing else in the codebase may assume readable message text.
+- **Aliases cost registrations.** Every alias is a separate slash command; 46 of Discord's 100-command budget are in use.
 - The fishing and gacha sub-features have been removed from earlier versions; no schema migration was needed because their tables were never live in this branch.
 
 [`DESIGN.md`](DESIGN.md) §11 covers the SQLite contract: the tmp + rename atomic-write pattern common to JSON state files deliberately does **not** apply to [`data/PekkaBot.db`](data/) — SQLite's WAL already provides stronger crash semantics than tmp + rename, and overwriting a SQLite file via rename would corrupt the journal. See the class Javadoc in [`src/manager/utility/SQL.java`](src/manager/utility/SQL.java) for the reasoning.
