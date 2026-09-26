@@ -244,6 +244,20 @@ Owner-only, and registered with default permissions disabled so they don't clutt
 | `/exit` | `/shutdown` | Shut down the bot. |
 | `/admin` | — | Report whether the bot has MESSAGE_HISTORY in the current channel. |
 
+## Troubleshooting
+
+**No slash commands appear at all.** Check the startup log — it says which half failed:
+
+| Log line | Meaning |
+|---|---|
+| `Registering 46 slash commands` then `Registered 46 slash commands` | Registration worked. An empty picker is then a client-side cache (Ctrl+R) or the propagation delay below. |
+| `Registering …` then `Failed to register slash commands` | Discord rejected the call. If it's a permissions error, the guild authorised the bot without the `applications.commands` scope — re-invite with the URL from `/addme` (or `p!addme`). |
+| Neither line | `READY` never reached the dispatcher. The bot is connected but registered nothing. |
+
+Re-inviting does **not** kick the bot or reset its data — it re-authorises the same app in the same guild with the added scope.
+
+**Some commands are missing for regular members.** `/exit`, `/shutdown` and `/admin` are registered with default permissions disabled, so only members with Administrator see them. That's deliberate. Grant them per-role under *Server Settings → Integrations → PekkaBot* if you want; the owner-id check still applies on invocation.
+
 ## Limitations
 
 - **Slash commands register globally**, which Discord can take up to an hour to propagate after a name, description or option changes. Existing commands keep working in the meantime. A guild the bot joined *without* the `applications.commands` scope won't show them at all — re-invite with the URL from `/addme`.

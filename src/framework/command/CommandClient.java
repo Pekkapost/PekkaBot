@@ -105,9 +105,16 @@ public class CommandClient extends ListenerAdapter {
             }
             payload.add(data);
         }
+        logger.info("Registering {} slash commands", payload.size());
         event.getJDA().updateCommands().addCommands(payload).queue(
                 registered -> logger.info("Registered {} slash commands", registered.size()),
-                error -> logger.error("Failed to register slash commands", error));
+                // Overwhelmingly this is a guild that authorised the bot with the
+                // `bot` scope alone: commands then register nowhere and the picker
+                // stays empty, with nothing about the failure mentioning scopes.
+                error -> logger.error("Failed to register slash commands. If this is a "
+                        + "permissions error, the bot was most likely invited without the "
+                        + "applications.commands scope — re-invite it with the URL from "
+                        + "the AddMe command.", error));
     }
 
     @Override

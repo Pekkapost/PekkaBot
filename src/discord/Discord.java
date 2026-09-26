@@ -71,10 +71,16 @@ public class Discord {
                     // The bot doesn't read presence, client-status, or voice state — disable
                     // the caches so JDA doesn't keep them populated per-guild.
                     .disableCache(CacheFlag.ACTIVITY, CacheFlag.CLIENT_STATUS, CacheFlag.VOICE_STATE)
+                    // Listeners are attached here rather than after build(),
+                    // which does not block: the gateway handshake runs on its
+                    // own thread and can fire READY before a post-build
+                    // addEventListener call lands. CommandClient registers the
+                    // slash commands from READY, so losing that race means the
+                    // bot connects normally and silently has no commands.
+                    .addEventListeners(
+                            new GuildMessageRespond(),
+                            client)
                     .build();
-            d.addEventListener(
-                    new GuildMessageRespond(),
-                    client);
         } catch (Exception e) {
             if (!BotConstants.prefix.isBlank()) {
                 logger.error("Failed to build JDA client. Prefix commands are on, so the bot "
