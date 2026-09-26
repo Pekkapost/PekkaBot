@@ -86,8 +86,14 @@ public class CommandClient extends ListenerAdapter {
         return commandList;
     }
 
-    @Override
-    public void onReady(ReadyEvent event) {
+    /**
+     * The exact command list sent to Discord on {@code READY}.
+     *
+     * Separate from {@link #onReady} so it can be built and inspected
+     * without a gateway connection — what Discord is told about each
+     * command's permissions is otherwise only observable in a live guild.
+     */
+    List<SlashCommandData> payload() {
         List<SlashCommandData> payload = new ArrayList<>();
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
             Command cmd = entry.getValue();
@@ -105,6 +111,12 @@ public class CommandClient extends ListenerAdapter {
             }
             payload.add(data);
         }
+        return payload;
+    }
+
+    @Override
+    public void onReady(ReadyEvent event) {
+        List<SlashCommandData> payload = payload();
         logger.info("Registering {} slash commands", payload.size());
         event.getJDA().updateCommands().addCommands(payload).queue(
                 registered -> logger.info("Registered {} slash commands", registered.size()),
